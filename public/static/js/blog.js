@@ -204,18 +204,17 @@ function criarHTMLArtigo(a) {
             </div>
             <p class="artigo-resumo">${escaparHTML(a.resumo)}</p>
                 <div class="artigo-conteudo" id="${idConteudo}">
-                    ${paragrafosHTML}
+                ${paragrafosHTML}
 
-                    <div class="share-container" aria-label="Compartilhar artigo">
-                        Compartilhe:
-                        <a href="${urlArtigo}" data-share="whatsapp" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="facebook" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="twitter" class="share-btn twitter" aria-label="Compartilhar no X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="threads" class="share-btn threads" aria-label="Compartilhar no Threads"><i class="fa-brands fa-threads" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="instagram" class="share-btn instagram" aria-label="Compartilhar no Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="tiktok" class="share-btn tiktok" aria-label="Compartilhar no TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
-                        <a href="${urlArtigo}" data-share="copy" class="share-btn copy-link" aria-label="Copiar link do artigo"><i class="fa-solid fa-link" aria-hidden="true"></i></a>
-                    </div>
+                <div class="share-container" aria-label="Compartilhar artigo">
+                    Compartilhe:
+                    <a href="${urlArtigo}" data-share="whatsapp" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="facebook" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="twitter" class="share-btn twitter" aria-label="Compartilhar no X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="threads" class="share-btn threads" aria-label="Compartilhar no Threads"><i class="fa-brands fa-threads" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="instagram" class="share-btn instagram" aria-label="Compartilhar no Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="tiktok" class="share-btn tiktok" aria-label="Compartilhar no TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="copy" class="share-btn copy-link" aria-label="Copiar link do artigo"><i class="fa-solid fa-link" aria-hidden="true"></i></a>
                 </div>
             </div>
         </article>
@@ -228,32 +227,86 @@ function carregarArtigos(artigos) {
 
     container.innerHTML = artigos.map(criarHTMLArtigo).join("");
 
-    container.querySelectorAll(".artigo-blog").forEach((artigo) => {
-        artigo.querySelector(".artigo-blog-header").addEventListener("click", () => {
-            alternarArtigo(artigo, undefined, true);
-        });
-    });
+    // Todos os cliques da lista passam por UM único listener (delegação de eventos).
+    // Regra: a PRIMEIRA ação cujo seletor combina trata o clique e encerra ("return").
+    // Assim, um mesmo clique nunca executa duas ações.
+    // Para dar tratamento próprio ao botão .artigo-toggle no futuro, acrescente aqui uma
+    // ação com seletor ".artigo-toggle" ANTES de ".artigo-blog-header" (e não crie um
+    // listener separado no botão, para não duplicar a chamada de alternarArtigo).
+    const acoesDoClique = [
+        {
+            // Botões de compartilhar do artigo
+            seletor: "[data-share]",
+            tratar: (botao, e) => {
+                e.preventDefault();
 
-    // Botões de compartilhar dos artigos (um único listener para todos)
+                const artigo = botao.closest(".artigo-blog");
+                const titulo = artigo.dataset.titulo;
+                const url = `${urlBlog()}#${artigo.id}`;
+
+                switch (botao.dataset.share) {
+                    case "whatsapp": compartilharWhatsApp(url, titulo); break;
+                    case "facebook": compartilharFacebook(url); break;
+                    case "twitter":  compartilharTwitter(url, titulo); break;
+                    case "threads":  compartilharThreads(url, titulo); break;
+                    case "instagram": compartilharInstagram(); break;
+                    case "tiktok":   compartilharTikTok(); break;
+                    case "copy":     copiarLink(url, e); break;
+                }
+            }
+        },
+        {
+            // Cabeçalho do artigo: imagem, título (h3), botão .artigo-toggle e a área ao redor.
+            // O teclado também passa por aqui: Enter/Espaço no <button> geram um "click".
+            seletor: ".artigo-blog-header",
+            tratar: (cabecalho) => {
+                alternarArtigo(cabecalho.closest(".artigo-blog"), undefined, true);
+            }
+        }
+    ];
+
     container.addEventListener("click", (e) => {
-        const botao = e.target.closest("[data-share]");
-        if (!botao) return;
-        e.preventDefault();
-
-        const artigo = botao.closest(".artigo-blog");
-        const titulo = artigo.dataset.titulo;
-        const url = `${urlBlog()}#${artigo.id}`;
-
-        switch (botao.dataset.share) {
-            case "whatsapp": compartilharWhatsApp(url, titulo); break;
-            case "facebook": compartilharFacebook(url); break;
-            case "twitter":  compartilharTwitter(url, titulo); break;
-            case "threads":  compartilharThreads(url, titulo); break;
-            case "instagram": compartilharInstagram(); break;
-            case "tiktok":   compartilharTikTok(); break;
-            case "copy":     copiarLink(url, e); break;
+        for (const acao of acoesDoClique) {
+            const alvo = e.target.closest(acao.seletor);
+            if (alvo && container.contains(alvo)) {
+                acao.tratar(alvo, e);
+                return;
+            }
         }
     });
+}
+
+// ==============================
+//      ALTURA DO CONTEÚDO (animação sem limite fixo)
+// ==============================
+// A altura que anima é a altura REAL do texto (scrollHeight), então nenhum artigo é cortado,
+// por mais longo que seja. Terminada a animação, a altura é liberada ("none"): se a tela girar
+// ou for redimensionada, o texto se ajusta sozinho.
+const DURACAO_TRANSICAO_MS = 600;            // = transição de max-height em blog.css (0.6s)
+const temporizadoresAltura = new WeakMap();  // evita timers antigos em cliques rápidos
+
+function ajustarAlturaDoConteudo(conteudo, expandir) {
+    const jaExpandido = conteudo.classList.contains("artigo-expandido");
+    if (expandir === jaExpandido) return; // já está no estado pedido
+
+    clearTimeout(temporizadoresAltura.get(conteudo));
+
+    if (expandir) {
+        conteudo.classList.add("artigo-expandido");
+        const altura = conteudo.scrollHeight; // inclui o padding
+        // se não for possível medir (altura 0), não limita a altura
+        conteudo.style.maxHeight = altura > 0 ? `${altura}px` : "none";
+        temporizadoresAltura.set(conteudo, setTimeout(() => {
+            if (conteudo.classList.contains("artigo-expandido")) conteudo.style.maxHeight = "none";
+        }, DURACAO_TRANSICAO_MS + 50));
+    } else {
+        // 1) fixa a altura atual (estava "none"); 2) faz o navegador registrá-la; 3) anima até 0
+        const altura = conteudo.scrollHeight;
+        if (altura > 0) conteudo.style.maxHeight = `${altura}px`;
+        void conteudo.offsetHeight;
+        conteudo.classList.remove("artigo-expandido");
+        conteudo.style.maxHeight = "";
+    }
 }
 
 // ==============================
@@ -268,7 +321,7 @@ function alternarArtigo(artigo, abrir, atualizarURL) {
 
     const expandir = abrir === undefined ? !conteudo.classList.contains("artigo-expandido") : abrir;
 
-    conteudo.classList.toggle("artigo-expandido", expandir);
+    ajustarAlturaDoConteudo(conteudo, expandir);
     botao.setAttribute("aria-expanded", String(expandir));
     if (resumo) resumo.style.display = expandir ? "none" : "block";
     if (icone) icone.className = expandir ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down";

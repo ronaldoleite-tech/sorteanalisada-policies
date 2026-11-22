@@ -286,7 +286,7 @@ h1 {
 }
 
 .artigo-expandido {
-    max-height: 12000px; /* folga para artigos longos em qualquer breakpoint */
+    max-height: 4000px; /* reserva: ao abrir, o blog.js define a altura real do texto (sem limite) */
     overflow: visible;
     padding: 1rem 0;
 }
