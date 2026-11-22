@@ -29,7 +29,7 @@ const dadosArtigos = [
   {
     "titulo": "Mega da Virada 2026: Como Jogar e Concorrer a R$ 1 Bilhão",
     "id": "mega-da-virada-2026",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog1.jpeg",
     "alt": "Fogos de artifício e bola da sorte representando o prêmio de 1 bilhão da Mega da Virada",
     "paragrafos": [
@@ -42,7 +42,7 @@ const dadosArtigos = [
   {
     "titulo": "Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar?",
     "id": "loteria-menos-impossivel",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog2.jpeg",
     "alt": "Gráficos e estatísticas comparando as probabilidades das loterias brasileiras",
     "paragrafos": [
@@ -55,7 +55,7 @@ const dadosArtigos = [
   {
     "titulo": "Quina: Seis Chances de Transformar Sua Vida Toda Semana!",
     "id": "quina-seis-chances",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog3.jpeg",
     "alt": "Sorteio da Quina com bolas coloridas representando as dezenas",
     "paragrafos": [
@@ -67,7 +67,7 @@ const dadosArtigos = [
   {
     "titulo": "O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta",
     "id": "premios-multiplos",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog4.jpeg",
     "alt": "Ilustração de prêmios acumulados e combinações de apostas múltiplas",
     "paragrafos": [
@@ -81,7 +81,7 @@ const dadosArtigos = [
   {
     "titulo": "Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas",
     "id": "premios-da-loteria-nas-telas",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog5.jpeg",
     "alt": "Cenário de cinema com letreiros iluminados e prêmios de loteria",
     "paragrafos": [
@@ -95,7 +95,7 @@ const dadosArtigos = [
   {
     "titulo": "Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena",
     "id": "numeros-de-lost-mega-sena",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog6.jpeg",
     "alt": "Sequência de números misteriosos da série Lost iluminados em uma parede",
     "paragrafos": [
@@ -108,7 +108,7 @@ const dadosArtigos = [
   {
     "titulo": "Será que a IA pode ajudar a ganhar na Mega-Sena?",
     "id": "ia-na-mega-sena",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog7.jpeg",
     "alt": "Representação de inteligência artificial com circuitos e números da sorte",
     "paragrafos": [
@@ -122,7 +122,7 @@ const dadosArtigos = [
   {
     "titulo": "Cardano: O Gênio do Acaso que Desvendou os Dados antes das Loterias",
     "id": "cardano-genio-do-acaso",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog8.jpeg",
     "alt": "Ilustração antiga de um matemático do Renascimento estudando jogos de azar",
     "paragrafos": [
@@ -135,7 +135,7 @@ const dadosArtigos = [
   {
     "titulo": "O Jogo Mais Solitário da Mega-Sena",
     "id": "jogo-mais-solitario",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog9.jpeg",
     "alt": "Ilustração de um volante de apostas com cartas e números exclusivos",
     "paragrafos": [
@@ -149,7 +149,7 @@ const dadosArtigos = [
   {
     "titulo": "Números Quentes vs. Frios: A Ciência Por Trás dos Palpites Vencedores",
     "id": "numeros-quentes-vs-frios",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog10.jpeg",
     "alt": "Gráfico comparando a frequência de números quentes e frios nos sorteios",
     "paragrafos": [
@@ -162,7 +162,7 @@ const dadosArtigos = [
   {
     "titulo": "Rumo ao Milhão: Dicas Quentes para Jogar na Mega da Virada!",
     "id": "dicas-mega-da-virada",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog11.jpeg",
     "alt": "Festa de fim de ano com fogos e números da sorte para a Mega da Virada",
     "paragrafos": [
@@ -176,7 +176,7 @@ const dadosArtigos = [
   {
     "titulo": "Jogue com Inteligência: Como Transformar Dados em Estratégia nas Loterias",
     "id": "dados-em-estrategia",
-    "data": "",
+    "data": "2026-11-22",
     "imagem": "blog12.jpeg",
     "alt": "Gráfico de análise de dados e estratégias matemáticas para loterias",
     "paragrafos": [
