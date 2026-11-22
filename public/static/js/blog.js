@@ -182,6 +182,95 @@ function inicializarArtigos() {
 }
 
 // ==============================
+//      GERENCIAMENTO DE ARTIGOS
+// ==============================
+function carregarMaisArtigos() {
+    console.log('Carregando mais artigos...');
+    
+    const artigos = getElements(".artigo-blog");
+    const artigosOcultos = Array.from(artigos).filter(artigo => !artigo.classList.contains('visivel'));
+    const quantidadeCarregar = Math.min(6, artigosOcultos.length);
+    
+    console.log(`Artigos ocultos: ${artigosOcultos.length}, Carregando: ${quantidadeCarregar}`);
+    
+    for (let i = 0; i < quantidadeCarregar; i++) {
+        artigosOcultos[i].classList.add("visivel");
+        artigosVisiveis++;
+        console.log(`Artigo ${i + 1} tornado visível`);
+    }
+    
+    atualizarContadorArtigos();
+    
+    // Scroll para o primeiro artigo carregado
+    if (artigosOcultos.length > 0 && quantidadeCarregar > 0) {
+        setTimeout(() => {
+            artigosOcultos[0].scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+    }
+}
+
+function atualizarContadorArtigos() {
+    const contadorArtigos = getElement("contador-artigos");
+    if (contadorArtigos) {
+        contadorArtigos.textContent = `Mostrando ${artigosVisiveis} de ${totalArtigos} artigos`;
+        console.log(`Contador atualizado: ${artigosVisiveis} de ${totalArtigos}`);
+    }
+    
+    const botaoCarregarMais = document.querySelector(".carregar-mais");
+    const mensagemCarregar = document.querySelector(".carregar-mais-container p");
+    
+    if (artigosVisiveis >= totalArtigos) {
+        if (botaoCarregarMais) {
+            botaoCarregarMais.style.display = 'none';
+            console.log('Botão carregar mais ocultado - todos os artigos visíveis');
+        }
+        if (mensagemCarregar) {
+            mensagemCarregar.innerHTML = '<span style="color: var(--cor-sucesso);">✓ Todos os artigos carregados!</span>';
+        }
+    } else {
+        if (botaoCarregarMais) {
+            botaoCarregarMais.style.display = 'block'; // Garantir que está visível
+        }
+    }
+}
+
+function toggleArtigo(artigoId) {
+    console.log('Toggle artigo:', artigoId);
+    
+    const artigoConteudo = getElement(artigoId);
+    if (!artigoConteudo) {
+        console.log('Conteúdo do artigo não encontrado:', artigoId);
+        return;
+    }
+    
+    const artigoContainer = artigoConteudo.closest('.artigo-blog');
+    const resumo = artigoContainer.querySelector('.artigo-resumo');
+    const icon = artigoContainer.querySelector('.artigo-blog-header i');
+    
+    const isExpandido = artigoConteudo.classList.contains('artigo-expandido');
+    
+    console.log('Artigo está expandido?:', isExpandido);
+    
+    // Alternar classes CSS
+    if (isExpandido) {
+        // Fechar artigo
+        artigoConteudo.classList.remove('artigo-expandido');
+        if (resumo) resumo.style.display = 'block';
+        if (icon) icon.className = 'fa-solid fa-chevron-down';
+    } else {
+        // Abrir artigo
+        artigoConteudo.classList.add('artigo-expandido');
+        if (resumo) resumo.style.display = 'none';
+        if (icon) icon.className = 'fa-solid fa-chevron-up';
+        
+        // Scroll suave para o artigo
+        setTimeout(() => {
+            artigoContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+    }
+}
+
+// ==============================
 //      CONFIGURAÇÃO DE EVENT LISTENERS DO BLOG
 // ==============================
 function configurarEventListenersBlog() {
