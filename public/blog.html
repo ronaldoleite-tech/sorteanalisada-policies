@@ -251,7 +251,6 @@
         <link rel="canonical" href="https://sorteanalisada.com.br/blog">
 
         <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
-        <link rel="stylesheet" href="/static/css/styles.css">
         <link rel="stylesheet" href="/static/css/blog.css">
         
     </head>
@@ -261,8 +260,8 @@
                 <picture>
                     <a href="/" title="Voltar para a página inicial Sorte Analisada">
                     <source srcset="/static/images/logotipo.webp">
-                    <img src="/static/images/logotipo.png" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high">
-                    </a>
+                    <img src="/static/images/logotipo.png" alt="Sorte Analisada - Gerador de Números para Loterias" class="imagem-ouro" width="128" height="131" loading="eager" fetchpriority="high" style="border-radius: 16px;">
+                </a>
                 </picture>
 
                 </a>
@@ -271,11 +270,10 @@
             </header>
             
                 <nav class="nav-interna">
-                    <a href="/">Início</a> 
-                    <a href="/blog">Blog Sorte Analisada</a> 
                     <a href="#artigos">Artigos</a>
                     <a href="/privacy">Política de Privacidade</a>
-                    <a href="/terms">Termos de Uso</a>                     
+                    <a href="/terms">Termos de Uso</a>
+                    <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada">App Sorte Analisada</a>                     
                 </nav>    
 
             <main id="artigos">
@@ -475,15 +473,6 @@
                     </div>
                 </div>
 
-                <!-- ============== SISTEMA DE PAGINAÇÃO ============== -->
-                <div class="carregar-mais-container">
-                    <p id="contador-artigos" style="color: var(--cor-dourado); margin-bottom: 1rem; font-weight: 500;"></p>
-                    <button class="carregar-mais">
-                        <i class="fa-solid fa-plus"></i> Carregar Mais Artigos
-                    </button>
-                </div>
-
-                <!-- ARTIGOS OCULTOS INICIALMENTE -->
                 <div class="artigo-blog visivel">
                     <div class="artigo-blog-header">
                         <img src="/static/images/blog6.jpeg" alt="Estratégia" style="height: 88px; margin-right: 10px; vertical-align: middle;" loading="lazy">
@@ -724,11 +713,13 @@
                 <br>
 
                 <!-- ============== CARDS DE RECURSOS ============== -->
+                 <div id="destaque" class="destaque-gerador">
+                    <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
+                    <p>Não perca tempo! Use o gerador de dezenas do app <strong>Sorte Analisada Lite <span style="font-size: 1.5rem;">📱</span> </strong>. <br>Gere dezenas para a Mega-Sena, Quina, Lotofácil e outras loterias!</p><br>  
+                </div>
+                
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                     <article class="card-feature">
-                        <span style="font-size: 2.5rem;">📱</span>
-                        <h3>App Sorte Analisada Lite</h3>
-                        <p>Acesse nosso gerador rápido.</p>
                         <p style="font-size: 1rem; color: #ffd700; font-weight: 600; margin-top: 1.5rem;">
                         <i class="fa-solid fa-dice"></i> Disponível gratuitamente na Google Play Store!
                     </p>
@@ -736,21 +727,14 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     title="Baixar Sorte Analisada Lite na Play Store"
-                    style="display: inline-flex; align-items: center; gap: 10px; margin-top: 1rem; padding: 1rem 2rem; background: linear-gradient(145deg, #1976d2, #0d47a1); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(25,118,210,0.35);">
+                    style="display: inline-flex; align-items: center; gap: 10px; margin-top: 1rem; padding: 1rem 2rem; background: linear-gradient(145deg, #037f03, #70c470); color: white; text-decoration: none; border-radius: 30px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(25,118,210,0.35);">
                         <i class="fa-brands fa-google-play" style="font-size: 1.3rem;"></i>
-                        Baixar na Play Store
+                        Baixar Grátis na Play Store
                     </a>
+
                     </article>
                 </div>
                 <br>
-
-                <div id="destaque" class="destaque-gerador">
-                    <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
-                    <p>Não perca tempo! Use o gerador de dezenas do app <strong>Sorte Analisada Lite</strong>. <br>Gere dezenas para a Mega-Sena, Quina, Lotofácil e outras loterias!</p><br>
-                    <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada" target="_blank" rel="noopener noreferrer" class="cta-gerador">
-                        <i class="fa-solid fa-dice"></i> Sorte Analisada<br> Gere as suas Dezenas Agora
-                    </a>
-                </div>
 
                 <!-- Compartilhamento geral --> 
                 <div class="share-container">
@@ -786,10 +770,6 @@
         <a href="https://www.instagram.com/sorteanalisadaoficial/?igsh=cW8zenNycWVieXF1" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a> 
     </div>
     <div class="copyright">
-        <a href="/" style="color: var(--cor-dourado); text-decoration: none;">Início</a>
-        <br>
-        <a href="/blog" style="color: var(--cor-dourado); text-decoration: none;">Blog Sorte Analisada</a>
-        <br>
         <a href="mailto:contato@sorteanalisada.com.br" title="Contato" style="color: var(--cor-dourado); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
                         <i class="fa-solid fa-envelope"></i>Contato
                         </a> 
@@ -798,6 +778,7 @@
         <br>
         <a href="/terms" style="color: var(--cor-dourado); text-decoration: none;">Termos de Uso</a>
                         <br>
+        <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada" style="color: var(--cor-dourado); text-decoration: none;">App Sorte Analisada</a>                 
                         <br>
          ™ 2026 Sorte Analisada. Todos os direitos reservados.
     </div>  
@@ -806,7 +787,6 @@
         </div>
 
             <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-            <script defer src="/static/js/scripts.js"></script>
             <script defer src="/static/js/blog.js"></script>
 
     </body>
