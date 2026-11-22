@@ -1,802 +1,216 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta name="google-site-verification" content="KyplyJ0pKcijcbwTJJ5aYIEqJo1xT60I031YP6L16Bs" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Principal -->
-    <title>Sorte Analisada Lite — Gerador de Palpites para Loterias | Google Play</title>
-    <meta name="description" content="Gere palpites inteligentes para Mega-Sena, Quina, Lotofácil e outras loterias. Filtros Aleatório, Monte Carlo, Especial Mega-Sena e Organizador de Jogos. Minigames com recompensa de palpites. Grátis no Google Play!">
-    <meta name="keywords" content="app loteria android, palpites mega-sena, sorte analisada lite, gerador números loteria, quina lotofácil app, monte carlo loteria, gerador palpites grátis, jogo da forca loteria, filtro especial mega-sena, organizador de jogos, jogo da memória loteria, corrida da sorte">
-    <meta name="robots" content="index, follow">
-    <meta name="application-name" content="Sorte Analisada Lite">
-    <meta name="author" content="Sorte Analisada">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sorteanalisada.com.br/">
-    <meta property="og:title" content="Sorte Analisada Lite — Gerador de Palpites para Loterias">
-    <meta property="og:description" content="Gere suas dezenas na palma da mão com filtros inteligentes para Mega-Sena, Quina, Lotofácil e mais. Jogue Forca, Memória ou Corrida da Sorte e ganhe palpites bônus. Grátis no Google Play.">
-    <meta property="og:image" content="https://sorteanalisada.com.br/static/images/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:site_name" content="Sorte Analisada Lite">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://sorteanalisada.com.br/">
-    <meta name="twitter:title" content="Sorte Analisada Lite — Palpites para Loterias no Celular">
-    <meta name="twitter:description" content="Gere suas dezenas com filtros inteligentes. Jogue Forca, Memória ou Corrida da Sorte e ganhe palpites bônus. Grátis no Google Play.">
-    <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/og-image.png">
-
-    <!-- Mobile -->
-    <meta name="format-detection" content="telephone=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#0A1628">
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://sorteanalisada.com.br/">
-    <link rel="icon" href="https://sorteanalisada.com.br/static/images/logotipo.png" type="image/png">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Schema.org — SoftwareApplication (Rich Results Google) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Sorte Analisada Lite",
-      "operatingSystem": "Android",
-      "applicationCategory": "EntertainmentApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "BRL"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5",
-        "ratingCount": "10"
-      },
-      "description": "Gerador de palpites para loterias brasileiras com filtros Aleatório, Monte Carlo, Especial Mega-Sena e um Organizador de Jogos. Inclui os minigames Jogo da Forca, Jogo da Memória e Corrida da Sorte, com recompensa de palpites bônus.",
-      "url": "https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada",
-      "author": {
-        "@type": "Person",
-        "name": "Ronaldo Leite"
-      }
-    }
-    </script>
-
-    <!-- Schema.org — FAQPage -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "O app é realmente gratuito?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sim! O Sorte Analisada Lite é gratuito no Google Play. Contém anúncios discretos (banner) e anúncios opcionais para ganhar palpites bônus."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "O que é o filtro Especial Mega-Sena?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Modo exclusivo para a Mega-Sena com regras estatísticas: controla intervalos por posição, limita números primos, evita muitos consecutivos e mantém a soma dentro de uma faixa balanceada."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "O que é o Organizador de Jogos?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Recurso gratuito para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil. Você escolhe algumas dezenas e o app completa o restante, gerando 10 jogos combinados a partir desse conjunto. Reduz repetição entre os jogos escolhidos, mas não altera a probabilidade real de acerto."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Quais minigames o app tem?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Três: Jogo da Forca, Jogo da Memória e Corrida da Sorte. Ao vencer qualquer um deles, você recebe automaticamente um palpite Especial Mega-Sena. Também é possível assistir um vídeo curto para ganhar 5 palpites de uma vez."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "O app garante que vou ganhar?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Não. Loterias são jogos de azar e nenhuma ferramenta pode garantir resultados. O app é uma ferramenta de entretenimento. Jogue com responsabilidade."
-          }
-        }
-      ]
-    }
-    </script>
-
-<style>
-    :root {
-        --primary-gold: #FFD700;
-        --gold-hover: #FFC107;
-        --dark-blue: #0A1628;
-        --light-blue: #1E3A8A;
-        --accent-blue: #3B82F6;
-        --text-light: #E3F2FD;
-        --text-gray: #94A3B8;
-        --success-green: #10B981;
-        --gradient-primary: linear-gradient(135deg, #0A1628 0%, #1E3A8A 50%, #3B82F6 100%);
-        --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { overflow-x: hidden; width: 100%; }
-
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: var(--gradient-primary);
-        color: var(--text-light);
-        line-height: 1.6;
-        overflow-x: hidden;
-        width: 100%;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-        width: 100%;
-    }
-
-    /* HERO */
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        text-align: center;
-        background: radial-gradient(ellipse at center, rgba(255,215,0,0.1) 0%, transparent 50%);
-        padding: 20px 0;
-    }
-
-    .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23FFD700" opacity="0.3"><animate attributeName="opacity" dur="2s" values="0.3;1;0.3" repeatCount="indefinite"/></circle><circle cx="80" cy="30" r="1.5" fill="%23FFD700" opacity="0.4"><animate attributeName="opacity" dur="3s" values="0.4;1;0.4" repeatCount="indefinite"/></circle></svg>') repeat;
-        animation: float 20s infinite linear;
-        pointer-events: none;
-    }
-
-    @keyframes float {
-        0%   { transform: translateY(0) rotate(0deg); }
-        50%  { transform: translateY(-20px) rotate(180deg); }
-        100% { transform: translateY(0) rotate(360deg); }
-    }
-
-    .hero-content {
-        z-index: 1;
-        position: relative;
-        max-width: 800px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .logo {
-        width: 120px; height: 120px;
-        margin: 0 auto 20px;
-        background: var(--gradient-gold);
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 10px 30px rgba(255,215,0,0.3);
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%,100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255,215,0,0.3); }
-        50%      { transform: scale(1.05); box-shadow: 0 15px 40px rgba(255,215,0,0.5); }
-    }
-
-    .logo i { font-size: 3rem; color: var(--dark-blue); }
-
-    .app-badge {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: rgba(16,185,129,0.15);
-        border: 1px solid var(--success-green);
-        border-radius: 50px; padding: 6px 18px;
-        font-size: 0.85rem; font-weight: 600;
-        color: var(--success-green);
-        margin-bottom: 20px; letter-spacing: 0.5px;
-    }
-
-    .hero h1 {
-        font-family: 'Orbitron', monospace;
-        font-size: clamp(2.2rem, 5vw, 3.6rem);
-        font-weight: 700; margin-bottom: 20px;
-        background: var(--gradient-gold);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: slideInDown 1s ease-out;
-    }
-
-    @keyframes slideInDown {
-        from { opacity: 0; transform: translateY(-50px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-subtitle {
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
-        color: var(--text-gray); margin-bottom: 30px;
-        animation: slideInUp 1s ease-out 0.3s both;
-    }
-
-    @keyframes slideInUp {
-        from { opacity: 0; transform: translateY(50px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-description {
-        font-size: 1.1rem; color: var(--text-light);
-        margin-bottom: 40px;
-        animation: fadeIn 1s ease-out 0.6s both;
-    }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .cta-button {
-        display: inline-flex; align-items: center; gap: 15px;
-        background: var(--gradient-gold);
-        color: var(--dark-blue);
-        padding: 18px 40px; border-radius: 50px;
-        text-decoration: none; font-weight: 700; font-size: 1.2rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(255,215,0,0.3);
-    }
-
-    .cta-button:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(255,215,0,0.5);
-    }
-
-    .loterias-chips {
-        display: flex; flex-wrap: wrap;
-        justify-content: center; gap: 10px;
-        margin-top: 30px;
-        animation: fadeIn 1s ease-out 0.9s both;
-    }
-
-    .chip {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,215,0,0.3);
-        border-radius: 50px; padding: 6px 16px;
-        font-size: 0.85rem; color: var(--text-gray);
-    }
-
-    /* FEATURES */
-    .features {
-        padding: 100px 0;
-        background: rgba(0,0,0,0.2);
-        backdrop-filter: blur(10px);
-    }
-
-    .features h2 {
-        text-align: center; font-size: 2.5rem;
-        margin-bottom: 20px; color: var(--primary-gold);
-    }
-
-    .features-subtitle {
-        text-align: center; font-size: 1.2rem;
-        color: var(--text-gray); margin-bottom: 60px;
-        max-width: 600px; margin-left: auto; margin-right: auto;
-    }
-
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px; margin-top: 60px;
-    }
-
-    .feature-card {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,215,0,0.2);
-        border-radius: 20px; padding: 40px 30px;
-        text-align: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-
-    .feature-card:hover {
-        transform: translateY(-10px);
-        border-color: var(--primary-gold);
-        box-shadow: 0 20px 40px rgba(255,215,0,0.2);
-    }
-
-    .feature-icon {
-        width: 80px; height: 80px;
-        background: var(--gradient-gold);
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 2rem; color: var(--dark-blue);
-    }
-
-    .feature-card h3 {
-        font-size: 1.5rem; margin-bottom: 15px;
-        color: var(--primary-gold);
-    }
-
-    /* Badge NOVO */
-    .badge-novo {
-        display: inline-block;
-        background: var(--success-green);
-        color: #fff; font-size: 0.7rem;
-        font-weight: 700; padding: 2px 8px;
-        border-radius: 50px; margin-left: 8px;
-        vertical-align: middle; letter-spacing: 0.5px;
-    }
-
-    /* STATS */
-    .stats { padding: 80px 0; text-align: center; }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 40px; margin-top: 40px;
-    }
-
-    .stat-item {
-        background: rgba(255,255,255,0.05);
-        border-radius: 15px; padding: 30px 20px;
-        border: 1px solid rgba(255,215,0,0.1);
-    }
-
-    .stat-number {
-        font-family: 'Orbitron', monospace;
-        font-size: 3rem; font-weight: 700;
-        color: var(--primary-gold); margin-bottom: 10px;
-    }
-
-    .stat-label { color: var(--text-gray); font-size: 1.1rem; }
-
-    /* FAQ */
-    .faq-section {
-        padding: 80px 0;
-        background: rgba(0,0,0,0.3);
-    }
-
-    .faq-section h2 {
-        text-align: center; font-size: 2.5rem;
-        margin-bottom: 60px; color: var(--primary-gold);
-    }
-
-    .faq-item {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,215,0,0.2);
-        border-radius: 15px; padding: 30px;
-        margin-bottom: 20px;
-        max-width: 800px; margin-left: auto; margin-right: auto;
-    }
-
-    .faq-item h3 {
-        font-size: 1.3rem; color: var(--primary-gold);
-        margin-bottom: 15px; font-weight: 600;
-    }
-
-    .faq-item p { color: var(--text-light); line-height: 1.6; }
-
-    /* FINAL CTA */
-    .final-cta {
-        padding: 100px 0; text-align: center;
-        background: radial-gradient(ellipse at center, rgba(255,215,0,0.1) 0%, transparent 50%);
-    }
-
-    .final-cta h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--primary-gold); }
-
-    .final-cta p {
-        font-size: 1.3rem; color: var(--text-light);
-        margin-bottom: 40px;
-        max-width: 600px; margin-left: auto; margin-right: auto;
-    }
-
-    .urgency-text {
-        background: rgba(255,215,0,0.1);
-        border: 1px solid var(--primary-gold);
-        border-radius: 10px; padding: 20px;
-        margin: 30px 0; font-weight: 600;
-        color: var(--primary-gold);
-    }
-
-    /* SEO */
-    .seo-content { padding: 60px 0 20px; }
-    .seo-content h2 { font-size: 1.8rem; color: var(--primary-gold); margin-bottom: 15px; }
-    .seo-content h3 { font-size: 1.3rem; color: var(--text-light); margin-bottom: 10px; }
-    .seo-content p { color: var(--text-gray); }
-
-    footer {
-        background: rgba(0,0,0,0.3);
-        border-top: 1px solid var(--primary-gold);
-        padding: 2rem 0; text-align: center; margin-top: 3rem;
-    }
-
-    footer a {
-        color: var(--primary-gold); text-decoration: none;
-        font-weight: 600; transition: color 0.3s;
-    }
-
-    footer a:hover { color: var(--gold-hover); }
-
-    .disclaimer {
-        margin-top: 30px; color: var(--text-gray);
-        font-size: 0.9rem; line-height: 1.4;
-        max-width: 800px; margin-left: auto; margin-right: auto;
-    }
-
-    @media (max-width: 768px) {
-        html, body { overflow-x: hidden; max-width: 100vw; }
-        .container { padding: 0 15px; max-width: 100%; }
-        .hero { min-height: 80vh; padding: 40px 0; }
-        .logo { width: 100px; height: 100px; }
-        .hero h1 { font-size: 2.2rem; word-wrap: break-word; }
-        .features { padding: 60px 0; }
-        .features-grid { grid-template-columns: 1fr; gap: 25px; }
-        .stats-grid { grid-template-columns: repeat(2,1fr); gap: 20px; }
-    }
-
-    @media (max-width: 480px) {
-        .hero h1 { font-size: 1.8rem; }
-        .stats-grid { grid-template-columns: 1fr; }
-    }
-</style>
-</head>
-<body>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <div class="logo">
-                <i class="fas fa-mobile-alt" aria-label="App Sorte Analisada Lite"></i>
-            </div>
-
-            <div class="app-badge">
-                <i class="fab fa-google-play"></i>
-                Disponível no Google Play — Grátis
-            </div>
-
-            <h1>Sorte Analisada Lite</h1>
-            <p class="hero-subtitle">Gere rápido as suas Dezenas!</p>
-            <p class="hero-description">
-                Tenha na palma da mão um gerador inteligente de palpites para as principais loterias brasileiras.
-                Filtros Aleatório, Monte Carlo e Especial Mega-Sena, além de um Organizador de Jogos.
-                Jogue Forca, Memória ou Corrida da Sorte e ganhe palpites bônus.
-                Tudo de forma gratuita.
-            </p>
-
-            <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
-               class="cta-button"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Baixar Sorte Analisada Lite no Google Play">
-                <i class="fab fa-google-play"></i>
-                Baixe Grátis no Google Play
-            </a>
-
-            <div class="loterias-chips">
-                <span class="chip">Mega-Sena</span>
-                <span class="chip">Quina</span>
-                <span class="chip">Lotofácil</span>
-                <span class="chip">Dia de Sorte</span>
-                <span class="chip">Dupla Sena</span>
-                <span class="chip">Lotomania</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-    <div class="container">
-        <h2>Tudo que você precisa no celular</h2>
-        <p class="features-subtitle">
-            Simples de usar, poderoso nos bastidores — gere dezenas com inteligência
-        </p>
-
-        <div class="features-grid">
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-random"></i>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
+
+        <!-- Google tag (gtag.js) -->
+        <script>
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    var script = document.createElement('script');
+                    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-PPB7LRV5SJ';
+                    script.async = true;
+                    document.head.appendChild(script);
+
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-PPB7LRV5SJ');
+                }, 3000);
+            });
+        </script>
+
+        <!-- ============== SCHEMA MARKUP PARA SEO ============== -->
+        <!-- O Schema (JSON-LD) é gerado dinamicamente pelo arquivo blog.js -->
+
+        <!-- ============== METADADOS E SEO ============== -->
+        <meta name="description" content="Gere dezenas aleatórias para Mega-Sena, Quina, Dupla-Sena, Lotofácil e Dia de Sorte e leia curiosidades, análises e dicas sobre as loterias no Blog Sorte Analisada.">
+        <meta name="keywords" content="Blog de loterias, curiosidades sobre loterias, mega-sena, quina, lotofácil, Dia de Sorte, dupla sena, lotomania, resultados das loterias">
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+        <title>Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias</title>
+        <link rel="icon" href="/static/images/logotipo.png" type="image/png">
+
+        <!-- ============== LINK GOOGLE ADSENSE ============== -->
+
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9963024999857816" crossorigin="anonymous"></script>
+
+        <!-- ============== FONTES E SCRIPTS EXTERNOS ============== -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://sorteanalisada.com.br/">
+        <meta property="og:title" content="Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias">
+        <meta property="og:description" content="Blog Sorte Analisada: Curiosidades, análises e guias sobre as loterias brasileiras. Explore o mundo dos números na Mega-Sena, Quina, Lotofácil e Dia de Sorte.">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:locale" content="pt_BR">
+        <meta property="og:site_name" content="Sorte Analisada">
+        <meta property="og:image" content="https://sorteanalisada.com.br/static/images/og-image.png">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://sorteanalisada.com.br/">
+        <meta name="twitter:title" content="Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias">
+        <meta name="twitter:description" content="Blog Sorte Analisada: Explore o universo das loterias com curiosidades, análises de dados e estatísticas. Entenda os padrões da Mega-Sena, Quina, Lotofácil e mais.">
+        <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
+
+        <!-- Canonical -->
+        <link rel="canonical" href="https://sorteanalisada.com.br/">
+
+        <!-- ============== ESTILOS CSS DA PÁGINA ============== -->
+        <link rel="stylesheet" href="/static/css/blog.css">
+    </head>
+    <body>
+        <div class="container">
+            <header id="topo">
+                <a href="/" title="Página inicial Sorte Analisada" class="logo-link">
+                    <picture>
+                        <source srcset="/static/images/logotipo.webp" type="image/webp">
+                        <img src="/static/images/logotipo.png"
+                            alt="Sorte Analisada - Gerador de Números para Loterias"
+                            class="imagem-ouro"
+                            width="128" height="131"
+                            loading="eager" fetchpriority="high">
+                    </picture>
+                </a>
+                <h1>Sorte Analisada - Blog</h1>
+                <p class="subtitulo">Gere dezenas e leia curiosidades e dicas sobre o mundo das loterias</p>
+            </header>
+
+            <nav class="nav-interna" aria-label="Navegação do blog">
+                <a href="#gerador">Gerador</a>
+                <a href="#artigos">Artigos</a>
+                <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada">App Sorte Analisada</a>
+                <a href="/privacy">Política de Privacidade</a>
+                <a href="/terms">Termos de Uso</a>
+            </nav>
+
+            <main>
+                <!-- ============== GERADOR DE DEZENAS ============== -->
+                <section id="gerador" class="gerador" aria-labelledby="gerador-titulo">
+                    <h2 id="gerador-titulo" class="titulo-artigos">🎲 Gerador de Dezenas</h2>
+                    <p class="gerador-sub">Escolha a loteria e gere números aleatórios para o seu jogo.</p>
+
+                    <div class="gerador-controles">
+                        <label for="gerador-loteria">Loteria:</label>
+                        <select id="gerador-loteria" class="seletor-loteria">
+                            <option value="megasena">Mega-Sena</option>
+                            <option value="quina">Quina</option>
+                            <option value="duplasena">Dupla-Sena</option>
+                            <option value="lotofacil">Lotofácil</option>
+                            <option value="diadesorte">Dia de Sorte</option>
+                        </select>
+                    </div>
+
+                    <div class="gerador-botoes">
+                        <button type="button" id="gerador-gerar" class="botao-gerar">
+                            <i class="fa-solid fa-dice" aria-hidden="true"></i> Gerar números
+                        </button>
+                        <button type="button" id="gerador-copiar" class="botao-copiar" disabled>
+                            <i class="fa-solid fa-copy" aria-hidden="true"></i> Copiar
+                        </button>
+                    </div>
+
+                    <div id="gerador-resultado" class="gerador-resultado" aria-live="polite"></div>
+                    <span id="gerador-status" class="sr-only" aria-live="polite"></span>
+                    <noscript><p>Ative o JavaScript no seu navegador para usar o gerador.</p></noscript>
+
+                    <p class="gerador-app">
+                        📱 Para uma experiência mais completa, acesse o app
+                        <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada" target="_blank" rel="noopener noreferrer"><strong>Sorte Analisada Lite</strong></a>:
+                        organizador de jogos, minigames com palpites bônus e muito mais.
+                    </p>
+                    <p class="gerador-aviso">
+                        Números gerados aleatoriamente, apenas para entretenimento. Loterias são jogos de azar,
+                        não há garantia de prêmios. Jogue com responsabilidade (18+).
+                    </p>
+                </section>
+
+                <!-- ============== ARTIGOS ============== -->
+                <section id="artigos">
+                <h2 class="titulo-artigos">Artigos</h2>
+                
+                <!-- AQUI O JAVASCRIPT VAI INJETAR OS ARTIGOS -->
+                <div id="lista-artigos"></div>
+                <noscript><p>Ative o JavaScript no seu navegador para ver os artigos do blog.</p></noscript>
+
+                <a href="#topo" class="voltar-topo">Voltar ao Topo ↑</a>
+                <!-- ============== CARD DE RECURSO ============== -->
+                <div id="destaque" class="destaque-gerador">
+                    <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
+                    <p>Não perca tempo! Use o gerador de dezenas do app <strong>Sorte Analisada Lite <span style="font-size: 1.5rem;">📱</span></strong>.<br>Gere dezenas para a Mega-Sena, Quina, Lotofácil e outras loterias!</p>
+                    <br>
+               
+                    <article class="card-feature">
+                        <p class="card-feature-titulo">
+                            <i class="fa-solid fa-dice" aria-hidden="true"></i> Disponível gratuitamente na Google Play Store!
+                        </p>
+                        <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           title="Baixar Sorte Analisada Lite na Play Store"
+                           class="botao-playstore">
+                            <i class="fa-brands fa-google-play" aria-hidden="true"></i>
+                            Baixar Grátis na Play Store
+                        </a>
+                        <p style="margin-top: 1rem;"><a href="/landing" class="link-interno">Conheça todos os recursos do app</a></p>
+                    </article>
                 </div>
-                <h3>Geração Aleatória</h3>
-                <p>Gere combinações aleatórias de forma rápida para qualquer loteria.
-                Escolha a quantidade de dezenas e clique em gerar — simples assim.</p>
-            </article>
+                <br>
 
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
+                <!-- Compartilhamento geral -->
+                <div class="share-container" aria-label="Compartilhar o blog">
+                    Curtiu o Blog! Compartilhe:
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no WhatsApp" onclick="compartilharWhatsApp(urlBlog())" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Facebook" onclick="compartilharFacebook(urlBlog())" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no X (Twitter)" onclick="compartilharTwitter(urlBlog())" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Threads" onclick="compartilharThreads(urlBlog())" class="share-btn threads"><i class="fa-brands fa-threads"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Instagram" onclick="compartilharInstagram()" class="share-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no TikTok" onclick="compartilharTikTok()" class="share-btn tiktok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Copiar link" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link"><i class="fa-solid fa-link"></i></a>
                 </div>
-                <h3>Simulação Monte Carlo</h3>
-                <p>Palpites gerados com base em frequências históricas dos sorteios simulados,
-                usando o método estatístico Monte Carlo para sugestões mais embasadas.</p>
-            </article>
+                <a href="#topo" class="voltar-topo">Voltar ao Topo ↑</a>
+                </section>
+            </main>
 
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-star"></i>
+            <footer class="site-footer">
+                <h2 class="footer-social-title">Siga o Sorte Analisada no Instagram</h2>
+                <div class="footer-links">
+                    <a href="https://www.instagram.com/sorteanalisadaoficial/?igsh=cW8zenNycWVieXF1"
+                       title="Instagram" target="_blank" rel="noopener noreferrer"
+                       aria-label="Instagram do Sorte Analisada">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                    </a>
                 </div>
-                <h3>Filtro Especial Mega-Sena</h3>
-                <p>Filtro da recompensa do Jogo da Forca e 5 palpites: é filtro exclusivo estatístico avançado: controle de intervalos por posição,
-                equilíbrio de números, limite de primos e soma balanceada das dezenas.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-clipboard-list"></i>
+                <div class="copyright">
+                    <a href="/">Início</a>
+                    <br>
+                    <a href="/landing">Conheça o App</a>
+                    <br>
+                    <a href="mailto:contato@sorteanalisada.com.br" title="Contato">
+                        <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contato
+                    </a>
+                    <br>
+                    <a href="/privacy">Política de Privacidade</a>
+                    <br>
+                    <a href="/terms">Termos de Uso</a>
+                    <br>
+                    <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada">App Sorte Analisada</a>
+                    <br>
+                    ™ 2026 Sorte Analisada. Todos os direitos reservados.
                 </div>
-                <h3>Organizador de Jogos <span class="badge-novo">NOVO</span></h3>
-                <p>Escolha algumas dezenas na Mega-Sena, Quina, Dupla-Sena, Dia de Sorte ou Lotofácil
-                e deixe o app completar o restante. Gera 10 jogos combinados automaticamente, sem repetição entre eles.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <h3>Jogo da Forca</h3>
-                <p>Minigame integrado com categorias variadas. Acerte a palavra secreta e ganhe
-                automaticamente um palpite Especial Mega-Sena como recompensa.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h3>Jogo da Memória</h3>
-                <p>Combine os pares de cartas com nomes de loterias. Complete o desafio e ganhe
-                automaticamente um palpite Especial Mega-Sena como recompensa.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-flag-checkered"></i>
-                </div>
-                <h3>Corrida da Sorte</h3>
-                <p>Escolha um carrinho — os nomes mudam a cada rodada, entre 9 loterias diferentes —
-                e vença a corrida para ganhar automaticamente um palpite Especial Mega-Sena.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-gift"></i>
-                </div>
-                <h3>Palpites Bônus</h3>
-                <p>Em qualquer um dos três minigames, assista um vídeo curto e ganhe 5 palpites Especiais
-                Mega-Sena de uma vez. Recompensa opcional — você escolhe quando usar.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-layer-group"></i>
-                </div>
-                <h3>6 Loterias Suportadas</h3>
-                <p>Mega-Sena, Quina, Lotofácil, Dia de Sorte (com sugestão do Mês),
-                Dupla Sena e Lotomania — com controle da quantidade de dezenas.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sync-alt"></i>
-                </div>
-                <h3>Layout Responsivo</h3>
-                <p>Interface que se adapta automaticamente ao portrait e landscape.
-                Funciona bem em celulares compactos e tablets.</p>
-            </article>
-
-            <article class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-sliders-h"></i>
-                </div>
-                <h3>Fácil de Usar</h3>
-                <p>Interface limpa e intuitiva. Escolha o filtro, a loteria e a quantidade de dezenas —
-                três toques e seus números estão prontos para copiar.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- STATS -->
-<section class="stats">
-    <div class="container">
-        <h2>Números do App</h2>
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">6</div>
-                <div class="stat-label">Loterias Disponíveis</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Filtros de Geração</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Minigames com Recompensa</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Palpites Bônus por Vídeo</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Gratuito</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-cta">
-    <div class="container">
-        <h2>Pronto para Gerar suas Dezenas?</h2>
-        <p>Baixe agora e tenha um gerador inteligente de palpites sempre com você — mais três minigames e um Organizador de Jogos com palpites bônus.</p>
-
-        <div class="urgency-text">
-            Grátis no Google Play — Android
+            </footer>
         </div>
 
-        <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
-           class="cta-button"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Baixar Sorte Analisada Lite no Google Play">
-            <i class="fab fa-google-play"></i>
-            Baixe Grátis no Google Play
-        </a>
-    </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section">
-    <div class="container">
-        <h2>Perguntas Frequentes</h2>
-
-        <article class="faq-item">
-            <h3>O app é realmente gratuito?</h3>
-            <p>Sim! O Sorte Analisada Lite é gratuito no Google Play. O app exibe um banner discreto na parte inferior da tela. Nos minigames e no Organizador de Jogos, há a opção de assistir um vídeo curto para ganhar 5 palpites bônus — totalmente opcional.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é o Jogo da Forca?</h3>
-            <p>É um minigame integrado ao app com palavras de várias categorias (Animais, Frutas, Países, Profissões, Esportes e Tecnologia). Ao acertar a palavra, você recebe automaticamente um palpite Especial Mega-Sena como recompensa. Também é possível assistir um vídeo curto para ganhar 5 palpites de uma vez.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é o Jogo da Memória?</h3>
-            <p>Um minigame de combinar pares de cartas com nomes de loterias. Ao encontrar todos os pares, você ganha automaticamente um palpite Especial Mega-Sena — e também pode assistir um vídeo curto para ganhar 5 palpites de uma vez.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é a Corrida da Sorte?</h3>
-            <p>Você escolhe um carrinho para disputar uma corrida — os nomes dos carrinhos são sorteados entre 9 loterias a cada rodada, então o jogo nunca fica igual. Vencendo a corrida, você ganha automaticamente um palpite Especial Mega-Sena, com a mesma opção de vídeo para 5 palpites de uma vez.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é o Organizador de Jogos?</h3>
-            <p>Um recurso gratuito para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil. Você escolhe algumas dezenas e o app completa o restante automaticamente, gerando 10 jogos combinados a partir desse conjunto fixo. Isso evita repetição entre os jogos escolhidos, mas não altera a probabilidade real de acerto contra o total de combinações da loteria.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é o filtro Especial Mega-Sena?</h3>
-            <p>É um modo exclusivo para a Mega-Sena com regras estatísticas avançadas: controla intervalos por posição, limita a quantidade de números primos, evita sequências muito agrupadas e mantém a soma das dezenas dentro de uma faixa balanceada baseada em sorteios históricos.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O que é a Simulação Monte Carlo?</h3>
-            <p>Método estatístico que usa a frequência de cada número em sorteios simulados para gerar combinações ponderadas. Números que saíram mais vezes têm maior chance de serem sugeridos, respeitando os padrões dos sorteios simulados.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>Quais loterias o app suporta?</h3>
-            <p>Mega-Sena, Quina, Lotofácil, Dia de Sorte (com sugestão do Mês da Sorte), Dupla Sena e Lotomania. Para cada loteria, você pode escolher a quantidade de dezenas dentro dos limites oficiais do jogo.</p>
-        </article>
-
-        <article class="faq-item">
-            <h3>O app garante que vou ganhar?</h3>
-            <p>Não. Loterias são jogos de azar e nenhuma ferramenta pode garantir resultados. O Sorte Analisada Lite é uma ferramenta de entretenimento e apoio estatístico. Sempre jogue com responsabilidade e dentro dos seus limites.</p>
-        </article>
-    </div>
-</section>
-
-<!-- SEO CONTENT -->
-<section class="seo-content">
-    <div class="container">
-        <h2>App de Palpites para Loterias no Android</h2>
-        <p>O <strong>Sorte Analisada Lite</strong> é um aplicativo Android gratuito para gerar palpites nas principais loterias brasileiras: <strong>Mega-Sena, Quina, Lotofácil, Dia de Sorte, Dupla Sena e Lotomania</strong>. Com três modos de geração — Aleatório, Monte Carlo e Especial Mega-Sena — você tem flexibilidade para escolher a abordagem que preferir.</p>
-        <br>
-        <h3>Organizador de Jogos</h3>
-        <p>O <strong>Organizador de Jogos</strong> é um recurso gratuito para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil. Escolha algumas dezenas e o app completa o restante, gerando 10 jogos combinados a partir desse conjunto — sem repetição entre eles e sem alterar a probabilidade real de acerto.</p>
-        <br>
-        <h3>Minigames com recompensa de palpites</h3>
-        <p>O app tem três minigames integrados: <strong>Jogo da Forca</strong>, com palavras de várias categorias; <strong>Jogo da Memória</strong>, de combinar pares de cartas com nomes de loterias; e <strong>Corrida da Sorte</strong>, onde você escolhe um carrinho (com nomes sorteados entre 9 loterias a cada rodada) para disputar a corrida. Vencendo qualquer um deles, ganhe automaticamente um palpite Especial Mega-Sena. Quer mais? Assista um vídeo curto e ganhe 5 palpites de uma vez — de forma totalmente opcional.</p>
-        <br>
-        <h3>Filtro Especial Mega-Sena</h3>
-        <p>O filtro <strong>Especial Mega-Sena</strong> aplica regras estatísticas avançadas para gerar combinações mais equilibradas, considerando distribuição de números por posição, presença de primos, soma total das dezenas e padrões de consecutivos.</p>
-        <br>
-        <h3>Simulação Monte Carlo no celular</h3>
-        <p>O método <strong>Monte Carlo</strong> pondera os números com base na frequência de sorteios simulados, oferecendo sugestões baseadas em dados estatísticos — direto no seu smartphone, sem necessidade de internet para gerar os palpites.</p>
-        <br>
-
-        <p class="disclaimer">
-            ⚠️ Loterias são jogos de azar para maiores de 18 anos.
-            Este app é uma ferramenta de entretenimento. Não garantimos resultados nem incentivamos a prática excessiva de jogos de azar. Jogue com responsabilidade e dentro dos seus limites.<br>
-            Em caso de problemas com jogos de azar: <a href="https://jogoresponsavel.org.br/" target="_blank" rel="noopener noreferrer" style="color:var(--primary-gold);text-decoration:underline;">jogoresponsavel.org.br</a> — Associação Brasileira de Jogo Responsável.
-        </p>
-    </div>
-</section>
-<br><br>
-
-<footer>
-    <div class="container">
-        <p>
-            <a href="/privacy">Política de Privacidade</a> |
-            <a href="/terms">Termos de Uso</a>
-        </p>
-        <p>
-            <i class="fa-solid fa-envelope"></i>
-            <a href="mailto:contato@sorteanalisada.com.br">contato@sorteanalisada.com.br</a>
-        </p>
-        <p>
-            Acesse também:
-            <a href="https://www.instagram.com/sorteanalisadaoficial/?igsh=cW8zenNycWVieXF1" title="Instagram Sorte Analisada" target="_blank" rel="noopener noreferrer">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </a> | 
-            <a href="https://sorteanalisada.com.br/blog" title="Blog Sorte Analisada" target="_blank" rel="noopener noreferrer"> Blog Sorte Analisada
-            </a>
-        </p>
-        <p style="color:var(--text-gray);font-size:1rem;margin-top:20px;">
-            ™ 2026 Sorte Analisada Lite — Gerador de palpites para loterias no Android.
-        </p>
-    </div>
-</footer>
-
-<script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    document.querySelectorAll('.feature-card, .stat-item, .faq-item').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        observer.observe(el);
-    });
-</script>
-
-</body>
+        <!-- Scripts com defer (carregam sem bloquear a renderização) -->
+        <script defer src="/static/js/dados-artigos.js"></script>
+        <script defer src="/static/js/blog.js"></script>
+        <script defer src="/static/js/gerador.js"></script>
+    </body>
 </html>

@@ -547,3 +547,213 @@ h1 {
         scroll-behavior: auto !important;
     }
 }
+
+/* ==============================
+   GERADOR DE DEZENAS
+   ============================== */
+section[id] {
+    scroll-margin-top: 1rem;
+}
+
+.gerador {
+    margin: 1.5rem 0 2.5rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-divisoria-ouro);
+    border-radius: 12px;
+}
+
+.gerador-sub {
+    font-size: 1.05rem;
+    color: #bbdefb;
+    margin-bottom: 1.2rem;
+}
+
+.gerador-controles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+}
+
+.seletor-loteria {
+    font-family: inherit;
+    font-size: 1.05rem;
+    color: var(--cor-dourado);
+    background: #12234a;
+    border: 1px solid var(--cor-dourado);
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    min-width: 190px;
+    cursor: pointer;
+}
+
+.seletor-loteria:focus-visible {
+    outline: 3px solid var(--cor-dourado);
+    outline-offset: 2px;
+}
+
+.gerador-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.4rem;
+}
+
+.botao-gerar,
+.botao-copiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 40px;
+    padding: 0.8rem 1.6rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.botao-gerar {
+    background: linear-gradient(145deg, var(--cor-dourado), var(--cor-dourado-hover));
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.botao-copiar {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--cor-dourado);
+    border: 2px solid var(--cor-dourado);
+}
+
+.botao-gerar:hover:not(:disabled),
+.botao-copiar:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.botao-gerar:focus-visible,
+.botao-copiar:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+.botao-copiar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.gerador-resultado {
+    min-height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 12px;
+}
+
+.gerador-vazio {
+    font-size: 1rem;
+    color: #bbdefb;
+    font-style: italic;
+}
+
+.gerador-nome {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bolas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bola {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff3a6, var(--cor-dourado) 55%, var(--cor-dourado-hover));
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 1.15rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    animation: bolaEntrada 0.35s ease both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes bolaEntrada {
+    from { opacity: 0; transform: scale(0.5) translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.gerador-extra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.05rem;
+}
+
+.bola-mes {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #037f03, #70c470);
+    color: #fff;
+    font-weight: 700;
+}
+
+.gerador-app {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+}
+
+.gerador-app a {
+    color: var(--cor-dourado);
+}
+
+.gerador-aviso {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #bbdefb;
+    opacity: 0.85;
+}
+
+/* Texto só para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 600px) {
+    .gerador { padding: 1rem; }
+    .botao-gerar, .botao-copiar { font-size: 1rem; padding: 0.7rem 1.2rem; }
+    .bola { width: 40px; height: 40px; font-size: 1rem; }
+    .bolas { gap: 8px; }
+}
