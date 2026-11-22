@@ -209,9 +209,10 @@ function gerarSchemaSEO(artigos) {
         const urlImagem = `https://sorteanalisada.com.br/static/images/${nomeImagem}`;
         
         const primeiroParagrafo = artigo.paragrafos[0] || "";
+        // Remove tags HTML do resumo e limita a 150 caracteres para o Google
         const descricaoLimpa = primeiroParagrafo.replace(/<[^>]*>?/gm, '').substring(0, 150).trim() + "...";
         
-        // Data no formato completo (ISO 8601), que o Google adora
+        // Data atual no formato completo ISO 8601
         const dataHoje = new Date().toISOString(); 
 
         return {
@@ -219,18 +220,19 @@ function gerarSchemaSEO(artigos) {
             "headline": artigo.titulo,
             "datePublished": dataHoje,
             "dateModified": dataHoje,
+            // O autor e a imagem agora estão no nível do BlogPosting, como o Google exige
             "author": { 
                 "@type": "Organization", 
                 "name": "Sorte Analisada",
-                "url": "https://sorteanalisada.com.br" // URL adicionada
+                "url": "https://sorteanalisada.com.br" 
             },
+            "image": urlImagem, 
             "description": descricaoLimpa,
-            "image": urlImagem,
             "url": `https://sorteanalisada.com.br/blog#artigo${index + 1}`
         };
     });
 
-    // ... o resto da função (schemaCompleto) continua igual
+    // Monta o objeto principal do Schema
     const schemaCompleto = {
         "@context": "https://schema.org",
         "@type": "Blog",
@@ -253,9 +255,12 @@ function gerarSchemaSEO(artigos) {
         "blogPost": blogPostList
     };
 
+    // Cria a tag <script> no HTML e insere o JSON gerado
     const scriptTag = document.createElement('script');
     scriptTag.type = 'application/ld+json';
     scriptTag.text = JSON.stringify(schemaCompleto, null, 2);
+    
+    // Adiciona ao <head>
     document.head.appendChild(scriptTag);
 }
 
