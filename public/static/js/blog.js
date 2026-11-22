@@ -203,15 +203,19 @@ function criarHTMLArtigo(a) {
                 </h3>
             </div>
             <p class="artigo-resumo">${escaparHTML(a.resumo)}</p>
-            <div class="artigo-conteudo" id="${idConteudo}">
-                ${paragrafosHTML}
+                <div class="artigo-conteudo" id="${idConteudo}">
+                    ${paragrafosHTML}
 
-                <div class="share-container" aria-label="Compartilhar artigo">
-                    Compartilhe:
-                    <a href="${urlArtigo}" data-share="whatsapp" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
-                    <a href="${urlArtigo}" data-share="facebook" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
-                    <a href="${urlArtigo}" data-share="twitter" class="share-btn twitter" aria-label="Compartilhar no X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
-                    <a href="${urlArtigo}" data-share="copy" class="share-btn copy-link" aria-label="Copiar link do artigo"><i class="fa-solid fa-link" aria-hidden="true"></i></a>
+                    <div class="share-container" aria-label="Compartilhar artigo">
+                        Compartilhe:
+                        <a href="${urlArtigo}" data-share="whatsapp" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="facebook" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="twitter" class="share-btn twitter" aria-label="Compartilhar no X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="threads" class="share-btn threads" aria-label="Compartilhar no Threads"><i class="fa-brands fa-threads" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="instagram" class="share-btn instagram" aria-label="Compartilhar no Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="tiktok" class="share-btn tiktok" aria-label="Compartilhar no TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+                        <a href="${urlArtigo}" data-share="copy" class="share-btn copy-link" aria-label="Copiar link do artigo"><i class="fa-solid fa-link" aria-hidden="true"></i></a>
+                    </div>
                 </div>
             </div>
         </article>
