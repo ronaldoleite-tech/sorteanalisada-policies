@@ -209,24 +209,28 @@ function gerarSchemaSEO(artigos) {
         const urlImagem = `https://sorteanalisada.com.br/static/images/${nomeImagem}`;
         
         const primeiroParagrafo = artigo.paragrafos[0] || "";
-        // Remove possíveis tags HTML do resumo para o Schema ficar limpo
         const descricaoLimpa = primeiroParagrafo.replace(/<[^>]*>?/gm, '').substring(0, 150).trim() + "...";
         
-        const dataHoje = new Date().toISOString().split('T')[0];
+        // Data no formato completo (ISO 8601), que o Google adora
+        const dataHoje = new Date().toISOString(); 
 
         return {
             "@type": "BlogPosting",
             "headline": artigo.titulo,
             "datePublished": dataHoje,
             "dateModified": dataHoje,
-            "author": { "@type": "Organization", "name": "Sorte Analisada" },
+            "author": { 
+                "@type": "Organization", 
+                "name": "Sorte Analisada",
+                "url": "https://sorteanalisada.com.br" // URL adicionada
+            },
             "description": descricaoLimpa,
-            "image": urlImagem, // Agora usa a imagem customizada se existir
+            "image": urlImagem,
             "url": `https://sorteanalisada.com.br/blog#artigo${index + 1}`
         };
     });
 
-    // ... (O resto do objeto schemaCompleto continua igual)
+    // ... o resto da função (schemaCompleto) continua igual
     const schemaCompleto = {
         "@context": "https://schema.org",
         "@type": "Blog",
