@@ -193,9 +193,9 @@ const dadosArtigos = [
     "imagem": "blog13.jpeg",
     "alt": "Comparação visual bem-humorada entre probabilidades raras, gráficos matemáticos e prêmio da Mega da Virada",
     "paragrafos": [
-      "Todo fim de ano o prêmio bilionário da Mega da Virada faz o cérebro viajar mais longe que foguete em noite de Réveillon. Mas, se a gente colocar a frieza da matemática na roda, o jogo simples de seis dezenas tem 1 chance em cerca de 50 milhões de combinações possíveis[cite: 1].",
-      "Para ter uma ideia do tamanho da façanha, matemáticos costumam comparar a bolada com eventos bem raros: levar um raio ou esbarrar em estatísticas bem improváveis do dia a dia parece até mais comum na teoria do que cravar os seis números sozinho[cite: 1]. E vale lembrar que nenhuma combinação tem vantagem secreta sobre outra[cite: 1].",
-      "O que realmente muda o tamanho da sua fatia de chances é jogar mais combinações — seja dividindo custo em bolão ou marcando mais dezenas na aposta múltipla, que dá aquela \"gordurinha\" extra de combinações dentro do mesmo volante[cite: 1]. Também ajuda fugir só de datas até 31 se você não quer dividir prêmio com meia cidade[cite: 1].",
+      "Todo fim de ano o prêmio bilionário da Mega da Virada faz o cérebro viajar mais longe que foguete em noite de Réveillon. Mas, se a gente colocar a frieza da matemática na roda, o jogo simples de seis dezenas tem 1 chance em cerca de 50 milhões de combinações possíveis.",
+      "Para ter uma ideia do tamanho da façanha, matemáticos costumam comparar a bolada com eventos bem raros: levar um raio ou esbarrar em estatísticas bem improváveis do dia a dia parece até mais comum na teoria do que cravar os seis números sozinho. E vale lembrar que nenhuma combinação tem vantagem secreta sobre outra.",
+      "O que realmente muda o tamanho da sua fatia de chances é jogar mais combinações — seja dividindo custo em bolão ou marcando mais dezenas na aposta múltipla, que dá aquela \"gordurinha\" extra de combinações dentro do mesmo volante. Também ajuda fugir só de datas até 31 se você não quer dividir prêmio com meia cidade.",
       "No fim das contas, a matemática não estraga a brincadeira: ela só mostra onde está a probabilidade real, enquanto o sonho de virar o ano rico continua de graça na imaginação! 🚀"
     ]
   },
@@ -206,9 +206,9 @@ const dadosArtigos = [
     "imagem": "blog14.jpeg",
     "alt": "Volantes de aposta organizados mostrando combinações repetidas e variação na última dezena",
     "paragrafos": [
-      "Imagina ir à lotérica, registrar bilhetes com calma e ver quatro jogos levarem a quina no mesmo sorteio? Foi exatamente o que aconteceu com um apostador de Maringá, no Paraná, que chamou atenção ao somar quatro prêmios da faixa de cinco acertos de uma só vez[cite: 2].",
-      "A lógica que ele contou ter usado é simples e bem pessoal: manter um núcleo de cinco números fixos ligados a datas da família e variar a sexta dezena em bilhetes separados usando outras referências afetivas[cite: 2]. Quando o sorteio encaixou cinco das dezenas fixas, o efeito cascata apareceu nas cartelas[cite: 2].",
-      "Vale sempre o alerta prático: ter números fixos ou datas especiais é um jeito organizado de montar jogos, mas não cria atalho matemático nem altera a aleatoriedade de cada extração[cite: 2, 4]. Em sorteios oficiais, cada concurso é um evento independente[cite: 1, 4].",
+      "Imagina ir à lotérica, registrar bilhetes com calma e ver quatro jogos levarem a quina no mesmo sorteio? Foi exatamente o que aconteceu com um apostador de Maringá, no Paraná, que chamou atenção ao somar quatro prêmios da faixa de cinco acertos de uma só vez.",
+      "A lógica que ele contou ter usado é simples e bem pessoal: manter um núcleo de cinco números fixos ligados a datas da família e variar a sexta dezena em bilhetes separados usando outras referências afetivas. Quando o sorteio encaixou cinco das dezenas fixas, o efeito cascata apareceu nas cartelas.",
+      "Vale sempre o alerta prático: ter números fixos ou datas especiais é um jeito organizado de montar jogos, mas não cria atalho matemático nem altera a aleatoriedade de cada extração. Em sorteios oficiais, cada concurso é um evento independente.",
       "Mesmo assim, histórias assim mostram como um método simples e consistente pode render momentos inesquecíveis quando a sorte resolve dar as caras! 🎯"
     ]
   },
@@ -219,9 +219,9 @@ const dadosArtigos = [
     "imagem": "blog15.jpeg",
     "alt": "Ilustração de planejamento financeiro, cautela e preservação de prêmio após sorteio",
     "paragrafos": [
-      "Muita gente passa anos ensaiando o discurso de despedida ou a lista de compras dos sonhos, mas quase ninguém pensa no que fazer nos primeiros minutos depois de conferir o bilhete premiado[cite: 3]. E é justamente aí que mora o perigo da euforia[cite: 3].",
-      "Especialistas em segurança e finanças costumam bater na mesma tecla: não sair espalhando a novidade para o mundo inteiro, manter a cabeça fria antes de fazer compras impulsivas e evitar decisões apressadas com imóveis ou investimentos arriscados sem entender o terreno[cite: 3].",
-      "O bilhete físico funciona como título ao portador, então assinar e colocar os dados corretos, guardar em local seguro e respeitar o prazo legal de resgate (90 dias) faz toda a diferença para não transformar alegria em dor de cabeça[cite: 3, 5].",
+      "Muita gente passa anos ensaiando o discurso de despedida ou a lista de compras dos sonhos, mas quase ninguém pensa no que fazer nos primeiros minutos depois de conferir o bilhete premiado. E é justamente aí que mora o perigo da euforia.",
+      "Especialistas em segurança e finanças costumam bater na mesma tecla: não sair espalhando a novidade para o mundo inteiro, manter a cabeça fria antes de fazer compras impulsivas e evitar decisões apressadas com imóveis ou investimentos arriscados sem entender o terreno.",
+      "O bilhete físico funciona como título ao portador, então assinar e colocar os dados corretos, guardar em local seguro e respeitar o prazo legal de resgate (90 dias) faz toda a diferença para não transformar alegria em dor de cabeça.",
       "Ganhar é o plot twist; manter a calma e o pé no chão é o que garante que a história tenha final feliz! 🛡️"
     ]
   },
@@ -232,9 +232,9 @@ const dadosArtigos = [
     "imagem": "blog16.jpeg",
     "alt": "Símbolos de repetição e estatística mostrando sorteios independentes nas loterias",
     "paragrafos": [
-      "Quem nunca teve aquele jogo \"de estimação\" repetido toda semana com a sensação de que uma hora a fila anda e esses números saem[cite: 4]? Acontece que, pela matemática das loterias, repetir sempre a mesma combinação dá a mesma chance por sorteio de quem troca os números a cada rodada[cite: 4].",
-      "O que realmente aumenta a exposição às chances é a quantidade de concursos participados e o número de dezenas jogadas por volante — já que mais dezenas geram mais combinações possíveis, pagando mais caro por isso[cite: 1, 4]. Mas \"mais chances\" nunca é promessa de vitória[cite: 4].",
-      "Na prática, manter o mesmo jogo ajuda quem gosta de rotina e não quer esquecer suas dezenas preferidas, enquanto variar pode dar um ar de novidade a cada sorteio[cite: 4].",
+      "Quem nunca teve aquele jogo \"de estimação\" repetido toda semana com a sensação de que uma hora a fila anda e esses números saem? Acontece que, pela matemática das loterias, repetir sempre a mesma combinação dá a mesma chance por sorteio de quem troca os números a cada rodada.",
+      "O que realmente aumenta a exposição às chances é a quantidade de concursos participados e o número de dezenas jogadas por volante — já que mais dezenas geram mais combinações possíveis, pagando mais caro por isso. Mas \"mais chances\" nunca é promessa de vitória.",
+      "Na prática, manter o mesmo jogo ajuda quem gosta de rotina e não quer esquecer suas dezenas preferidas, enquanto variar pode dar um ar de novidade a cada sorteio.",
       "No fim, o globo não tem memória afetiva: ele sorteia na hora, e você escolhe se prefere a rotina ou a variedade! 🔄"
     ]
   },
@@ -245,9 +245,9 @@ const dadosArtigos = [
     "imagem": "blog17.jpeg",
     "alt": "Bilhete de loteria protegido, calendário de prazos e conferência de regras da Mega da Virada",
     "paragrafos": [
-      "Quando o prêmio especial de fim de ano encosta na casa do bilhão, o movimento nas lotéricas e nos canais digitais dispara — e junto vem a importância de não vacilar nos detalhes básicos do bilhete[cite: 5].",
-      "Se o jogo for feito em volante físico ou cota de bolão, preencher nome completo e CPF no verso ajuda a evitar que outra pessoa tente resgatar o comprovante em caso de perda ou furto, enquanto jogos digitais ficam vinculados ao cadastro[cite: 5].",
-      "Também vale ficar atento às regras do concurso especial: a Mega da Virada não acumula o prêmio principal, o resgate exige atenção ao valor e ao local de pagamento, e o prazo para buscar o dinheiro é de 90 dias corridos após o sorteio[cite: 5].",
+      "Quando o prêmio especial de fim de ano encosta na casa do bilhão, o movimento nas lotéricas e nos canais digitais dispara — e junto vem a importância de não vacilar nos detalhes básicos do bilhete.",
+      "Se o jogo for feito em volante físico ou cota de bolão, preencher nome completo e CPF no verso ajuda a evitar que outra pessoa tente resgatar o comprovante em caso de perda ou furto, enquanto jogos digitais ficam vinculados ao cadastro.",
+      "Também vale ficar atento às regras do concurso especial: a Mega da Virada não acumula o prêmio principal, o resgate exige atenção ao valor e ao local de pagamento, e o prazo para buscar o dinheiro é de 90 dias corridos após o sorteio.",
       "Um minutinho de atenção com o comprovante e com o calendário poupa um trabalhão danado lá na frente! 📋"
     ]
   },
@@ -258,9 +258,9 @@ const dadosArtigos = [
     "imagem": "blog18.jpeg",
     "alt": "Organização de palpites, bolões e combinações de loteria de forma simples e consciente",
     "paragrafos": [
-      "Entre pedir surpresinha, montar jogo próprio ou entrar num bolão com a turma, cada apostador cria seu próprio ritual antes do sorteio[cite: 1, 5]. Nenhuma dessas escolhas muda a matemática base do jogo, mas cada uma muda o custo e o formato da participação[cite: 1, 5].",
-      "Bolões costumam ser o caminho mais comentado para reunir mais gente e cobrir mais combinações sem estourar o bolso individual, desde que tudo fique bem combinado e cada cota tenha seu comprovante protegido[cite: 1, 5].",
-      "Já quem prefere escolher os próprios números ganha em autonomia e diversão na hora de montar o volante, bastando manter o valor dentro de um limite confortável para o orçamento[cite: 1].",
+      "Entre pedir surpresinha, montar jogo próprio ou entrar num bolão com a turma, cada apostador cria seu próprio ritual antes do sorteio. Nenhuma dessas escolhas muda a matemática base do jogo, mas cada uma muda o custo e o formato da participação.",
+      "Bolões costumam ser o caminho mais comentado para reunir mais gente e cobrir mais combinações sem estourar o bolso individual, desde que tudo fique bem combinado e cada cota tenha seu comprovante protegido.",
+      "Já quem prefere escolher os próprios números ganha em autonomia e diversão na hora de montar o volante, bastando manter o valor dentro de um limite confortável para o orçamento.",
       "Escolha o estilo que combina com o seu bolso e com a sua diversão, sem transformar palpite em aperto! 🎲"
     ]
   }
