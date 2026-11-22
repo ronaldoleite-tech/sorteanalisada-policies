@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="google-site-verification" content="EgyoXsWWVGCKSqeXLnr9I4mJPvUGsLR5DDpNWP8wLKM" />
 
         <!-- Google tag (gtag.js) -->
@@ -24,8 +26,6 @@
         <!-- O Schema (JSON-LD) é gerado dinamicamente pelo arquivo blog.js -->
 
         <!-- ============== METADADOS E SEO ============== -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Blog Sorte Analisada: Explore o universo das loterias com análises de dados, estatísticas e curiosidades. Mega-Sena, Quina, Lotofácil e muito mais.">
         <meta name="keywords" content="Blog de loterias, curiosidades sobre loterias, mega-sena, quina, lotofácil, Dia de Sorte, dupla sena, lotomania, resultados das loterias">
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -95,10 +95,9 @@
                 
                 <!-- AQUI O JAVASCRIPT VAI INJETAR OS ARTIGOS -->
                 <div id="lista-artigos"></div>
+                <noscript><p>Ative o JavaScript no seu navegador para ver os artigos do blog.</p></noscript>
 
                 <a href="#artigos" class="voltar-topo">Voltar ao Topo ↑</a>
-                <!-- ... resto do seu HTML ... -->
-
                 <!-- ============== CARD DE RECURSO ============== -->
                 <div id="destaque" class="destaque-gerador">
                     <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
@@ -124,10 +123,10 @@
                 <!-- Compartilhamento geral -->
                 <div class="share-container" aria-label="Compartilhar o blog">
                     Curtiu o Blog! Compartilhe:
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no WhatsApp" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Facebook" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no X (Twitter)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Threads" onclick="compartilharThreads(window.location.href)" class="share-btn threads"><i class="fa-brands fa-threads"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no WhatsApp" onclick="compartilharWhatsApp(urlBlog())" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Facebook" onclick="compartilharFacebook(urlBlog())" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no X (Twitter)" onclick="compartilharTwitter(urlBlog())" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Threads" onclick="compartilharThreads(urlBlog())" class="share-btn threads"><i class="fa-brands fa-threads"></i></a>
                     <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Instagram" onclick="compartilharInstagram()" class="share-btn instagram"><i class="fa-brands fa-instagram"></i></a>
                     <a href="javascript:void(0)" role="button" aria-label="Compartilhar no TikTok" onclick="compartilharTikTok()" class="share-btn tiktok"><i class="fa-brands fa-tiktok"></i></a>
                     <a href="javascript:void(0)" role="button" aria-label="Copiar link" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link"><i class="fa-solid fa-link"></i></a>

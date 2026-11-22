@@ -185,6 +185,7 @@ h1 {
    ARTIGOS DO BLOG
    ============================== */
 .artigo-blog {
+    scroll-margin-top: 1rem; /* espaço ao abrir blog#artigo */
     margin-top: 1.5rem;
     padding: 1.5rem;
     background: rgba(0, 0, 0, 0.2);
@@ -207,8 +208,16 @@ h1 {
     border-radius: 8px;
 }
 
-.artigo-blog-header:focus-visible {
-    box-shadow: 0 0 0 3px var(--cor-dourado);
+/* Botão do título (acessível por teclado) */
+.artigo-toggle {
+    all: unset;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.artigo-toggle:focus-visible {
+    outline: 3px solid var(--cor-dourado);
+    outline-offset: 3px;
 }
 
 .artigo-blog-header img {

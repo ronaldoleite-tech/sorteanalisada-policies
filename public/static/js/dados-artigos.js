@@ -1,6 +1,35 @@
+/*
+  ================================================================
+  COMO ADICIONAR OU EDITAR ARTIGOS DO BLOG
+  ================================================================
+  - A ORDEM dos itens deste array é a ordem exibida no blog
+    (o primeiro item aparece no topo). Para reordenar, basta mover o bloco { ... }.
+  - Cada artigo aceita os campos abaixo:
+
+      titulo      (obrigatório) título do artigo.
+      paragrafos  (obrigatório) lista de textos; aceita <strong>, <a>, <ul>, <li> etc.
+      id          identificador usado no link do artigo: blog#id  (ex.: "quina-seis-chances").
+                  Use letras minúsculas, números e hífens. Não mude depois de publicado,
+                  senão os links já compartilhados deixam de abrir o artigo.
+                  Se omitido, é gerado a partir do título.
+      imagem      nome do arquivo em /static/images/ (ex.: "blog1.jpeg").
+                  Se omitido, usa o logotipo.
+      alt         texto alternativo da imagem (acessibilidade e SEO). Se omitido, usa o título.
+      resumo      texto curto mostrado com o artigo fechado e usado no schema.
+                  Se omitido, usa o início do primeiro parágrafo.
+      data        data de publicação no formato AAAA-MM-DD (ex.: "2026-11-20").
+                  Usada no schema. Deixe "" se não quiser informar.
+      atualizado  data da última atualização, AAAA-MM-DD (opcional).
+
+  - Dentro dos textos, use aspas simples ('...') ou escape as aspas duplas (\"...\").
+  - Cada artigo termina com vírgula, exceto o último.
+  ================================================================
+*/
 const dadosArtigos = [
   {
     "titulo": "Mega da Virada 2026: Como Jogar e Concorrer a R$ 1 Bilhão",
+    "id": "mega-da-virada-2026",
+    "data": "",
     "imagem": "blog1.jpeg",
     "alt": "Fogos de artifício e bola da sorte representando o prêmio de 1 bilhão da Mega da Virada",
     "paragrafos": [
@@ -12,6 +41,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Desvendando a Sorte: Qual a Loteria 'Menos Impossível' de Ganhar?",
+    "id": "loteria-menos-impossivel",
+    "data": "",
     "imagem": "blog2.jpeg",
     "alt": "Gráficos e estatísticas comparando as probabilidades das loterias brasileiras",
     "paragrafos": [
@@ -23,6 +54,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Quina: Seis Chances de Transformar Sua Vida Toda Semana!",
+    "id": "quina-seis-chances",
+    "data": "",
     "imagem": "blog3.jpeg",
     "alt": "Sorteio da Quina com bolas coloridas representando as dezenas",
     "paragrafos": [
@@ -33,6 +66,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "O Segredo dos Prêmios Múltiplos: Ganhe Mais com a Mesma Aposta",
+    "id": "premios-multiplos",
+    "data": "",
     "imagem": "blog4.jpeg",
     "alt": "Ilustração de prêmios acumulados e combinações de apostas múltiplas",
     "paragrafos": [
@@ -45,6 +80,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Luz, Câmera, Milhões! Os Prêmios da Loteria que Vimos nas Telas",
+    "id": "premios-da-loteria-nas-telas",
+    "data": "",
     "imagem": "blog5.jpeg",
     "alt": "Cenário de cinema com letreiros iluminados e prêmios de loteria",
     "paragrafos": [
@@ -57,6 +94,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Sorte ou Azar? Os Números Misteriosos de 'Lost' na Mega-Sena",
+    "id": "numeros-de-lost-mega-sena",
+    "data": "",
     "imagem": "blog6.jpeg",
     "alt": "Sequência de números misteriosos da série Lost iluminados em uma parede",
     "paragrafos": [
@@ -68,6 +107,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Será que a IA pode ajudar a ganhar na Mega-Sena?",
+    "id": "ia-na-mega-sena",
+    "data": "",
     "imagem": "blog7.jpeg",
     "alt": "Representação de inteligência artificial com circuitos e números da sorte",
     "paragrafos": [
@@ -80,6 +121,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Cardano: O Gênio do Acaso que Desvendou os Dados antes das Loterias",
+    "id": "cardano-genio-do-acaso",
+    "data": "",
     "imagem": "blog8.jpeg",
     "alt": "Ilustração antiga de um matemático do Renascimento estudando jogos de azar",
     "paragrafos": [
@@ -91,6 +134,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "O Jogo Mais Solitário da Mega-Sena",
+    "id": "jogo-mais-solitario",
+    "data": "",
     "imagem": "blog9.jpeg",
     "alt": "Ilustração de um volante de apostas com cartas e números exclusivos",
     "paragrafos": [
@@ -103,6 +148,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Números Quentes vs. Frios: A Ciência Por Trás dos Palpites Vencedores",
+    "id": "numeros-quentes-vs-frios",
+    "data": "",
     "imagem": "blog10.jpeg",
     "alt": "Gráfico comparando a frequência de números quentes e frios nos sorteios",
     "paragrafos": [
@@ -114,6 +161,8 @@ const dadosArtigos = [
   },
   {
     "titulo": "Rumo ao Milhão: Dicas Quentes para Jogar na Mega da Virada!",
+    "id": "dicas-mega-da-virada",
+    "data": "",
     "imagem": "blog11.jpeg",
     "alt": "Festa de fim de ano com fogos e números da sorte para a Mega da Virada",
     "paragrafos": [
@@ -121,11 +170,13 @@ const dadosArtigos = [
       "Todo fim de ano muita gente pensa: E se dessa vez for eu? A Mega da Virada é o maior sorteio do calendário, prêmios gigantes que <strong>não acumulam</strong>, então o prêmio principal sai de qualquer jeito (mesmo que dividido).",
       "Quer aumentar a probabilidade prática de ganhar? <strong>Participe de bolões</strong> com amigos, família ou colegas: dividir custos e multiplicar apostas costuma ser a forma mais eficiente de <strong>escalar</strong> suas chances sem gastar uma fortuna. Evite combinações óbvias (1–2–3–4–5–6) e números apenas de datas. Distribua, a Mega vai até o número 60!",
       "Outra dica esperta: <strong>diversifique</strong> entre apostas simples e múltiplas, e considere repetir combinações que já ganharam em faixas menores (estatisticamente têm a mesma chance). Controle o orçamento, jogue pelo prazer do sonho, não pelo desespero, e registre sempre seus bilhetes ou comprovantes digitais.",
-      "No <strong>Sorte Analisada</strong> a gente foca na estratégia: ferramentas para analisar padrões, gerar números para bolões e distribuir apostas com método. Quer saber quais números que saíram mais e quais que nunca saíram na Mega da Virada? Clique no link para ver os dados dos concursos da Mega da Virada: <a href=\"https://sorteanalisada.com.br/#megadavirada\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"link-interno\">https://sorteanalisada.com.br/#megadavirada</a>. A sorte continua sendo a estrela, mas com planejamento você sobe ao palco com mais confiança. 🎆"
+      "No <strong>Sorte Analisada</strong> a gente foca na estratégia: ferramentas para analisar padrões, gerar números para bolões e distribuir apostas com método. A sorte continua sendo a estrela, mas com planejamento você sobe ao palco com mais confiança. 🎆"
     ]
   }, 
   {
     "titulo": "Jogue com Inteligência: Como Transformar Dados em Estratégia nas Loterias",
+    "id": "dados-em-estrategia",
+    "data": "",
     "imagem": "blog12.jpeg",
     "alt": "Gráfico de análise de dados e estratégias matemáticas para loterias",
     "paragrafos": [

@@ -1,5 +1,58 @@
 // ==============================
-//          COMPARTILHAMENTO
+//      CONFIGURAÇÕES
+// ==============================
+const SITE_URL = "https://sorteanalisada.com.br";
+const IMAGENS_DIR = "/static/images/";
+const IMAGEM_PADRAO = "logotipo.png";
+// ids já usados na página (um artigo nunca pode ter um destes ids)
+const IDS_RESERVADOS = ["artigos", "destaque", "lista-artigos"];
+
+// ==============================
+//      UTILITÁRIOS
+// ==============================
+function escaparHTML(texto) {
+    return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function textoPuro(html) {
+    return String(html).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+// Resumo curto, cortado no fim de uma palavra
+function resumir(texto, limite = 150) {
+    const limpo = textoPuro(texto);
+    if (limpo.length <= limite) return limpo;
+    const corte = limpo.lastIndexOf(" ", limite);
+    return limpo.slice(0, corte > 0 ? corte : limite).replace(/[.,;:!?\s]+$/, "") + "...";
+}
+
+function gerarSlug(texto) {
+    return String(texto)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 60)
+        .replace(/-+$/, "");
+}
+
+function dataValida(valor) {
+    return typeof valor === "string" && /^\d{4}-\d{2}-\d{2}/.test(valor) && !isNaN(Date.parse(valor));
+}
+
+// Endereço do blog sem o #artigo
+function urlBlog() {
+    return window.location.origin + window.location.pathname;
+}
+
+// ==============================
+//      COMPARTILHAMENTO
 // ==============================
 const compartilhamento = {
     whatsapp: (titulo, url) => {
@@ -34,21 +87,21 @@ const compartilhamento = {
     }
 };
 
-// Funções globais (chamadas via onclick no HTML)
-function compartilharWhatsApp(url) {
-    compartilhamento.whatsapp(document.title || "Sorte Analisada", url);
+// Funções globais (chamadas via onclick no HTML). O título é opcional.
+function compartilharWhatsApp(url, titulo) {
+    compartilhamento.whatsapp(titulo || document.title || "Sorte Analisada", url || urlBlog());
 }
 
 function compartilharFacebook(url) {
-    compartilhamento.facebook(url);
+    compartilhamento.facebook(url || urlBlog());
 }
 
-function compartilharTwitter(url) {
-    compartilhamento.twitter(document.title || "Sorte Analisada", url);
+function compartilharTwitter(url, titulo) {
+    compartilhamento.twitter(titulo || document.title || "Sorte Analisada", url || urlBlog());
 }
 
-function compartilharThreads(url) {
-    compartilhamento.threads(document.title || "Sorte Analisada", url);
+function compartilharThreads(url, titulo) {
+    compartilhamento.threads(titulo || document.title || "Sorte Analisada", url || urlBlog());
 }
 
 function compartilharInstagram() {
@@ -98,176 +151,231 @@ function fallbackCopiar(url, callback) {
 }
 
 // ==============================
-//      ARTIGOS EXPANSÍVEIS
+//      PREPARAÇÃO DOS DADOS
 // ==============================
-function toggleArtigo(header, conteudo) {
-    const artigoContainer = header.closest(".artigo-blog");
-    const resumo = artigoContainer.querySelector(".artigo-resumo");
-    const icon = header.querySelector("i");
-    const isExpandido = conteudo.classList.contains("artigo-expandido");
+// Calcula id, imagem, alt, resumo e datas de cada artigo uma única vez.
+// A tela e o schema usam exatamente o mesmo resultado.
+function prepararArtigos(lista) {
+    const usados = new Set(IDS_RESERVADOS);
 
-    if (isExpandido) {
-        conteudo.classList.remove("artigo-expandido");
-        header.setAttribute("aria-expanded", "false");
-        if (resumo) resumo.style.display = "block";
-        if (icon) icon.className = "fa-solid fa-chevron-down";
-    } else {
-        conteudo.classList.add("artigo-expandido");
-        header.setAttribute("aria-expanded", "true");
-        if (resumo) resumo.style.display = "none";
-        if (icon) icon.className = "fa-solid fa-chevron-up";
+    return lista.map((artigo, index) => {
+        const titulo = String(artigo.titulo || "").trim();
+        const paragrafos = Array.isArray(artigo.paragrafos) ? artigo.paragrafos : [];
 
-        const rect = artigoContainer.getBoundingClientRect();
+        const base = gerarSlug(artigo.id || titulo) || `artigo-${index + 1}`;
+        let id = base;
+        let n = 2;
+        while (usados.has(id)) id = `${base}-${n++}`;
+        usados.add(id);
+
+        const imagem = artigo.imagem || IMAGEM_PADRAO;
+        const imagemUrl = /^(https?:)?\/\//.test(imagem) || imagem.startsWith("/") ? imagem : IMAGENS_DIR + imagem;
+
+        return {
+            id,
+            titulo,
+            paragrafos,
+            imagemUrl,
+            alt: artigo.alt || titulo,
+            resumo: artigo.resumo ? textoPuro(artigo.resumo) : resumir(paragrafos[0] || ""),
+            data: dataValida(artigo.data) ? artigo.data : null,
+            atualizado: dataValida(artigo.atualizado) ? artigo.atualizado : null
+        };
+    });
+}
+
+// ==============================
+//      RENDERIZAÇÃO DOS ARTIGOS
+// ==============================
+function criarHTMLArtigo(a) {
+    const idConteudo = `${a.id}-conteudo`;
+    const urlArtigo = `${urlBlog()}#${a.id}`;
+    const paragrafosHTML = a.paragrafos.map(p => `<p>${p}</p>`).join("");
+
+    return `
+        <article class="artigo-blog" id="${a.id}" data-titulo="${escaparHTML(a.titulo)}">
+            <div class="artigo-blog-header">
+                <img src="${escaparHTML(a.imagemUrl)}" alt="${escaparHTML(a.alt)}" width="80" height="80" loading="lazy">
+                <h3>
+                    <button type="button" class="artigo-toggle" aria-expanded="false" aria-controls="${idConteudo}">
+                        ${escaparHTML(a.titulo)} <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </h3>
+            </div>
+            <p class="artigo-resumo">${escaparHTML(a.resumo)}</p>
+            <div class="artigo-conteudo" id="${idConteudo}">
+                ${paragrafosHTML}
+
+                <div class="share-container" aria-label="Compartilhar artigo">
+                    Compartilhe:
+                    <a href="${urlArtigo}" data-share="whatsapp" class="share-btn whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="facebook" class="share-btn facebook" aria-label="Compartilhar no Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="twitter" class="share-btn twitter" aria-label="Compartilhar no X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                    <a href="${urlArtigo}" data-share="copy" class="share-btn copy-link" aria-label="Copiar link do artigo"><i class="fa-solid fa-link" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function carregarArtigos(artigos) {
+    const container = document.getElementById("lista-artigos");
+    if (!container) return;
+
+    container.innerHTML = artigos.map(criarHTMLArtigo).join("");
+
+    container.querySelectorAll(".artigo-blog").forEach((artigo) => {
+        artigo.querySelector(".artigo-blog-header").addEventListener("click", () => {
+            alternarArtigo(artigo, undefined, true);
+        });
+    });
+
+    // Botões de compartilhar dos artigos (um único listener para todos)
+    container.addEventListener("click", (e) => {
+        const botao = e.target.closest("[data-share]");
+        if (!botao) return;
+        e.preventDefault();
+
+        const artigo = botao.closest(".artigo-blog");
+        const titulo = artigo.dataset.titulo;
+        const url = `${urlBlog()}#${artigo.id}`;
+
+        switch (botao.dataset.share) {
+            case "whatsapp": compartilharWhatsApp(url, titulo); break;
+            case "facebook": compartilharFacebook(url); break;
+            case "twitter":  compartilharTwitter(url, titulo); break;
+            case "threads":  compartilharThreads(url, titulo); break;
+            case "instagram": compartilharInstagram(); break;
+            case "tiktok":   compartilharTikTok(); break;
+            case "copy":     copiarLink(url, e); break;
+        }
+    });
+}
+
+// ==============================
+//      ABRIR / FECHAR ARTIGO
+// ==============================
+function alternarArtigo(artigo, abrir, atualizarURL) {
+    const botao = artigo.querySelector(".artigo-toggle");
+    const conteudo = artigo.querySelector(".artigo-conteudo");
+    const resumo = artigo.querySelector(".artigo-resumo");
+    const icone = botao ? botao.querySelector("i") : null;
+    if (!botao || !conteudo) return;
+
+    const expandir = abrir === undefined ? !conteudo.classList.contains("artigo-expandido") : abrir;
+
+    conteudo.classList.toggle("artigo-expandido", expandir);
+    botao.setAttribute("aria-expanded", String(expandir));
+    if (resumo) resumo.style.display = expandir ? "none" : "block";
+    if (icone) icone.className = expandir ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down";
+
+    if (atualizarURL) {
+        // Deixa na barra de endereço o link do artigo aberto (sem criar histórico)
+        if (expandir) {
+            history.replaceState(null, "", `#${artigo.id}`);
+        } else if (window.location.hash === `#${artigo.id}`) {
+            history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+    }
+
+    if (expandir) {
+        const rect = artigo.getBoundingClientRect();
         if (rect.top < 0) {
             setTimeout(() => {
-                artigoContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+                artigo.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 300);
         }
     }
 }
 
-function configurarArtigos() {
-    const artigos = document.querySelectorAll(".artigo-blog");
+// Abre o artigo indicado em blog#id (links compartilhados)
+function abrirArtigoDoHash() {
+    let id = "";
+    try {
+        id = decodeURIComponent(window.location.hash.slice(1));
+    } catch (e) {
+        return;
+    }
+    if (!id) return;
 
-    artigos.forEach((artigo) => {
-        const header = artigo.querySelector(".artigo-blog-header");
-        const conteudo = artigo.querySelector(".artigo-conteudo");
-        if (!header || !conteudo) return;
+    const artigo = document.getElementById(id);
+    if (!artigo || !artigo.classList.contains("artigo-blog")) return;
 
-        conteudo.classList.remove("artigo-expandido");
-        header.setAttribute("aria-expanded", "false");
-
-        header.addEventListener("click", (e) => {
-            if (e.target.closest("a") || e.target.closest(".share-container")) return;
-            toggleArtigo(header, conteudo);
-        });
-
-        header.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleArtigo(header, conteudo);
-            }
-        });
-    });
-}
-
-// ==============================
-//      CARREGAR ARTIGOS DO JS
-// ==============================
-function carregarArtigos() {
-    const container = document.getElementById('lista-artigos');
-    if (!container) return;
-
-    let htmlGerado = '';
-    let contadorImagens = 1;
-
-    dadosArtigos.forEach((artigo, index) => {
-        // Verifica se o artigo tem imagem e alt customizados. Se não, usa o padrão sequencial.
-        const nomeImagem = artigo.imagem || `blog${(contadorImagens > 11) ? 1 : contadorImagens}.jpeg`;
-        const caminhoImagem = `/static/images/${nomeImagem}`; 
-        
-        const textoAlt = artigo.alt || artigo.titulo;
-        const idArtigo = `artigo-dinamico-${index}`;
-        
-        const primeiroParagrafo = artigo.paragrafos[0] || "";
-        const resumo = primeiroParagrafo.substring(0, 150) + "...";
-        const paragrafosHTML = artigo.paragrafos.map(p => `<p>${p}</p>`).join('');
-
-        htmlGerado += `
-            <article class="artigo-blog" itemscope itemtype="https://schema.org/BlogPosting">
-                <div class="artigo-blog-header" role="button" tabindex="0" aria-expanded="false" aria-controls="${idArtigo}">
-                    <img src="${caminhoImagem}" alt="${textoAlt}" width="80" height="80" loading="lazy">
-                    <h3 itemprop="headline">${artigo.titulo} <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></h3>
-                </div>
-                <p class="artigo-resumo" itemprop="description">${resumo}</p>
-                <div class="artigo-conteudo" id="${idArtigo}">
-                    ${paragrafosHTML}
-                    
-                    <div class="share-container" aria-label="Compartilhar artigo">
-                        Compartilhe:
-                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link"><i class="fa-solid fa-link"></i></a>
-                    </div>
-                </div>
-            </article>
-        `;
-        contadorImagens++;
-    });
-
-    container.innerHTML = htmlGerado;
-    configurarArtigos();
+    alternarArtigo(artigo, true, false);
+    setTimeout(() => {
+        artigo.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
 }
 
 // ==============================
 //      GERADOR DE SCHEMA SEO
 // ==============================
 function gerarSchemaSEO(artigos) {
-    const blogPostList = artigos.map((artigo, index) => {
-        const nomeImagem = artigo.imagem || `blog${(index + 1 > 11) ? 1 : index + 1}.jpeg`;
-        const urlImagem = `https://sorteanalisada.com.br/static/images/${nomeImagem}`;
-        
-        const primeiroParagrafo = artigo.paragrafos[0] || "";
-        // Remove tags HTML do resumo e limita a 150 caracteres para o Google
-        const descricaoLimpa = primeiroParagrafo.replace(/<[^>]*>?/gm, '').substring(0, 150).trim() + "...";
-        
-        // Data atual no formato completo ISO 8601
-        const dataHoje = new Date().toISOString(); 
-
-        return {
+    const blogPostList = artigos.map((a) => {
+        const post = {
             "@type": "BlogPosting",
-            "headline": artigo.titulo,
-            "datePublished": dataHoje,
-            "dateModified": dataHoje,
-            // O autor e a imagem agora estão no nível do BlogPosting, como o Google exige
-            "author": { 
-                "@type": "Organization", 
+            "headline": a.titulo,
+            "author": {
+                "@type": "Organization",
                 "name": "Sorte Analisada",
-                "url": "https://sorteanalisada.com.br" 
+                "url": SITE_URL
             },
-            "image": urlImagem, 
-            "description": descricaoLimpa,
-            "url": `https://sorteanalisada.com.br/blog#artigo${index + 1}`
+            "image": new URL(a.imagemUrl, SITE_URL).href,
+            "description": a.resumo,
+            "url": `${SITE_URL}/blog#${a.id}`
         };
+        // As datas só entram no schema quando informadas em dados-artigos.js
+        if (a.data) post.datePublished = a.data;
+        if (a.atualizado || a.data) post.dateModified = a.atualizado || a.data;
+        return post;
     });
 
-    // Monta o objeto principal do Schema
     const schemaCompleto = {
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "Blog Sorte Analisada",
         "description": "Blog Sorte Analisada: Explore o universo das loterias com análises de dados, estatísticas e curiosidades. Mega-Sena, Quina, Lotofácil e muito mais.",
-        "url": "https://sorteanalisada.com.br/blog",
+        "url": `${SITE_URL}/blog`,
+        "inLanguage": "pt-BR",
         "author": {
             "@type": "Organization",
             "name": "Sorte Analisada",
-            "url": "https://sorteanalisada.com.br"
+            "url": SITE_URL
         },
         "publisher": {
             "@type": "Organization",
             "name": "Sorte Analisada",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://sorteanalisada.com.br/static/images/logotipo.webp"
+                "url": `${SITE_URL}/static/images/logotipo.webp`
             }
         },
         "blogPost": blogPostList
     };
 
-    // Cria a tag <script> no HTML e insere o JSON gerado
-    const scriptTag = document.createElement('script');
-    scriptTag.type = 'application/ld+json';
+    const scriptTag = document.createElement("script");
+    scriptTag.type = "application/ld+json";
     scriptTag.text = JSON.stringify(schemaCompleto, null, 2);
-    
-    // Adiciona ao <head>
     document.head.appendChild(scriptTag);
 }
 
 // ==============================
 //      INICIALIZAÇÃO
 // ==============================
-document.addEventListener("DOMContentLoaded", () => {
-    carregarArtigos();      
-    gerarSchemaSEO(dadosArtigos); 
-});
+function iniciarBlog() {
+    const container = document.getElementById("lista-artigos");
+
+    if (typeof dadosArtigos === "undefined" || !Array.isArray(dadosArtigos)) {
+        console.error("dados-artigos.js não foi carregado ou tem erro de sintaxe.");
+        if (container) container.innerHTML = "<p>Não foi possível carregar os artigos no momento.</p>";
+        return;
+    }
+
+    const artigos = prepararArtigos(dadosArtigos);
+    carregarArtigos(artigos);
+    gerarSchemaSEO(artigos);
+    abrirArtigoDoHash();
+    window.addEventListener("hashchange", abrirArtigoDoHash);
+}
+
+document.addEventListener("DOMContentLoaded", iniciarBlog);
