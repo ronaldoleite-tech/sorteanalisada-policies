@@ -59,7 +59,6 @@ function compartilharTikTok() {
     compartilhamento.tiktok();
 }
 
-// ⚠️ IMPORTANTE: o segundo parâmetro "event" é passado via onclick="copiarLink(..., event)"
 function copiarLink(url, event) {
     const botao = event?.target?.closest(".share-btn");
 
@@ -108,19 +107,16 @@ function toggleArtigo(header, conteudo) {
     const isExpandido = conteudo.classList.contains("artigo-expandido");
 
     if (isExpandido) {
-        // Fechar
         conteudo.classList.remove("artigo-expandido");
         header.setAttribute("aria-expanded", "false");
         if (resumo) resumo.style.display = "block";
         if (icon) icon.className = "fa-solid fa-chevron-down";
     } else {
-        // Abrir
         conteudo.classList.add("artigo-expandido");
         header.setAttribute("aria-expanded", "true");
         if (resumo) resumo.style.display = "none";
         if (icon) icon.className = "fa-solid fa-chevron-up";
 
-        // Scroll suave apenas se o topo do artigo estiver fora da viewport
         const rect = artigoContainer.getBoundingClientRect();
         if (rect.top < 0) {
             setTimeout(() => {
@@ -138,18 +134,14 @@ function configurarArtigos() {
         const conteudo = artigo.querySelector(".artigo-conteudo");
         if (!header || !conteudo) return;
 
-        // Estado inicial: fechado
         conteudo.classList.remove("artigo-expandido");
         header.setAttribute("aria-expanded", "false");
 
-        // Clique no header
         header.addEventListener("click", (e) => {
-            // Ignorar cliques em links/compartilhamento dentro do conteúdo
             if (e.target.closest("a") || e.target.closest(".share-container")) return;
             toggleArtigo(header, conteudo);
         });
 
-        // Acessibilidade: teclado
         header.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
@@ -160,8 +152,113 @@ function configurarArtigos() {
 }
 
 // ==============================
+//      CARREGAR ARTIGOS DO JS
+// ==============================
+function carregarArtigos() {
+    const container = document.getElementById('lista-artigos');
+    if (!container) return;
+
+    let htmlGerado = '';
+    let contadorImagens = 1;
+
+    dadosArtigos.forEach((artigo, index) => {
+        // Verifica se o artigo tem imagem e alt customizados. Se não, usa o padrão sequencial.
+        const nomeImagem = artigo.imagem || `blog${(contadorImagens > 11) ? 1 : contadorImagens}.jpeg`;
+        const caminhoImagem = `/static/images/${nomeImagem}`; 
+        
+        const textoAlt = artigo.alt || artigo.titulo;
+        const idArtigo = `artigo-dinamico-${index}`;
+        
+        const primeiroParagrafo = artigo.paragrafos[0] || "";
+        const resumo = primeiroParagrafo.substring(0, 150) + "...";
+        const paragrafosHTML = artigo.paragrafos.map(p => `<p>${p}</p>`).join('');
+
+        htmlGerado += `
+            <article class="artigo-blog" itemscope itemtype="https://schema.org/BlogPosting">
+                <div class="artigo-blog-header" role="button" tabindex="0" aria-expanded="false" aria-controls="${idArtigo}">
+                    <img src="${caminhoImagem}" alt="${textoAlt}" width="80" height="80" loading="lazy">
+                    <h3 itemprop="headline">${artigo.titulo} <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></h3>
+                </div>
+                <p class="artigo-resumo" itemprop="description">${resumo}</p>
+                <div class="artigo-conteudo" id="${idArtigo}">
+                    ${paragrafosHTML}
+                    
+                    <div class="share-container" aria-label="Compartilhar artigo">
+                        Compartilhe:
+                        <a href="javascript:void(0)" onclick="compartilharWhatsApp(window.location.href)" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="javascript:void(0)" onclick="compartilharFacebook(window.location.href)" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="javascript:void(0)" onclick="compartilharTwitter(window.location.href)" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="javascript:void(0)" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link"><i class="fa-solid fa-link"></i></a>
+                    </div>
+                </div>
+            </article>
+        `;
+        contadorImagens++;
+    });
+
+    container.innerHTML = htmlGerado;
+    configurarArtigos();
+}
+
+// ==============================
+//      GERADOR DE SCHEMA SEO
+// ==============================
+function gerarSchemaSEO(artigos) {
+    const blogPostList = artigos.map((artigo, index) => {
+        const nomeImagem = artigo.imagem || `blog${(index + 1 > 11) ? 1 : index + 1}.jpeg`;
+        const urlImagem = `https://sorteanalisada.com.br/static/images/${nomeImagem}`;
+        
+        const primeiroParagrafo = artigo.paragrafos[0] || "";
+        // Remove possíveis tags HTML do resumo para o Schema ficar limpo
+        const descricaoLimpa = primeiroParagrafo.replace(/<[^>]*>?/gm, '').substring(0, 150).trim() + "...";
+        
+        const dataHoje = new Date().toISOString().split('T')[0];
+
+        return {
+            "@type": "BlogPosting",
+            "headline": artigo.titulo,
+            "datePublished": dataHoje,
+            "dateModified": dataHoje,
+            "author": { "@type": "Organization", "name": "Sorte Analisada" },
+            "description": descricaoLimpa,
+            "image": urlImagem, // Agora usa a imagem customizada se existir
+            "url": `https://sorteanalisada.com.br/blog#artigo${index + 1}`
+        };
+    });
+
+    // ... (O resto do objeto schemaCompleto continua igual)
+    const schemaCompleto = {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Blog Sorte Analisada",
+        "description": "Blog Sorte Analisada: Explore o universo das loterias com análises de dados, estatísticas e curiosidades. Mega-Sena, Quina, Lotofácil e muito mais.",
+        "url": "https://sorteanalisada.com.br/blog",
+        "author": {
+            "@type": "Organization",
+            "name": "Sorte Analisada",
+            "url": "https://sorteanalisada.com.br"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Sorte Analisada",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://sorteanalisada.com.br/static/images/logotipo.webp"
+            }
+        },
+        "blogPost": blogPostList
+    };
+
+    const scriptTag = document.createElement('script');
+    scriptTag.type = 'application/ld+json';
+    scriptTag.text = JSON.stringify(schemaCompleto, null, 2);
+    document.head.appendChild(scriptTag);
+}
+
+// ==============================
 //      INICIALIZAÇÃO
 // ==============================
 document.addEventListener("DOMContentLoaded", () => {
-    configurarArtigos();
+    carregarArtigos();      
+    gerarSchemaSEO(dadosArtigos); 
 });
