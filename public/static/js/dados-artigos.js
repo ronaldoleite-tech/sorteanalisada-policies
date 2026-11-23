@@ -260,6 +260,19 @@ const dadosArtigos = [
       "Bolões reúnem recursos de várias pessoas para registrar mais combinações, ampliando a chance coletiva de acertar em comparação com uma aposta simples. Em contrapartida, os prêmios são repartidos conforme as cotas. Comprovantes e regras claras são essenciais para evitar conflitos.",
       "A escolha do formato pode considerar orçamento, conveniência e diversão. O importante é entender o que está sendo comprado, manter os gastos sob controle e não confundir mais combinações com garantia de prêmio."
     ]
+  },
+  {
+    "titulo": "Quando ganhar na Mega-Sena vira uma disputa: o caso dos R$ 29 milhões",
+    "id": "mega-sena-premio-disputa-29-milhoes",
+    "data": "2026-11-23",
+    "imagem": "blog19.jpeg",
+    "alt": "Bilhete de loteria próximo a um cofre, ilustrando uma disputa envolvendo prêmio milionário da Mega-Sena",
+    "paragrafos": [
+      "Ganhar na Mega-Sena pode representar uma mudança radical de vida, mas algumas histórias mostram que o caminho entre acertar os números e receber o prêmio pode ser mais complicado do que se imagina. Em Sinop, no Mato Grosso, um caso envolvendo um bilhete premiado de aproximadamente R$ 29 milhões chamou a atenção após um comprovante com problema de impressão permanecer guardado em uma lotérica e, posteriormente, se tornar objeto de uma investigação.",
+      "Segundo as reportagens, uma aposta teria sido reemitida após apresentar falhas na impressão, enquanto o primeiro bilhete permaneceu no estabelecimento. Depois que os números foram sorteados, a investigação apontou suspeitas de que uma funcionária teria retirado o comprovante premiado e, junto com o marido, tentado reivindicar a fortuna. O episódio deu origem a uma disputa judicial e a uma investigação criminal, com versões e argumentos que ainda precisam ser analisados pela Justiça.",
+      "O caso não é isolado quando se trata de histórias envolvendo grandes prêmios. Em 2007, Renné Senna, ganhador de aproximadamente R$ 52 milhões, foi assassinado no Rio de Janeiro. A investigação apontou sua esposa como mandante do crime, motivado por interesses relacionados à fortuna, e ela acabou condenada. Em outra situação, um patrão e um empregado disputaram judicialmente um prêmio da Mega-Sena após uma aposta que, segundo o trabalhador, teria sido realizada em conjunto. A Justiça reconheceu o direito à divisão, e o conflito terminou em acordo anos depois.",
+      "São histórias muito diferentes, mas que mostram como grandes premiações podem envolver questões de confiança, segurança, relações pessoais e disputas sobre direitos. A sorte de acertar os números não elimina a necessidade de cuidado com comprovantes, acordos entre participantes e informações pessoais. Afinal, o sorteio pode ser o momento mais aguardado, mas, em algumas histórias, os acontecimentos posteriores acabam sendo tão surpreendentes quanto os próprios números sorteados. 🎰"
+    ]
   }
   ];
 
