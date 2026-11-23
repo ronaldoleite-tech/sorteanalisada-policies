@@ -721,6 +721,29 @@ section[id] {
     font-weight: 700;
 }
 
+.coluna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.coluna-rotulo {
+    font-size: 0.7rem;
+    color: #bbdefb;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bola-trevo {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #037f03, #70c470);
+    color: #fff;
+    font-weight: 700;
+}
+
 .gerador-app {
     font-size: 1.05rem;
     line-height: 1.6;
@@ -756,4 +779,5 @@ section[id] {
     .botao-gerar, .botao-copiar { font-size: 1rem; padding: 0.7rem 1.2rem; }
     .bola { width: 40px; height: 40px; font-size: 1rem; }
     .bolas { gap: 8px; }
+    .coluna-rotulo { font-size: 0.6rem; }
 }

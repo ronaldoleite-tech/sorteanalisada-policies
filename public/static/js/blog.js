@@ -46,6 +46,13 @@ function dataValida(valor) {
     return typeof valor === "string" && /^\d{4}-\d{2}-\d{2}/.test(valor) && !isNaN(Date.parse(valor));
 }
 
+// Schema.org exige data/hora ISO 8601 com fuso horário.
+// "2026-11-22" vira "2026-11-22T00:00:00-03:00" (horário de Brasília).
+function dataIso(valor) {
+    if (typeof valor !== "string") return valor;
+    return /^\d{4}-\d{2}-\d{2}$/.test(valor) ? valor + "T00:00:00-03:00" : valor;
+}
+
 // Endereço do blog sem o #artigo
 function urlBlog() {
     return window.location.origin + window.location.pathname;
@@ -382,8 +389,8 @@ function gerarSchemaSEO(artigos) {
             "url": `${SITE_URL}/#${a.id}`
         };
         // As datas só entram no schema quando informadas em dados-artigos.js
-        if (a.data) post.datePublished = a.data;
-        if (a.atualizado || a.data) post.dateModified = a.atualizado || a.data;
+        if (a.data) post.datePublished = dataIso(a.data);
+        if (a.atualizado || a.data) post.dateModified = dataIso(a.atualizado || a.data);
         return post;
     });
 

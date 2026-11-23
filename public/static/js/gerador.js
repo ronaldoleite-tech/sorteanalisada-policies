@@ -11,7 +11,11 @@
         quina:      { nome: "Quina",        dezenas: 5,  max: 80 },
         duplasena:  { nome: "Dupla-Sena",   dezenas: 6,  max: 50 },
         lotofacil:  { nome: "Lotofácil",    dezenas: 15, max: 25 },
-        diadesorte: { nome: "Dia de Sorte", dezenas: 7,  max: 31, mesDaSorte: true }
+        diadesorte: { nome: "Dia de Sorte", dezenas: 7,  max: 31, mesDaSorte: true },
+        maismilionaria: { nome: "+Milionária", dezenas: 6, max: 50, trevos: 2, maxTrevo: 6 },
+        // Super Sete: 7 colunas independentes, cada uma com um dígito de 0 a 9
+        // (pode repetir entre colunas e NÃO é colocado em ordem crescente)
+        supersete:  { nome: "Super Sete",   colunas: 7, maxColuna: 9 }
     };
 
     const MESES = [
@@ -51,21 +55,36 @@
         return String(n).padStart(2, "0");
     }
 
+    // Super Sete: um dígito (0 a 9) por coluna, sorteados de forma independente
+    function sortearColunas(qtd, maxDigito) {
+        const colunas = [];
+        for (let i = 0; i < qtd; i++) colunas.push(inteiroAleatorio(maxDigito + 1));
+        return colunas;
+    }
+
     function gerarJogo(chave) {
         const regra = LOTERIAS[chave];
         if (!regra) return null;
-        const jogo = {
-            chave: chave,
-            nome: regra.nome,
-            dezenas: sortearDezenas(regra.dezenas, regra.max)
-        };
+        const jogo = { chave: chave, nome: regra.nome };
+        if (regra.colunas) {
+            jogo.colunas = sortearColunas(regra.colunas, regra.maxColuna);
+        } else {
+            jogo.dezenas = sortearDezenas(regra.dezenas, regra.max);
+        }
         if (regra.mesDaSorte) jogo.mes = MESES[inteiroAleatorio(MESES.length)];
+        if (regra.trevos) jogo.trevos = sortearDezenas(regra.trevos, regra.maxTrevo);
         return jogo;
     }
 
     function textoParaCopiar(jogo) {
-        let texto = jogo.nome + ": " + jogo.dezenas.map(formatar).join(" - ");
+        let texto;
+        if (jogo.colunas) {
+            texto = jogo.nome + ": " + jogo.colunas.join(" - ") + "\n(colunas 1 a " + jogo.colunas.length + ", nessa ordem)";
+        } else {
+            texto = jogo.nome + ": " + jogo.dezenas.map(formatar).join(" - ");
+        }
         if (jogo.mes) texto += "\nMês de Sorte: " + jogo.mes;
+        if (jogo.trevos) texto += "\nTrevos: " + jogo.trevos.join(" - ");
         return texto;
     }
 
@@ -126,18 +145,43 @@
             const lista = criar("div", "bolas");
             lista.setAttribute("role", "list");
             lista.setAttribute("aria-label", "Números gerados para " + jogo.nome);
-            jogo.dezenas.forEach(function (n, i) {
-                const bola = criar("span", "bola", formatar(n));
-                bola.setAttribute("role", "listitem");
-                bola.style.setProperty("--i", String(i));
-                lista.appendChild(bola);
-            });
+            if (jogo.colunas) {
+                // Super Sete: cada dígito aparece sob o rótulo da sua coluna
+                jogo.colunas.forEach(function (n, i) {
+                    const item = criar("div", "coluna");
+                    item.setAttribute("role", "listitem");
+                    item.appendChild(criar("span", "coluna-rotulo", "Coluna " + (i + 1)));
+                    const bola = criar("span", "bola", String(n));
+                    bola.style.setProperty("--i", String(i));
+                    item.appendChild(bola);
+                    lista.appendChild(item);
+                });
+            } else {
+                jogo.dezenas.forEach(function (n, i) {
+                    const bola = criar("span", "bola", formatar(n));
+                    bola.setAttribute("role", "listitem");
+                    bola.style.setProperty("--i", String(i));
+                    lista.appendChild(bola);
+                });
+            }
             area.appendChild(lista);
 
             if (jogo.mes) {
                 const extra = criar("p", "gerador-extra");
                 extra.appendChild(criar("span", "gerador-extra-rotulo", "Mês de Sorte: "));
                 extra.appendChild(criar("span", "bola-mes", jogo.mes));
+                area.appendChild(extra);
+            }
+
+            if (jogo.trevos) {
+                const extra = criar("p", "gerador-extra");
+                extra.appendChild(criar("span", "gerador-extra-rotulo", "Trevos: "));
+                jogo.trevos.forEach(function (t) {
+                    const trevo = criar("span", "bola-trevo");
+                    trevo.innerHTML = '<i class="fa-solid fa-clover" aria-hidden="true"></i> ';
+                    trevo.appendChild(document.createTextNode(String(t)));
+                    extra.appendChild(trevo);
+                });
                 area.appendChild(extra);
             }
 
