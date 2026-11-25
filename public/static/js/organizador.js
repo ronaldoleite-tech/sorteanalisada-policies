@@ -1,6 +1,6 @@
 // ==============================
 //      ORGANIZADOR DE JOGOS (versão web)
-//      Mega-Sena: organiza 9 dezenas distribuindo todas as quadras do conjunto (12 ou 13 jogos).
+//      Mega-Sena: organiza 9 dezenas distribuindo todas as quadras do conjunto (12 jogos).
 //      Demais loterias: combinação padrão de 10 jogos.
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
 // ==============================
@@ -18,7 +18,8 @@
             max: 60,
             padrao: 6,
             extra: 3,       // total = 9 dezenas
-            jogos: null,    // adaptável conforme a distribuição (12 ou 13 jogos)
+            jogos: null,    // definido pela distribuição
+            jogosAlvo: 12,  // menor quantidade conhecida; a busca repete até alcançá-la
             distribuirQuadras: true,
             garantia: 4,
             colunas: [6]
@@ -100,64 +101,69 @@
         return saida;
     }
 
-    // Conta quantos bits 1 existem em um BigInt positivo
-    function contarBits(n) {
-        var count = 0;
-        while (n > 0n) {
-            n &= (n - 1n);
-            count++;
-        }
-        return count;
-    }
-
-    // Cobertura gulosa com bitmask (BigInt) para distribuir todas as quadras do conjunto
-    function organizarComCobertura(dezenas, tamanhoAposta, garantiaAcertos) {
+    // Cobertura gulosa para distribuir todas as quadras do conjunto.
+    // Usa listas de índices e um vetor de "pendentes" (sem números gigantes), compatível com navegadores antigos.
+    // Repete a busca (com desempate aleatório) e fica com o menor número de jogos.
+    function organizarComCobertura(dezenas, tamanhoAposta, garantiaAcertos, metaJogos) {
         var dezenasOrdenadas = dezenas.slice().sort(function (a, b) { return a - b; });
-        var candidatos = embaralhar(combinacoes(dezenasOrdenadas, tamanhoAposta));
+        var candidatos = combinacoes(dezenasOrdenadas, tamanhoAposta);
         var alvos = combinacoes(dezenasOrdenadas, garantiaAcertos);
 
         var indiceAlvo = Object.create(null);
         for (var i = 0; i < alvos.length; i++) {
-            indiceAlvo[alvos[i].join(",")] = BigInt(i);
+            indiceAlvo[alvos[i].join(",")] = i;
         }
 
-        // Bitmask com todos os alvos pendentes (1 = pendente, 0 = coberto)
-        var alvosPendentes = (1n << BigInt(alvos.length)) - 1n;
+        // Para cada jogo candidato, quais alvos (quadras) ele cobre
+        var cobertura = candidatos.map(function (c) {
+            return combinacoes(c, garantiaAcertos).map(function (sub) {
+                return indiceAlvo[sub.join(",")];
+            });
+        });
 
-        // Monta a bitmask de alvos cobertos para cada bilhete candidato
-        var mascarasCandidatos = new Array(candidatos.length);
-        for (var c = 0; c < candidatos.length; c++) {
-            var mascara = 0n;
-            var subs = combinacoes(candidatos[c], garantiaAcertos);
-            for (var s = 0; s < subs.length; s++) {
-                mascara |= (1n << indiceAlvo[subs[s].join(",")]);
-            }
-            mascarasCandidatos[c] = mascara;
-        }
+        function umaTentativa() {
+            var ordem = embaralhar(candidatos.map(function (_, idx) { return idx; }));
+            var pendente = new Uint8Array(alvos.length);
+            for (var p = 0; p < pendente.length; p++) pendente[p] = 1;
+            var restantes = alvos.length;
+            var escolhidos = [];
 
-        var matrizEscolhida = [];
+            while (restantes > 0) {
+                var melhorIdx = -1;
+                var maiorGanho = 0;
+                for (var o = 0; o < ordem.length; o++) {
+                    var idx = ordem[o];
+                    var ganho = 0;
+                    var lista = cobertura[idx];
+                    for (var t = 0; t < lista.length; t++) {
+                        if (pendente[lista[t]]) ganho++;
+                    }
+                    if (ganho > maiorGanho) {
+                        maiorGanho = ganho;
+                        melhorIdx = idx;
+                    }
+                }
+                if (melhorIdx === -1) break;
 
-        while (alvosPendentes > 0n) {
-            var melhorIdx = -1;
-            var maiorGanho = 0;
-
-            for (var idx = 0; idx < mascarasCandidatos.length; idx++) {
-                var ganho = contarBits(mascarasCandidatos[idx] & alvosPendentes);
-                if (ganho > maiorGanho) {
-                    maiorGanho = ganho;
-                    melhorIdx = idx;
+                escolhidos.push(candidatos[melhorIdx].slice().sort(function (a, b) { return a - b; }));
+                var cobertos = cobertura[melhorIdx];
+                for (var u = 0; u < cobertos.length; u++) {
+                    if (pendente[cobertos[u]]) {
+                        pendente[cobertos[u]] = 0;
+                        restantes--;
+                    }
                 }
             }
-
-            if (maiorGanho === 0 || melhorIdx === -1) {
-                break;
-            }
-
-            matrizEscolhida.push(candidatos[melhorIdx].slice().sort(function (a, b) { return a - b; }));
-            alvosPendentes &= ~mascarasCandidatos[melhorIdx];
+            return escolhidos;
         }
 
-        return matrizEscolhida;
+        var melhor = null;
+        for (var tentativa = 0; tentativa < 30; tentativa++) {
+            var resultado = umaTentativa();
+            if (!melhor || resultado.length < melhor.length) melhor = resultado;
+            if (metaJogos && melhor.length <= metaJogos) break;
+        }
+        return melhor;
     }
 
     function fmt(n) { return String(n).padStart(2, "0"); }
@@ -362,7 +368,7 @@
             pool.sort(function (a, b) { return a - b; });
 
             if (cfg.distribuirQuadras) {
-                jogos = organizarComCobertura(pool, cfg.padrao, cfg.garantia);
+                jogos = organizarComCobertura(pool, cfg.padrao, cfg.garantia, cfg.jogosAlvo);
             } else {
                 jogos = embaralhar(combinacoes(pool, cfg.padrao)).slice(0, cfg.jogos).map(function (c) {
                     return c.sort(function (a, b) { return a - b; });
