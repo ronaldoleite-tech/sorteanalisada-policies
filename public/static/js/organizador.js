@@ -1,23 +1,64 @@
 // ==============================
 //      ORGANIZADOR DE JOGOS (versão web)
-//      Mesma lógica do organizador do app Sorte Analisada Lite.
+//      Mega-Sena: organiza 9 dezenas distribuindo todas as quadras do conjunto (12 ou 13 jogos).
+//      Demais loterias: combinação padrão de 10 jogos.
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
 // ==============================
 (function () {
     "use strict";
 
-    var QTD_JOGOS = 10;
     var TAMANHO = 40;   // px — deve bater com o CSS (.num)
     var ESPACO = 8;     // px — deve bater com o gap da grade
     var COLUNAS_MIN = 4;
 
     // padrao = dezenas de um jogo simples; extra = quantos números a mais o pool pode ter
     var LOTERIAS = {
-        megasena:   { nome: "Mega-Sena",    max: 60, padrao: 6,  extra: 2, colunas: [6] },
-        quina:      { nome: "Quina",        max: 80, padrao: 5,  extra: 2, colunas: [8, 5] },
-        duplasena:  { nome: "Dupla-Sena",   max: 50, padrao: 6,  extra: 2, colunas: [5] },
-        diadesorte: { nome: "Dia de Sorte", max: 31, padrao: 7,  extra: 2, colunas: [7] },
-        lotofacil:  { nome: "Lotofácil",    max: 25, padrao: 15, extra: 1, colunas: [5] }
+        megasena: {
+            nome: "Mega-Sena",
+            max: 60,
+            padrao: 6,
+            extra: 3,       // total = 9 dezenas
+            jogos: null,    // adaptável conforme a distribuição (12 ou 13 jogos)
+            distribuirQuadras: true,
+            garantia: 4,
+            colunas: [6]
+        },
+        quina: {
+            nome: "Quina",
+            max: 80,
+            padrao: 5,
+            extra: 2,
+            jogos: 10,
+            distribuirQuadras: false,
+            colunas: [8, 5]
+        },
+        duplasena: {
+            nome: "Dupla-Sena",
+            max: 50,
+            padrao: 6,
+            extra: 2,
+            jogos: 10,
+            distribuirQuadras: false,
+            colunas: [5]
+        },
+        diadesorte: {
+            nome: "Dia de Sorte",
+            max: 31,
+            padrao: 7,
+            extra: 2,
+            jogos: 10,
+            distribuirQuadras: false,
+            colunas: [7]
+        },
+        lotofacil: {
+            nome: "Lotofácil",
+            max: 25,
+            padrao: 15,
+            extra: 1,
+            jogos: 10,
+            distribuirQuadras: false,
+            colunas: [5]
+        }
     };
 
     // ---------- utilidades ----------
@@ -45,7 +86,7 @@
         return a;
     }
 
-    // Todas as combinações de "k" itens de "lista" (o pool é pequeno: no máximo 36 combinações)
+    // Todas as combinações de "k" itens de "lista"
     function combinacoes(lista, k) {
         var saida = [];
         (function escolher(inicio, atual) {
@@ -57,6 +98,66 @@
             }
         })(0, []);
         return saida;
+    }
+
+    // Conta quantos bits 1 existem em um BigInt positivo
+    function contarBits(n) {
+        var count = 0;
+        while (n > 0n) {
+            n &= (n - 1n);
+            count++;
+        }
+        return count;
+    }
+
+    // Cobertura gulosa com bitmask (BigInt) para distribuir todas as quadras do conjunto
+    function organizarComCobertura(dezenas, tamanhoAposta, garantiaAcertos) {
+        var dezenasOrdenadas = dezenas.slice().sort(function (a, b) { return a - b; });
+        var candidatos = embaralhar(combinacoes(dezenasOrdenadas, tamanhoAposta));
+        var alvos = combinacoes(dezenasOrdenadas, garantiaAcertos);
+
+        var indiceAlvo = Object.create(null);
+        for (var i = 0; i < alvos.length; i++) {
+            indiceAlvo[alvos[i].join(",")] = BigInt(i);
+        }
+
+        // Bitmask com todos os alvos pendentes (1 = pendente, 0 = coberto)
+        var alvosPendentes = (1n << BigInt(alvos.length)) - 1n;
+
+        // Monta a bitmask de alvos cobertos para cada bilhete candidato
+        var mascarasCandidatos = new Array(candidatos.length);
+        for (var c = 0; c < candidatos.length; c++) {
+            var mascara = 0n;
+            var subs = combinacoes(candidatos[c], garantiaAcertos);
+            for (var s = 0; s < subs.length; s++) {
+                mascara |= (1n << indiceAlvo[subs[s].join(",")]);
+            }
+            mascarasCandidatos[c] = mascara;
+        }
+
+        var matrizEscolhida = [];
+
+        while (alvosPendentes > 0n) {
+            var melhorIdx = -1;
+            var maiorGanho = 0;
+
+            for (var idx = 0; idx < mascarasCandidatos.length; idx++) {
+                var ganho = contarBits(mascarasCandidatos[idx] & alvosPendentes);
+                if (ganho > maiorGanho) {
+                    maiorGanho = ganho;
+                    melhorIdx = idx;
+                }
+            }
+
+            if (maiorGanho === 0 || melhorIdx === -1) {
+                break;
+            }
+
+            matrizEscolhida.push(candidatos[melhorIdx].slice().sort(function (a, b) { return a - b; }));
+            alvosPendentes &= ~mascarasCandidatos[melhorIdx];
+        }
+
+        return matrizEscolhida;
     }
 
     function fmt(n) { return String(n).padStart(2, "0"); }
@@ -94,7 +195,9 @@
     // ---------- aplicação ----------
     function iniciar() {
         var select = document.getElementById("org-loteria");
+        var subtitulo = document.getElementById("org-subtitulo");
         var intro = document.getElementById("org-intro");
+        var explica = document.getElementById("org-explica");
         var grade = document.getElementById("org-grade");
         var contador = document.getElementById("org-contador");
         var btnGerar = document.getElementById("org-gerar");
@@ -126,6 +229,31 @@
             return cabem;
         }
 
+        function atualizarTextosLoteria() {
+            var cfg = config();
+            var max = maximo();
+
+            if (cfg.distribuirQuadras) {
+                if (subtitulo) {
+                    subtitulo.textContent = "Escolha seus números favoritos e organize seus jogos a partir deles";
+                }
+                intro.textContent = "Escolha os seus " + max + " números ou deixe o sistema completar!";
+                btnGerar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Organizar jogos';
+                if (explica) {
+                    explica.textContent = "Escolha até " + max + " números favoritos. Se escolher menos, o sistema completa aleatoriamente até " + max + " dezenas e organiza os jogos de " + cfg.padrao + " números de forma distribuída dentro desse conjunto.";
+                }
+            } else {
+                if (subtitulo) {
+                    subtitulo.textContent = "Escolha seus números favoritos e gere " + cfg.jogos + " jogos a partir deles";
+                }
+                intro.textContent = "Escolha os seus " + max + " números ou deixe o sistema completar!";
+                btnGerar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Gerar ' + cfg.jogos + ' jogos';
+                if (explica) {
+                    explica.textContent = "Você escolhe os seus números favoritos. Se escolher menos do que o necessário, o próprio sistema completa com números aleatórios. Os " + cfg.jogos + " jogos são gerados a partir desse conjunto.";
+                }
+            }
+        }
+
         function atualizarContador() {
             contador.textContent = selecionados.length + " escolhido(s) · o organizador completa até " +
                 maximo() + " números para formar o conjunto";
@@ -146,7 +274,7 @@
             botoes = {};
             colunasAtuais = calcularColunas();
             grade.style.gridTemplateColumns = "repeat(" + colunasAtuais + ", " + TAMANHO + "px)";
-            intro.textContent = "Escolha os seus " + maximo() + " números ou deixe o sistema completar!";
+            atualizarTextosLoteria();
             for (var n = 1; n <= config().max; n++) {
                 (function (num) {
                     var b = criar("button", "num", fmt(num));
@@ -182,7 +310,7 @@
             if (!jogos.length) return;
 
             var resumo = criar("p", "org-pool");
-            resumo.appendChild(criar("strong", null, "Conjunto desta rodada: "));
+            resumo.appendChild(criar("strong", null, "Conjunto desta rodada (" + jogos.length + " jogos organizados): "));
             resumo.appendChild(document.createTextNode(pool.map(fmt).join(" - ")));
             areaJogos.appendChild(resumo);
 
@@ -233,16 +361,20 @@
             if (faltam > 0) pool = pool.concat(embaralhar(restantes).slice(0, faltam));
             pool.sort(function (a, b) { return a - b; });
 
-            jogos = embaralhar(combinacoes(pool, cfg.padrao)).slice(0, QTD_JOGOS).map(function (c) {
-                return c.sort(function (a, b) { return a - b; });
-            });
+            if (cfg.distribuirQuadras) {
+                jogos = organizarComCobertura(pool, cfg.padrao, cfg.garantia);
+            } else {
+                jogos = embaralhar(combinacoes(pool, cfg.padrao)).slice(0, cfg.jogos).map(function (c) {
+                    return c.sort(function (a, b) { return a - b; });
+                });
+            }
 
             jogosProntos = true;
             btnGerar.disabled = true;
             grade.classList.add("travada");
             for (var k in botoes) pintar(Number(k));
             exibirJogos();
-            avisar(jogos.length + " jogos gerados.");
+            avisar(jogos.length + " jogos organizados.");
         }
 
         function limpar() {

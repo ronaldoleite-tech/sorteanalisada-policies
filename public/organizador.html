@@ -32,15 +32,15 @@
             "applicationCategory": "EntertainmentApplication",
             "operatingSystem": "Qualquer (navegador)",
             "inLanguage": "pt-BR",
-            "description": "Escolha seus números favoritos, deixe o sistema completar o conjunto e gere 10 jogos distintos para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil.",
+            "description": "Escolha seus números favoritos, deixe o sistema completar o conjunto e organize jogos distintos para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil.",
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
             "publisher": { "@type": "Organization", "name": "Sorte Analisada", "url": "https://sorteanalisada.com.br/" }
         }
         </script>
 
         <!-- ============== METADADOS E SEO ============== -->
-        <meta name="description" content="Organizador de Jogos grátis: escolha seus números favoritos, deixe o sistema completar o conjunto e gere 10 jogos distintos para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil.">
-        <meta name="keywords" content="organizador de jogos, fechamento de loteria, gerador de jogos mega-sena, quina, lotofácil, dupla sena, dia de sorte">
+        <meta name="description" content="Organizador de Jogos grátis: escolha seus números favoritos, deixe o sistema completar o conjunto e organize jogos distintos para Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil.">
+        <meta name="keywords" content="organizador de jogos, gerador de jogos mega-sena, quina, lotofácil, dupla sena, dia de sorte, combinar dezenas">
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         <title>Organizador de Jogos de Loteria Grátis - Sorte Analisada</title>
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
@@ -58,7 +58,7 @@
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://sorteanalisada.com.br/organizador">
         <meta property="og:title" content="Organizador de Jogos de Loteria Grátis - Sorte Analisada">
-        <meta property="og:description" content="Escolha seus números, deixe o sistema completar e gere 10 jogos distintos para as principais loterias brasileiras.">
+        <meta property="og:description" content="Escolha seus números, deixe o sistema completar e organize jogos distintos para as principais loterias brasileiras.">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:locale" content="pt_BR">
@@ -69,7 +69,7 @@
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="https://sorteanalisada.com.br/organizador">
         <meta name="twitter:title" content="Organizador de Jogos de Loteria Grátis - Sorte Analisada">
-        <meta name="twitter:description" content="Escolha seus números, deixe o sistema completar e gere 10 jogos distintos para Mega-Sena, Quina, Lotofácil e mais.">
+        <meta name="twitter:description" content="Escolha seus números, deixe o sistema completar e organize jogos distintos para Mega-Sena, Quina, Lotofácil e mais.">
         <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
 
         <!-- Canonical -->
@@ -93,7 +93,7 @@
                     </picture>
                 </a>
                 <h1>Organizador de Jogos</h1>
-                <p class="subtitulo">Escolha seus números favoritos e gere 10 jogos a partir deles</p>
+                <p id="org-subtitulo" class="subtitulo">Escolha seus números favoritos e organize seus jogos a partir deles</p>
             </header>
 
             <nav class="nav-interna" aria-label="Navegação do site">
@@ -109,7 +109,7 @@
                 <!-- ============== ORGANIZADOR ============== -->
                 <section id="organizador" class="organizador" aria-labelledby="org-titulo">
                     <h2 id="org-titulo" class="titulo-artigos">🗂️ Organizador de Jogos</h2>
-                    <p id="org-intro" class="org-intro">Escolha os seus números ou deixe o sistema completar!</p>
+                    <p id="org-intro" class="org-intro">Escolha os seus 9 números ou deixe o sistema completar!</p>
 
                     <div class="gerador-controles">
                         <label for="org-loteria">Loteria:</label>
@@ -134,16 +134,15 @@
 
                     <div class="gerador-botoes">
                         <button type="button" id="org-gerar" class="botao-gerar">
-                            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Gerar 10 jogos
+                            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Organizar jogos
                         </button>
                         <button type="button" id="org-limpar" class="botao-copiar">
                             <i class="fa-solid fa-eraser" aria-hidden="true"></i> Limpar
                         </button>
                     </div>
 
-                    <p class="org-explica">
-                        Você escolhe os seus números favoritos. Se escolher menos do que o necessário, o próprio sistema
-                        completa com números aleatórios. Os 10 jogos são gerados a partir desse conjunto.
+                    <p id="org-explica" class="org-explica">
+                        Escolha até 9 números favoritos. Se escolher menos, o sistema completa aleatoriamente até 9 dezenas e organiza os jogos de 6 números de forma distribuída dentro desse conjunto.
                     </p>
 
                     <div id="org-jogos" class="org-jogos" aria-live="polite"></div>
@@ -153,7 +152,7 @@
 
                     <p class="gerador-aviso">
                         ** Números gerados e organizados apenas para entretenimento. Jogos de loteria são aleatórios e
-                        imprevisíveis; nenhum sistema ou método garante resultados ou prêmios. Jogue com responsabilidade.
+                        imprevisíveis; nenhum sistema ou método garante resultados ou prêmios no sorteio oficial. Jogue com responsabilidade.
                         Loterias são para maiores de 18 anos.
                     </p>
                 </section>
@@ -163,18 +162,19 @@
                     <h2 id="como-funciona" class="titulo-artigos">Como funciona</h2>
                     <p>
                         O organizador monta um <strong>conjunto fixo</strong> de números: os que você escolhe na grade mais,
-                        se faltarem, números sorteados para completar. O tamanho do conjunto é o de um jogo simples da
-                        loteria mais uma pequena folga (por exemplo, 8 números na Mega-Sena, que pede 6 por jogo).
+                        se faltarem, números sorteados para completar. Na <strong>Mega-Sena</strong>, o conjunto reúne
+                        <strong>9 dezenas</strong> e organiza jogos de 6 números de modo que todas as combinações de 4 dezenas
+                        desse conjunto estejam distribuídas entre as linhas geradas.
                     </p>
                     <p>
-                        Em seguida, ele gera <strong>10 jogos diferentes</strong>, todos combinações desse mesmo conjunto,
-                        sem repetição. É a ideia de um “fechamento”: os jogos se espalham dentro dos números que você
-                        escolheu, em vez de cada um ser sorteado do zero.
+                        Nas demais loterias (<strong>Quina, Dupla-Sena, Dia de Sorte e Lotofácil</strong>), o tamanho do conjunto
+                        é o de um jogo simples mais uma pequena folga, gerando <strong>10 jogos diferentes</strong> combinados a partir
+                        desse mesmo conjunto, sem repetição.
                     </p>
                     <p>
-                        Vale lembrar o que isso <strong>não</strong> faz: organizar os jogos não altera a probabilidade real
-                        de acerto contra o total de combinações da loteria. É uma ferramenta de organização e diversão.
-                        Tudo roda no seu navegador; nenhum número é enviado ou guardado.
+                        Vale lembrar o que isso <strong>não</strong> faz: organizar os números não altera a probabilidade real
+                        de acerto contra o total de combinações da loteria, nem exige que você utilize todas as linhas geradas.
+                        É uma ferramenta de organização e diversão. Tudo roda no seu navegador; nenhum número é enviado ou guardado.
                     </p>
                 </section>
 
