@@ -1,0 +1,188 @@
+/* ============================================================
+   Organizador de Jogos — estilos específicos desta página.
+   Usa as variáveis e componentes do blog.css (carregue antes).
+   ============================================================ */
+
+.organizador {
+    margin: 1.5rem 0 2.5rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-divisoria-ouro);
+    border-radius: 12px;
+}
+
+.org-intro {
+    font-size: 1.1rem;
+    color: #bbdefb;
+    margin-bottom: 1.2rem;
+}
+
+/* Grade de números */
+.org-grade-area {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 0.8rem;
+}
+
+.org-grade {
+    display: grid;
+    gap: 8px;
+    justify-content: center;
+    transition: opacity 0.25s ease;
+}
+
+.org-grade.travada { opacity: 0.6; }
+.org-grade.travada .num { cursor: default; }
+
+.num {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--cor-texto);
+    background: rgba(255, 255, 255, 0.14);
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.num:hover { background: rgba(255, 255, 255, 0.26); }
+.num:active { transform: scale(0.92); }
+
+.num:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* Escolhido pelo usuário (dourado) */
+.num.sel {
+    color: #1a1a1a;
+    background: radial-gradient(circle at 30% 30%, #fff3a6, var(--cor-dourado) 55%, var(--cor-dourado-hover));
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Sorteado para completar o conjunto (azul) */
+.num.auto {
+    color: #fff;
+    background: radial-gradient(circle at 30% 30%, #8fb8e0, #5a8cbf 60%, #3f6d9c);
+}
+
+.org-contador {
+    font-size: 0.95rem;
+    color: #bbdefb;
+    margin-bottom: 0.3rem;
+}
+
+.org-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 18px;
+    font-size: 0.85rem;
+    color: #bbdefb;
+    margin-bottom: 1.4rem;
+}
+
+.org-legenda span::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 50%;
+    vertical-align: -1px;
+}
+.org-legenda .leg-sel::before  { background: var(--cor-dourado); }
+.org-legenda .leg-auto::before { background: #5a8cbf; }
+
+.botao-gerar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.org-explica {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #bbdefb;
+    max-width: 640px;
+    margin: 0 auto 1.4rem;
+}
+
+/* Lista de jogos */
+.org-jogos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.org-pool {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #bbdefb;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.jogo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.6rem 0.9rem;
+    background: rgba(0, 0, 0, 0.28);
+    border-radius: 12px;
+    text-align: left;
+}
+
+.jogo-numero {
+    flex: none;
+    font-size: 0.8rem;
+    color: #bbdefb;
+}
+
+.jogo-texto {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    overflow-wrap: anywhere;
+}
+
+.botao-mini {
+    flex: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    background: transparent;
+    border: 1px solid var(--cor-dourado);
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    cursor: pointer;
+}
+
+.botao-mini:hover { background: rgba(255, 215, 0, 0.12); }
+.botao-mini:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.botao-copiar-todos { align-self: center; margin-top: 8px; }
+
+/* Texto explicativo e card do app */
+.org-texto {
+    text-align: left;
+    line-height: 1.7;
+    margin: 0 0 2rem;
+}
+
+.org-texto h2 { margin-bottom: 0.6rem; }
+.org-texto p { margin-bottom: 0.9rem; }
+
+@media (max-width: 600px) {
+    .organizador { padding: 1rem; }
+    .jogo { flex-wrap: wrap; gap: 4px 10px; }
+    .jogo-texto { flex-basis: 100%; order: 3; }
+    .botao-mini { margin-left: auto; }
+}
