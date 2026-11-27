@@ -1,5 +1,13 @@
 {
-  "name": "sorteanalisada-policies",
-  "compatibility_date": "2026-11-20",
-  "assets": { "directory": "./public" }
+	"name": "sorteanalisada-policies",
+	"compatibility_date": "2026-11-20",
+	"assets": {
+		"directory": "./public"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "LOTERIAS_KV",
+			"id": "7f7264cc2a534f46ae259d43b6f922b0"
+		}
+	]
 }
