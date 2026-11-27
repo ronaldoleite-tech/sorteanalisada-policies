@@ -1,0 +1,220 @@
+/* ============================================================
+   Últimos Resultados — estilos específicos desta página.
+   Usa as variáveis e componentes do blog.css (carregue antes).
+   ============================================================ */
+
+.res-aviso {
+    max-width: 640px;
+    margin: 0.8rem auto 1.2rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #bbdefb;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-divisoria-ouro);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.res-atualizado {
+    font-size: 0.95rem;
+    color: #bbdefb;
+    margin-bottom: 0.8rem;
+}
+
+.res-vazio {
+    padding: 1.5rem 1rem;
+    font-style: italic;
+    color: #bbdefb;
+}
+
+/* Atalhos para cada loteria */
+.res-indice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1.4rem;
+}
+
+.res-indice a {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    border: 1px solid var(--cor-divisoria-ouro);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.res-indice a:hover { background: rgba(255, 255, 255, 0.12); }
+.res-indice a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+/* Cards */
+.res-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 0 0 1.5rem;
+}
+
+.res-card {
+    scroll-margin-top: 1rem;
+    padding: 1.2rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--cor-divisoria-ouro);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.res-nome {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.res-concurso { font-size: 1rem; }
+
+.res-local {
+    font-size: 0.85rem;
+    color: #bbdefb;
+}
+
+.res-sub {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #bbdefb;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Bolas um pouco menores (Lotofácil e Lotomania têm muitas dezenas) e sem animação */
+.res-bolas { max-width: 100%; }
+.res-bolas .bola {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    animation: none;
+}
+
+/* Evita uma bola sozinha na última linha: Lotofácil em 5 por linha, Lotomania em 10 */
+.res-b-lotofacil { max-width: 270px; }
+.res-b-lotomania { max-width: 500px; }
+
+.res-extra { margin: 0; }
+
+/* Acumulou */
+.res-acum {
+    margin: 0;
+    padding: 0.35rem 1rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
+}
+.res-acum-sim { background: rgba(255, 215, 0, 0.15); color: var(--cor-dourado); }
+.res-acum-nao { background: rgba(255, 255, 255, 0.08); color: #bbdefb; }
+
+/* Premiação e jogos (tabelas dentro de <details>) */
+.res-premios,
+.res-jogos {
+    width: 100%;
+    text-align: left;
+}
+
+.res-premios summary,
+.res-jogos summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    padding: 0.3rem 0;
+    text-align: center;
+}
+
+.res-premios summary:focus-visible,
+.res-jogos summary:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.res-rolagem { overflow-x: auto; }
+
+.res-card table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.res-card th,
+.res-card td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.res-card thead th {
+    font-size: 0.75rem;
+    color: #bbdefb;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.res-card td:nth-child(n+2):not(.res-partida),
+.res-card thead th:nth-child(n+2) { text-align: right; }
+.res-card .res-partida { text-align: left; }
+.res-card tr.res-grupo th {
+    padding-top: 0.7rem;
+    color: var(--cor-dourado);
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+/* Loteca: título "Partida" à esquerda, como o texto; coluna final (1, X ou 2) centralizada */
+.res-jogos thead th:nth-child(2) { text-align: left; }
+.res-jogos td:last-child,
+.res-jogos thead th:last-child { text-align: center; }
+
+/* Federal */
+.res-bilhetes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.res-bilhetes li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 0.4rem 0.8rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    text-align: left;
+}
+
+.res-pos { font-size: 0.8rem; color: #bbdefb; }
+.res-bilhete { font-weight: 700; letter-spacing: 2px; color: var(--cor-dourado); }
+.res-valor { font-size: 0.9rem; }
+
+.res-prox {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #bbdefb;
+}
+
+@media (max-width: 600px) {
+    .res-card { padding: 1rem 0.7rem; }
+    .res-bolas .bola { width: 36px; height: 36px; font-size: 0.9rem; }
+    .res-b-lotofacil,
+    .res-b-lotomania { max-width: 230px; }   /* 5 bolas por linha no celular */
+    .res-b-supersete { gap: 6px; flex-wrap: nowrap; }   /* as 7 colunas numa linha só */
+    .res-b-supersete .bola { width: 32px; height: 32px; font-size: 0.85rem; }
+    .res-bilhetes li { grid-template-columns: 4.5rem 1fr; }
+    .res-valor { grid-column: 1 / -1; text-align: right; }
+}
