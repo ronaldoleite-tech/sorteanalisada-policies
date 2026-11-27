@@ -1,8 +1,10 @@
 
 {
   "name": "sorteanalisada-policies",
-  "pages_build_output_dir": "./public",
   "compatibility_date": "2026-11-20",
+  "assets": {
+    "directory": "./public"
+  },
   "kv_namespaces": [
     {
       "binding": "LOTERIAS_KV",
