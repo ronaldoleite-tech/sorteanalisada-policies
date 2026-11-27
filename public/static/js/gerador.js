@@ -1,17 +1,23 @@
 // ==============================
 //      GERADOR DE DEZENAS (simples)
+//      Modos: Aleatório e Monte Carlo (dezenas sorteadas com peso proporcional
+//      à frequência obtida em simulações, lida de /monte_carlo_data/*.json).
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
 // ==============================
 (function () {
     "use strict";
 
+    // Pasta (em /public) com os arquivos de simulação Monte Carlo
+    const MC_PASTA = "/monte_carlo_data/";
+
     // Regras básicas de cada loteria (1 jogo simples)
+    // arquivoMC = arquivo de simulação; sem ele, a loteria só tem o modo aleatório
     const LOTERIAS = {
-        megasena:   { nome: "Mega-Sena",    dezenas: 6,  max: 60 },
-        quina:      { nome: "Quina",        dezenas: 5,  max: 80 },
-        duplasena:  { nome: "Dupla-Sena",   dezenas: 6,  max: 50 },
-        lotofacil:  { nome: "Lotofácil",    dezenas: 15, max: 25 },
-        diadesorte: { nome: "Dia de Sorte", dezenas: 7,  max: 31, mesDaSorte: true },
+        megasena:   { nome: "Mega-Sena",    dezenas: 6,  max: 60, arquivoMC: "monte_carlo_data_megasena.json" },
+        quina:      { nome: "Quina",        dezenas: 5,  max: 80, arquivoMC: "monte_carlo_data_quina.json" },
+        duplasena:  { nome: "Dupla-Sena",   dezenas: 6,  max: 50, arquivoMC: "monte_carlo_data_duplasena.json" },
+        lotofacil:  { nome: "Lotofácil",    dezenas: 15, max: 25, arquivoMC: "monte_carlo_data_lotofacil.json" },
+        diadesorte: { nome: "Dia de Sorte", dezenas: 7,  max: 31, mesDaSorte: true, arquivoMC: "monte_carlo_data_dia_de_sorte.json" },
         maismilionaria: { nome: "+Milionária", dezenas: 6, max: 50, trevos: 2, maxTrevo: 6 },
         // Super Sete: 7 colunas independentes, cada uma com um dígito de 0 a 9
         // (pode repetir entre colunas e NÃO é colocado em ordem crescente)
@@ -51,6 +57,61 @@
         return pool.slice(0, qtd).sort((a, b) => a - b);
     }
 
+    // Sorteia "qtd" dezenas distintas com peso (sem reposição), em ordem crescente.
+    // itens = [{ n: dezena, peso: inteiro > 0 }]
+    function sortearPonderado(itens, qtd) {
+        const pool = itens.map(function (i) { return { n: i.n, peso: i.peso }; });
+        const escolhidas = [];
+        for (let k = 0; k < qtd && pool.length; k++) {
+            let total = 0;
+            for (let i = 0; i < pool.length; i++) total += pool[i].peso;
+            let r = inteiroAleatorio(total);
+            for (let i = 0; i < pool.length; i++) {
+                if (r < pool[i].peso) {
+                    escolhidas.push(pool[i].n);
+                    pool.splice(i, 1);
+                    break;
+                }
+                r -= pool[i].peso;
+            }
+        }
+        return escolhidas.sort((a, b) => a - b);
+    }
+
+    // Carrega (uma única vez por loteria) e valida os dados da simulação Monte Carlo
+    const cacheMC = {};
+    function carregarMC(chave) {
+        const regra = LOTERIAS[chave];
+        if (!regra || !regra.arquivoMC) return Promise.reject(new Error("sem arquivo"));
+        if (!cacheMC[chave]) {
+            cacheMC[chave] = fetch(MC_PASTA + regra.arquivoMC)
+                .then(function (r) {
+                    if (!r.ok) throw new Error("HTTP " + r.status);
+                    return r.json();
+                })
+                .then(function (dados) {
+                    const freq = dados && dados.frequencia_numeros;
+                    if (!freq) throw new Error("formato inesperado");
+                    const itens = [];
+                    Object.keys(freq).forEach(function (k) {
+                        const n = parseInt(k, 10);
+                        const peso = Math.round(Number(freq[k]));
+                        if (n >= 1 && n <= regra.max && isFinite(peso)) {
+                            itens.push({ n: n, peso: Math.max(1, peso) });
+                        }
+                    });
+                    // precisa ter todas as dezenas da loteria, senão alguma nunca seria sorteada
+                    if (itens.length !== regra.max) throw new Error("dados incompletos");
+                    return { itens: itens, simulacoes: Number(dados.num_simulacoes) || 0 };
+                })
+                .catch(function (e) {
+                    delete cacheMC[chave];   // permite tentar de novo depois
+                    throw e;
+                });
+        }
+        return cacheMC[chave];
+    }
+
     function formatar(n) {
         return String(n).padStart(2, "0");
     }
@@ -62,12 +123,17 @@
         return colunas;
     }
 
-    function gerarJogo(chave) {
+    // dadosMC (opcional): dados já validados de carregarMC() → modo Monte Carlo
+    function gerarJogo(chave, dadosMC) {
         const regra = LOTERIAS[chave];
         if (!regra) return null;
-        const jogo = { chave: chave, nome: regra.nome };
+        const jogo = { chave: chave, nome: regra.nome, metodo: "aleatorio" };
         if (regra.colunas) {
             jogo.colunas = sortearColunas(regra.colunas, regra.maxColuna);
+        } else if (dadosMC) {
+            jogo.dezenas = sortearPonderado(dadosMC.itens, regra.dezenas);
+            jogo.metodo = "montecarlo";
+            jogo.simulacoes = dadosMC.simulacoes;
         } else {
             jogo.dezenas = sortearDezenas(regra.dezenas, regra.max);
         }
@@ -85,6 +151,7 @@
         }
         if (jogo.mes) texto += "\nMês de Sorte: " + jogo.mes;
         if (jogo.trevos) texto += "\nTrevos: " + jogo.trevos.join(" - ");
+        if (jogo.metodo === "montecarlo") texto += "\n(modo Monte Carlo)";
         return texto;
     }
 
@@ -118,6 +185,9 @@
 
     function iniciarGerador() {
         const select = document.getElementById("gerador-loteria");
+        const areaModo = document.getElementById("gerador-modo-area");
+        const selectModo = document.getElementById("gerador-modo");
+        const notaModo = document.getElementById("gerador-modo-nota");
         const btnGerar = document.getElementById("gerador-gerar");
         const btnCopiar = document.getElementById("gerador-copiar");
         const area = document.getElementById("gerador-resultado");
@@ -128,6 +198,22 @@
         const ROTULO_COPIAR = btnCopiar.innerHTML;
         let jogoAtual = null;
         let timerCopiar = null;
+        let pedido = 0;   // identifica a última solicitação (descarta respostas antigas)
+
+        function temMC() {
+            const regra = LOTERIAS[select.value];
+            return !!(regra && regra.arquivoMC);
+        }
+
+        function modoMC() {
+            return temMC() && selectModo && selectModo.value === "montecarlo";
+        }
+
+        // O seletor de modo só aparece nas loterias que têm dados de simulação
+        function atualizarModo() {
+            if (areaModo) areaModo.hidden = !temMC();
+            if (notaModo) notaModo.hidden = !modoMC();
+        }
 
         function mostrarVazio() {
             jogoAtual = null;
@@ -185,16 +271,54 @@
                 area.appendChild(extra);
             }
 
+            if (jogo.metodo === "montecarlo") {
+                const sims = jogo.simulacoes ? jogo.simulacoes.toLocaleString("pt-BR") + " simulações" : "simulações";
+                area.appendChild(criar("p", "gerador-vazio", "Modo Monte Carlo · " + sims));
+            } else if (jogo.avisoMC) {
+                area.appendChild(criar("p", "gerador-vazio",
+                    "Não foi possível carregar os dados do Monte Carlo agora; este jogo foi gerado no modo aleatório."));
+            }
+
             btnCopiar.disabled = false;
         }
 
         btnGerar.addEventListener("click", function () {
-            const jogo = gerarJogo(select.value);
-            if (jogo) mostrarJogo(jogo);
+            const chave = select.value;
+            const atual = ++pedido;
+
+            if (!modoMC()) {
+                const jogo = gerarJogo(chave);
+                if (jogo) mostrarJogo(jogo);
+                return;
+            }
+
+            btnGerar.disabled = true;
+            if (status) status.textContent = "Carregando dados da simulação…";
+            carregarMC(chave).then(
+                function (dados) { return gerarJogo(chave, dados); },
+                function () {
+                    const jogo = gerarJogo(chave);
+                    if (jogo) jogo.avisoMC = true;
+                    return jogo;
+                }
+            ).then(function (jogo) {
+                if (atual !== pedido) return;   // o usuário mudou de loteria/modo no meio do caminho
+                if (jogo) mostrarJogo(jogo);
+            }).then(function () {
+                btnGerar.disabled = false;
+                if (status) status.textContent = "";
+            });
         });
 
-        // Trocar de loteria limpa o resultado (ele pertence à loteria anterior)
-        select.addEventListener("change", mostrarVazio);
+        // Trocar de loteria ou de modo limpa o resultado (ele pertence à escolha anterior)
+        function aoMudarEscolha() {
+            pedido++;
+            btnGerar.disabled = false;
+            atualizarModo();
+            mostrarVazio();
+        }
+        select.addEventListener("change", aoMudarEscolha);
+        if (selectModo) selectModo.addEventListener("change", aoMudarEscolha);
 
         btnCopiar.addEventListener("click", function () {
             if (!jogoAtual) return;
@@ -215,6 +339,7 @@
             copiarTexto(texto).then(function () { feedback(true); }, function () { feedback(false); });
         });
 
+        atualizarModo();
         mostrarVazio();
     }
 

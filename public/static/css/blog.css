@@ -579,6 +579,11 @@ section[id] {
     font-size: 1.1rem;
 }
 
+/* O atributo hidden perde para o display:flex acima; garante que esconda */
+.gerador-controles[hidden] {
+    display: none;
+}
+
 .seletor-loteria {
     font-family: inherit;
     font-size: 1.05rem;

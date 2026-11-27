@@ -1,7 +1,9 @@
 // ==============================
 //      ORGANIZADOR DE JOGOS (versão web)
-//      Mega-Sena: organiza 9 dezenas distribuindo todas as quadras do conjunto (12 jogos).
-//      Demais loterias: combinação padrão de 10 jogos.
+//      Modelo padrão: 10 jogos diferentes a partir do conjunto (todas as loterias).
+//      Modelo "Conjunto fixo (fechamento)": Mega-Sena, Dupla-Sena e Quina.
+//        Mega-Sena / Dupla-Sena: 9 dezenas, 4 garantidos (quadra) = 12 jogos.
+//        Quina: 9 dezenas, 3 garantidos (terno) = 12 jogos.
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
 // ==============================
 (function () {
@@ -11,18 +13,17 @@
     var ESPACO = 8;     // px — deve bater com o gap da grade
     var COLUNAS_MIN = 4;
 
-    // padrao = dezenas de um jogo simples; extra = quantos números a mais o pool pode ter
+    // padrao = dezenas de um jogo simples; extra = números a mais no conjunto (modelo padrão)
+    // fechamento (opcional) = conjunto fixo: extra do conjunto, garantia (acertos garantidos) e jogos alvo
     var LOTERIAS = {
         megasena: {
             nome: "Mega-Sena",
             max: 60,
             padrao: 6,
-            extra: 3,       // total = 9 dezenas
-            jogos: null,    // definido pela distribuição
-            jogosAlvo: 12,  // menor quantidade conhecida; a busca repete até alcançá-la
-            distribuirQuadras: true,
-            garantia: 4,
-            colunas: [6]
+            extra: 2,
+            jogos: 10,
+            colunas: [6],
+            fechamento: { extra: 3, garantia: 4, nomeGarantia: "quadra", jogosAlvo: 12 }
         },
         quina: {
             nome: "Quina",
@@ -30,8 +31,8 @@
             padrao: 5,
             extra: 2,
             jogos: 10,
-            distribuirQuadras: false,
-            colunas: [8, 5]
+            colunas: [8, 5],
+            fechamento: { extra: 4, garantia: 3, nomeGarantia: "terno", jogosAlvo: 12 }
         },
         duplasena: {
             nome: "Dupla-Sena",
@@ -39,8 +40,8 @@
             padrao: 6,
             extra: 2,
             jogos: 10,
-            distribuirQuadras: false,
-            colunas: [5]
+            colunas: [5],
+            fechamento: { extra: 3, garantia: 4, nomeGarantia: "quadra", jogosAlvo: 12 }
         },
         diadesorte: {
             nome: "Dia de Sorte",
@@ -48,7 +49,6 @@
             padrao: 7,
             extra: 2,
             jogos: 10,
-            distribuirQuadras: false,
             colunas: [7]
         },
         lotofacil: {
@@ -57,7 +57,6 @@
             padrao: 15,
             extra: 1,
             jogos: 10,
-            distribuirQuadras: false,
             colunas: [5]
         }
     };
@@ -158,7 +157,7 @@
         }
 
         var melhor = null;
-        for (var tentativa = 0; tentativa < 30; tentativa++) {
+        for (var tentativa = 0; tentativa < 80; tentativa++) {
             var resultado = umaTentativa();
             if (!melhor || resultado.length < melhor.length) melhor = resultado;
             if (metaJogos && melhor.length <= metaJogos) break;
@@ -201,6 +200,8 @@
     // ---------- aplicação ----------
     function iniciar() {
         var select = document.getElementById("org-loteria");
+        var areaModelo = document.getElementById("org-modelo-area");
+        var selectModelo = document.getElementById("org-modelo");
         var subtitulo = document.getElementById("org-subtitulo");
         var intro = document.getElementById("org-intro");
         var explica = document.getElementById("org-explica");
@@ -213,6 +214,7 @@
         if (!select || !grade || !btnGerar || !btnLimpar || !areaJogos) return;
 
         var loteria = select.value;
+        var modelo = "organizado";   // "organizado" (10 jogos) ou "fechamento" (conjunto fixo)
         var selecionados = [];
         var jogos = [];
         var pool = [];
@@ -221,7 +223,11 @@
         var colunasAtuais = 0;
 
         function config() { return LOTERIAS[loteria]; }
-        function maximo() { return config().padrao + config().extra; }
+        function emFechamento() { return !!config().fechamento && modelo === "fechamento"; }
+        function maximo() {
+            var cfg = config();
+            return cfg.padrao + (emFechamento() ? cfg.fechamento.extra : cfg.extra);
+        }
 
         function avisar(texto) { if (status) status.textContent = texto; }
 
@@ -239,20 +245,24 @@
             var cfg = config();
             var max = maximo();
 
-            if (cfg.distribuirQuadras) {
+            // O seletor de modelo só aparece nas loterias que têm fechamento
+            if (areaModelo) areaModelo.hidden = !cfg.fechamento;
+
+            intro.textContent = "Escolha os seus " + max + " números ou deixe o sistema completar!";
+
+            if (emFechamento()) {
+                var f = cfg.fechamento;
                 if (subtitulo) {
                     subtitulo.textContent = "Escolha seus números favoritos e organize seus jogos a partir deles";
                 }
-                intro.textContent = "Escolha os seus " + max + " números ou deixe o sistema completar!";
                 btnGerar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Organizar jogos';
                 if (explica) {
-                    explica.textContent = "Escolha até " + max + " números favoritos. Se escolher menos, o sistema completa aleatoriamente até " + max + " dezenas e organiza os jogos de " + cfg.padrao + " números de forma distribuída dentro desse conjunto.";
+                    explica.textContent = "Conjunto fixo (fechamento): escolha até " + max + " números favoritos. Se escolher menos, o sistema completa aleatoriamente até " + max + " dezenas e distribui os jogos de " + cfg.padrao + " números para que todas as combinações de " + f.garantia + " dezenas do conjunto (" + f.nomeGarantia + "s) apareçam pelo menos uma vez, em " + f.jogosAlvo + " jogos.";
                 }
             } else {
                 if (subtitulo) {
                     subtitulo.textContent = "Escolha seus números favoritos e gere " + cfg.jogos + " jogos a partir deles";
                 }
-                intro.textContent = "Escolha os seus " + max + " números ou deixe o sistema completar!";
                 btnGerar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Gerar ' + cfg.jogos + ' jogos';
                 if (explica) {
                     explica.textContent = "Você escolhe os seus números favoritos. Se escolher menos do que o necessário, o próprio sistema completa com números aleatórios. Os " + cfg.jogos + " jogos são gerados a partir desse conjunto.";
@@ -316,7 +326,8 @@
             if (!jogos.length) return;
 
             var resumo = criar("p", "org-pool");
-            resumo.appendChild(criar("strong", null, "Conjunto desta rodada (" + jogos.length + " jogos organizados): "));
+            var rotuloResumo = emFechamento() ? "Conjunto fixo desta rodada (" : "Conjunto desta rodada (";
+            resumo.appendChild(criar("strong", null, rotuloResumo + jogos.length + " jogos organizados): "));
             resumo.appendChild(document.createTextNode(pool.map(fmt).join(" - ")));
             areaJogos.appendChild(resumo);
 
@@ -367,8 +378,8 @@
             if (faltam > 0) pool = pool.concat(embaralhar(restantes).slice(0, faltam));
             pool.sort(function (a, b) { return a - b; });
 
-            if (cfg.distribuirQuadras) {
-                jogos = organizarComCobertura(pool, cfg.padrao, cfg.garantia, cfg.jogosAlvo);
+            if (emFechamento()) {
+                jogos = organizarComCobertura(pool, cfg.padrao, cfg.fechamento.garantia, cfg.fechamento.jogosAlvo);
             } else {
                 jogos = embaralhar(combinacoes(pool, cfg.padrao)).slice(0, cfg.jogos).map(function (c) {
                     return c.sort(function (a, b) { return a - b; });
@@ -398,9 +409,18 @@
 
         select.addEventListener("change", function () {
             loteria = select.value;
+            modelo = "organizado";                       // volta ao padrão ao trocar de loteria
+            if (selectModelo) selectModelo.value = modelo;
             limpar();
             montarGrade();
         });
+        if (selectModelo) {
+            selectModelo.addEventListener("change", function () {
+                modelo = selectModelo.value;
+                limpar();
+                montarGrade();
+            });
+        }
         btnGerar.addEventListener("click", gerar);
         btnLimpar.addEventListener("click", limpar);
 

@@ -111,6 +111,17 @@
                         </select>
                     </div>
 
+                    <div id="gerador-modo-area" class="gerador-controles">
+                        <label for="gerador-modo">Modo:</label>
+                        <select id="gerador-modo" class="seletor-loteria">
+                            <option value="aleatorio">Aleatório</option>
+                            <option value="montecarlo">Monte Carlo</option>
+                        </select>
+                    </div>
+                    <p id="gerador-modo-nota" class="gerador-vazio" hidden>
+                        No modo Monte Carlo, cada dezena é sorteada com peso proporcional à frequência que teve em milhares de simulações de sorteios. É um método para entretenimento e não aumenta a chance de ganhar.
+                    </p>
+
                     <div class="gerador-botoes">
                         <button type="button" id="gerador-gerar" class="botao-gerar">
                             <i class="fa-solid fa-dice" aria-hidden="true"></i> Gerar números

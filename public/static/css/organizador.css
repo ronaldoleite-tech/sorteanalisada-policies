@@ -17,6 +17,9 @@
     margin-bottom: 1.2rem;
 }
 
+/* O atributo hidden perde para display definido no blog.css; garante que esconda */
+.gerador-controles[hidden] { display: none; }
+
 /* Grade de números */
 .org-grade-area {
     display: flex;
