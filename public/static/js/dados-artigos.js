@@ -274,6 +274,19 @@ const dadosArtigos = [
       "São histórias muito diferentes, mas que mostram como grandes premiações podem envolver questões de confiança, segurança, relações pessoais e disputas sobre direitos. A sorte de acertar os números não elimina a necessidade de cuidado com comprovantes, acordos entre participantes e informações pessoais. Afinal, o sorteio pode ser o momento mais aguardado, mas, em algumas histórias, os acontecimentos posteriores acabam sendo tão surpreendentes quanto os próprios números sorteados. 🎰"
     ]
   }
+  {
+    "titulo": "Como escolher dezenas para a loteria? Entre datas, filmes, IAs e a sorte",
+    "id": "como-escolher-dezenas-loteria",
+    "data": "2026-11-28",
+    "imagem": "blog20.jpeg",
+    "alt": "Volante de loteria com dezenas variadas e elementos que remetem à sorte e à escolha de números",
+    "paragrafos": [
+      "Escolher dezenas para uma loteria é quase um ritual. Algumas pessoas recorrem a aniversários, datas importantes, placas de carros, números de casas, combinações sugeridas por inteligência artificial ou até números que apareceram em filmes e séries. Em O Homem que Copiava, a sequência 1, 2, 3, 4, 5 e 6 ganha um significado especial, enquanto os números de Lost continuam sendo lembrados por apostadores até hoje. Também há quem desconsidere jogos que já foram sorteados, como se uma combinação repetida estivesse descartada. Mas, em um sorteio legítimo, todas as combinações continuam tendo a mesma probabilidade, inclusive aquelas que já apareceram anteriormente.",
+      "Geradores de números e ferramentas de inteligência artificial podem ajudar a escolher dezenas, seja de forma aleatória, por critérios estatísticos ou por preferências pessoais. Entretanto, nenhum deles consegue prever o resultado de um sorteio independente. Uma combinação com números espalhados pelo volante pode parecer mais equilibrada, mas não tem vantagem matemática sobre outra. Estatísticas mostram como as dezenas se distribuíram nos concursos anteriores, quais apareceram mais vezes ou ficaram ausentes por períodos maiores, mas não determinam o que acontecerá no próximo sorteio. O histórico é uma fonte de curiosidade e análise, não uma fórmula para antecipar o futuro.",
+      "A história das loterias também mostra que pessoas ganham com escolhas muito diferentes: números pessoais, combinações aleatórias, apostas individuais ou bolões entre amigos. Não existe um padrão obrigatório para se tornar ganhador, assim como uma combinação aparentemente improvável não deixa de ter sua chance. O que define o resultado é a coincidência entre as dezenas registradas e as sorteadas. A matemática explica as probabilidades, mas não escolhe o próximo vencedor.",
+      "No fim, existem inúmeras maneiras de montar um jogo, e nenhuma delas oferece garantia. Talvez o melhor método seja simplesmente aquele que você escolheu, sem atribuir a ele poderes que não possui. Loterias devem ser encaradas como entretenimento, com gastos pequenos e limitados, que não comprometam as finanças pessoais, compromissos ou necessidades do dia a dia. Nas loterias, a matemática explica as chances, mas a sorte continua sendo a grande protagonista. 🍀"
+    ]
+  }
   ];
 
 
