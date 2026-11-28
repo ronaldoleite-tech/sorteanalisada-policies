@@ -273,7 +273,7 @@ const dadosArtigos = [
       "O caso não é isolado quando se trata de histórias envolvendo grandes prêmios. Em 2007, Renné Senna, ganhador de aproximadamente R$ 52 milhões, foi assassinado no Rio de Janeiro. A investigação apontou sua esposa como mandante do crime, motivado por interesses relacionados à fortuna, e ela acabou condenada. Em outra situação, um patrão e um empregado disputaram judicialmente um prêmio da Mega-Sena após uma aposta que, segundo o trabalhador, teria sido realizada em conjunto. A Justiça reconheceu o direito à divisão, e o conflito terminou em acordo anos depois.",
       "São histórias muito diferentes, mas que mostram como grandes premiações podem envolver questões de confiança, segurança, relações pessoais e disputas sobre direitos. A sorte de acertar os números não elimina a necessidade de cuidado com comprovantes, acordos entre participantes e informações pessoais. Afinal, o sorteio pode ser o momento mais aguardado, mas, em algumas histórias, os acontecimentos posteriores acabam sendo tão surpreendentes quanto os próprios números sorteados. 🎰"
     ]
-  }
+  },
   {
     "titulo": "Como escolher dezenas para a loteria? Entre datas, filmes, IAs e a sorte",
     "id": "como-escolher-dezenas-loteria",
