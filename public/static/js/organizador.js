@@ -1,7 +1,7 @@
 // ==============================
 //      ORGANIZADOR DE JOGOS (versão web)
 //      Modelo padrão: 10 jogos diferentes a partir do conjunto (todas as loterias).
-//      Modelo "Conjunto fixo (fechamento)": Mega-Sena, Dupla-Sena e Quina.
+//      Modelo "Desdobramento reduzido": Mega-Sena, Dupla-Sena e Quina.
 //        Mega-Sena / Dupla-Sena: 9 dezenas, 4 garantidos (quadra) = 12 jogos.
 //        Quina: 9 dezenas, 3 garantidos (terno) = 12 jogos.
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
@@ -14,7 +14,7 @@
     var COLUNAS_MIN = 4;
 
     // padrao = dezenas de um jogo simples; extra = números a mais no conjunto (modelo padrão)
-    // fechamento (opcional) = conjunto fixo: extra do conjunto, garantia (acertos garantidos) e jogos alvo
+    // Desdobramento reduzido (opcional) = conjunto fixo: extra do conjunto, garantia (acertos garantidos) e jogos alvo
     var LOTERIAS = {
         megasena: {
             nome: "Mega-Sena",
@@ -214,7 +214,7 @@
         if (!select || !grade || !btnGerar || !btnLimpar || !areaJogos) return;
 
         var loteria = select.value;
-        var modelo = "organizado";   // "organizado" (10 jogos) ou "fechamento" (conjunto fixo)
+        var modelo = "organizado";   // "organizado" (10 jogos) ou "Desdobramento reduzido" (fechamento)
         var selecionados = [];
         var jogos = [];
         var pool = [];
@@ -257,7 +257,7 @@
                 }
                 btnGerar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Organizar jogos';
                 if (explica) {
-                    explica.textContent = "Conjunto fixo (fechamento): escolha até " + max + " números favoritos. Se escolher menos, o sistema completa aleatoriamente até " + max + " dezenas e distribui os jogos de " + cfg.padrao + " números para que todas as combinações de " + f.garantia + " dezenas do conjunto (" + f.nomeGarantia + "s) apareçam pelo menos uma vez, em " + f.jogosAlvo + " jogos.";
+                    explica.textContent = "Desdobramento reduzido: escolha até " + max + " números favoritos. Se escolher menos, o sistema completa aleatoriamente até " + max + " dezenas e distribui os jogos de " + cfg.padrao + " números para que todas as combinações de " + f.garantia + " dezenas do conjunto (" + f.nomeGarantia + "s) apareçam pelo menos uma vez, em " + f.jogosAlvo + " jogos.";
                 }
             } else {
                 if (subtitulo) {
@@ -326,7 +326,7 @@
             if (!jogos.length) return;
 
             var resumo = criar("p", "org-pool");
-            var rotuloResumo = emFechamento() ? "Conjunto fixo desta rodada (" : "Conjunto desta rodada (";
+            var rotuloResumo = emFechamento() ? "Desdobramento reduzido desta rodada (" : "Conjunto desta rodada (";
             resumo.appendChild(criar("strong", null, rotuloResumo + jogos.length + " jogos organizados): "));
             resumo.appendChild(document.createTextNode(pool.map(fmt).join(" - ")));
             areaJogos.appendChild(resumo);
