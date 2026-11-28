@@ -1,5 +1,5 @@
 // ==============================
-//      GERADOR DE DEZENAS (simples)
+//      GERADOR DE DEZENAS (10 jogos por vez)
 //      Modos: Aleatório e Monte Carlo (dezenas sorteadas com peso proporcional
 //      à frequência obtida em simulações, lida de /monte_carlo_data/*.json).
 //      Roda inteiramente no navegador: nada é enviado nem armazenado.
@@ -102,7 +102,17 @@
                     });
                     // precisa ter todas as dezenas da loteria, senão alguma nunca seria sorteada
                     if (itens.length !== regra.max) throw new Error("dados incompletos");
-                    return { itens: itens, simulacoes: Number(dados.num_simulacoes) || 0 };
+
+                    // Dia de Sorte: o arquivo também traz a frequência dos meses (opcional;
+                    // sem os 12 meses válidos, o Mês de Sorte continua sendo sorteado ao acaso)
+                    let meses = null;
+                    if (regra.mesDaSorte && dados.frequencia_meses) {
+                        const lista = MESES.map(function (nome) {
+                            return { nome: nome, peso: Math.round(Number(dados.frequencia_meses[nome])) };
+                        });
+                        if (lista.every(function (m) { return isFinite(m.peso) && m.peso > 0; })) meses = lista;
+                    }
+                    return { itens: itens, simulacoes: Number(dados.num_simulacoes) || 0, meses: meses };
                 })
                 .catch(function (e) {
                     delete cacheMC[chave];   // permite tentar de novo depois
@@ -123,36 +133,65 @@
         return colunas;
     }
 
-    // dadosMC (opcional): dados já validados de carregarMC() → modo Monte Carlo
+    // Quantidade de jogos gerados a cada clique
+    const QTD_JOGOS = 10;
+
+    // Gera UM jogo. dadosMC (opcional): dados já validados de carregarMC() → modo Monte Carlo
     function gerarJogo(chave, dadosMC) {
         const regra = LOTERIAS[chave];
-        if (!regra) return null;
-        const jogo = { chave: chave, nome: regra.nome, metodo: "aleatorio" };
+        const jogo = {};
         if (regra.colunas) {
             jogo.colunas = sortearColunas(regra.colunas, regra.maxColuna);
         } else if (dadosMC) {
             jogo.dezenas = sortearPonderado(dadosMC.itens, regra.dezenas);
-            jogo.metodo = "montecarlo";
-            jogo.simulacoes = dadosMC.simulacoes;
         } else {
             jogo.dezenas = sortearDezenas(regra.dezenas, regra.max);
         }
-        if (regra.mesDaSorte) jogo.mes = MESES[inteiroAleatorio(MESES.length)];
+        if (regra.mesDaSorte) {
+            jogo.mes = (dadosMC && dadosMC.meses)
+                ? MESES[sortearPonderado(dadosMC.meses.map(function (m, i) { return { n: i, peso: m.peso }; }), 1)[0]]
+                : MESES[inteiroAleatorio(MESES.length)];
+        }
         if (regra.trevos) jogo.trevos = sortearDezenas(regra.trevos, regra.maxTrevo);
         return jogo;
     }
 
-    function textoParaCopiar(jogo) {
-        let texto;
-        if (jogo.colunas) {
-            texto = jogo.nome + ": " + jogo.colunas.join(" - ") + "\n(colunas 1 a " + jogo.colunas.length + ", nessa ordem)";
-        } else {
-            texto = jogo.nome + ": " + jogo.dezenas.map(formatar).join(" - ");
+    // Gera os 10 jogos, todos com combinações diferentes entre si
+    function gerarJogos(chave, dadosMC) {
+        const regra = LOTERIAS[chave];
+        if (!regra) return null;
+        const conjunto = { chave: chave, nome: regra.nome, metodo: "aleatorio", jogos: [] };
+        if (dadosMC && !regra.colunas) {
+            conjunto.metodo = "montecarlo";
+            conjunto.simulacoes = dadosMC.simulacoes;
         }
-        if (jogo.mes) texto += "\nMês de Sorte: " + jogo.mes;
-        if (jogo.trevos) texto += "\nTrevos: " + jogo.trevos.join(" - ");
-        if (jogo.metodo === "montecarlo") texto += "\n(modo Monte Carlo)";
-        return texto;
+        const vistos = new Set();
+        let tentativas = 0;
+        while (conjunto.jogos.length < QTD_JOGOS && tentativas < QTD_JOGOS * 50) {
+            tentativas++;
+            const jogo = gerarJogo(chave, dadosMC);
+            const marca = (jogo.dezenas || jogo.colunas).join(",");
+            if (vistos.has(marca)) continue;
+            vistos.add(marca);
+            conjunto.jogos.push(jogo);
+        }
+        return conjunto;
+    }
+
+    function textoParaCopiar(c) {
+        const linhas = [c.nome + " - " + c.jogos.length + " jogos"];
+        c.jogos.forEach(function (j, i) {
+            let linha = String(i + 1).padStart(2, "0") + ": " +
+                (j.colunas ? j.colunas.join(" - ") : j.dezenas.map(formatar).join(" - "));
+            if (j.mes) linha += " | Mês de Sorte: " + j.mes;
+            if (j.trevos) linha += " | Trevos: " + j.trevos.join(" - ");
+            linhas.push(linha);
+        });
+        if (c.jogos.length && c.jogos[0].colunas) {
+            linhas.push("(colunas 1 a " + c.jogos[0].colunas.length + ", nessa ordem)");
+        }
+        if (c.metodo === "montecarlo") linhas.push("(modo Monte Carlo)");
+        return linhas.join("\n");
     }
 
     function copiarTexto(texto) {
@@ -194,9 +233,9 @@
         const status = document.getElementById("gerador-status");
         if (!select || !btnGerar || !btnCopiar || !area) return;
 
-        const MENSAGEM_VAZIA = "Escolha a loteria e clique em “Gerar números”.";
+        const MENSAGEM_VAZIA = "Escolha a loteria e clique em “Gerar 10 jogos”.";
         const ROTULO_COPIAR = btnCopiar.innerHTML;
-        let jogoAtual = null;
+        let conjuntoAtual = null;
         let timerCopiar = null;
         let pedido = 0;   // identifica a última solicitação (descarta respostas antigas)
 
@@ -216,67 +255,63 @@
         }
 
         function mostrarVazio() {
-            jogoAtual = null;
+            conjuntoAtual = null;
             area.innerHTML = "";
             area.appendChild(criar("p", "gerador-vazio", MENSAGEM_VAZIA));
             btnCopiar.disabled = true;
         }
 
-        function mostrarJogo(jogo) {
-            jogoAtual = jogo;
+        function mostrarJogos(c) {
+            conjuntoAtual = c;
             area.innerHTML = "";
 
-            area.appendChild(criar("p", "gerador-nome", jogo.nome));
-
-            const lista = criar("div", "bolas");
-            lista.setAttribute("role", "list");
-            lista.setAttribute("aria-label", "Números gerados para " + jogo.nome);
-            if (jogo.colunas) {
-                // Super Sete: cada dígito aparece sob o rótulo da sua coluna
-                jogo.colunas.forEach(function (n, i) {
-                    const item = criar("div", "coluna");
-                    item.setAttribute("role", "listitem");
-                    item.appendChild(criar("span", "coluna-rotulo", "Coluna " + (i + 1)));
-                    const bola = criar("span", "bola", String(n));
-                    bola.style.setProperty("--i", String(i));
-                    item.appendChild(bola);
-                    lista.appendChild(item);
-                });
-            } else {
-                jogo.dezenas.forEach(function (n, i) {
-                    const bola = criar("span", "bola", formatar(n));
-                    bola.setAttribute("role", "listitem");
-                    bola.style.setProperty("--i", String(i));
-                    lista.appendChild(bola);
-                });
+            area.appendChild(criar("p", "gerador-nome", c.nome));
+            if (c.jogos.length && c.jogos[0].colunas) {
+                area.appendChild(criar("p", "gerador-vazio",
+                    "Dígitos das colunas 1 a " + c.jogos[0].colunas.length + ", nessa ordem."));
             }
+
+            const lista = criar("div", "jogos-lista");
+            lista.setAttribute("role", "list");
+            lista.setAttribute("aria-label", c.jogos.length + " jogos gerados para " + c.nome);
+
+            c.jogos.forEach(function (jogo, k) {
+                const rotulo = "Jogo " + String(k + 1).padStart(2, "0");
+                const linha = criar("div", "jogo-linha");
+                linha.setAttribute("role", "listitem");
+                linha.appendChild(criar("span", "jogo-rotulo", rotulo));
+
+                const bolas = criar("div", "bolas bolas-peq");
+                const valores = jogo.colunas ? jogo.colunas.map(String) : jogo.dezenas.map(formatar);
+                if (valores.length > 8) bolas.classList.add("bolas-longa");   // ex.: Lotofácil (ver CSS)
+                bolas.setAttribute("role", "group");
+                bolas.setAttribute("aria-label", rotulo + ": " + valores.join(", "));
+                valores.forEach(function (v, i) {
+                    const bola = criar("span", "bola", v);
+                    bola.style.setProperty("--i", String(i));
+                    bolas.appendChild(bola);
+                });
+                linha.appendChild(bolas);
+
+                if (jogo.mes) linha.appendChild(criar("span", "bola-mes", jogo.mes));
+                if (jogo.trevos) {
+                    jogo.trevos.forEach(function (t) {
+                        const trevo = criar("span", "bola-trevo");
+                        trevo.innerHTML = '<i class="fa-solid fa-clover" aria-hidden="true"></i> ';
+                        trevo.appendChild(document.createTextNode(String(t)));
+                        linha.appendChild(trevo);
+                    });
+                }
+                lista.appendChild(linha);
+            });
             area.appendChild(lista);
 
-            if (jogo.mes) {
-                const extra = criar("p", "gerador-extra");
-                extra.appendChild(criar("span", "gerador-extra-rotulo", "Mês de Sorte: "));
-                extra.appendChild(criar("span", "bola-mes", jogo.mes));
-                area.appendChild(extra);
-            }
-
-            if (jogo.trevos) {
-                const extra = criar("p", "gerador-extra");
-                extra.appendChild(criar("span", "gerador-extra-rotulo", "Trevos: "));
-                jogo.trevos.forEach(function (t) {
-                    const trevo = criar("span", "bola-trevo");
-                    trevo.innerHTML = '<i class="fa-solid fa-clover" aria-hidden="true"></i> ';
-                    trevo.appendChild(document.createTextNode(String(t)));
-                    extra.appendChild(trevo);
-                });
-                area.appendChild(extra);
-            }
-
-            if (jogo.metodo === "montecarlo") {
-                const sims = jogo.simulacoes ? jogo.simulacoes.toLocaleString("pt-BR") + " simulações" : "simulações";
+            if (c.metodo === "montecarlo") {
+                const sims = c.simulacoes ? c.simulacoes.toLocaleString("pt-BR") + " simulações" : "simulações";
                 area.appendChild(criar("p", "gerador-vazio", "Modo Monte Carlo · " + sims));
-            } else if (jogo.avisoMC) {
+            } else if (c.avisoMC) {
                 area.appendChild(criar("p", "gerador-vazio",
-                    "Não foi possível carregar os dados do Monte Carlo agora; este jogo foi gerado no modo aleatório."));
+                    "Não foi possível carregar os dados do Monte Carlo agora; estes jogos foram gerados no modo aleatório."));
             }
 
             btnCopiar.disabled = false;
@@ -287,23 +322,23 @@
             const atual = ++pedido;
 
             if (!modoMC()) {
-                const jogo = gerarJogo(chave);
-                if (jogo) mostrarJogo(jogo);
+                const c = gerarJogos(chave);
+                if (c) mostrarJogos(c);
                 return;
             }
 
             btnGerar.disabled = true;
             if (status) status.textContent = "Carregando dados da simulação…";
             carregarMC(chave).then(
-                function (dados) { return gerarJogo(chave, dados); },
+                function (dados) { return gerarJogos(chave, dados); },
                 function () {
-                    const jogo = gerarJogo(chave);
-                    if (jogo) jogo.avisoMC = true;
-                    return jogo;
+                    const c = gerarJogos(chave);
+                    if (c) c.avisoMC = true;
+                    return c;
                 }
-            ).then(function (jogo) {
+            ).then(function (c) {
                 if (atual !== pedido) return;   // o usuário mudou de loteria/modo no meio do caminho
-                if (jogo) mostrarJogo(jogo);
+                if (c) mostrarJogos(c);
             }).then(function () {
                 btnGerar.disabled = false;
                 if (status) status.textContent = "";
@@ -321,15 +356,15 @@
         if (selectModo) selectModo.addEventListener("change", aoMudarEscolha);
 
         btnCopiar.addEventListener("click", function () {
-            if (!jogoAtual) return;
-            const texto = textoParaCopiar(jogoAtual);
+            if (!conjuntoAtual) return;
+            const texto = textoParaCopiar(conjuntoAtual);
 
             function feedback(ok) {
                 clearTimeout(timerCopiar);
                 btnCopiar.innerHTML = ok
                     ? '<i class="fa-solid fa-check" aria-hidden="true"></i> Copiado!'
                     : '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Não foi possível copiar';
-                if (status) status.textContent = ok ? "Números copiados." : "Não foi possível copiar.";
+                if (status) status.textContent = ok ? "Jogos copiados." : "Não foi possível copiar.";
                 timerCopiar = setTimeout(function () {
                     btnCopiar.innerHTML = ROTULO_COPIAR;
                     if (status) status.textContent = "";

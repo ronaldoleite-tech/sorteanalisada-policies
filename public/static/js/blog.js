@@ -2,6 +2,7 @@
 //      CONFIGURAÇÕES
 // ==============================
 const SITE_URL = "https://sorteanalisada.com.br";
+const BLOG_URL = SITE_URL + "/blog";   // o blog agora vive em /blog (o gerador é a página inicial)
 const IMAGENS_DIR = "/static/images/";
 const IMAGEM_PADRAO = "logotipo.png";
 // ids já usados na página (um artigo nunca pode ter um destes ids)
@@ -386,7 +387,7 @@ function gerarSchemaSEO(artigos) {
             },
             "image": new URL(a.imagemUrl, SITE_URL).href,
             "description": a.resumo,
-            "url": `${SITE_URL}/#${a.id}`
+            "url": `${BLOG_URL}#${a.id}`
         };
         // As datas só entram no schema quando informadas em dados-artigos.js
         if (a.data) post.datePublished = dataIso(a.data);
@@ -399,7 +400,7 @@ function gerarSchemaSEO(artigos) {
         "@type": "Blog",
         "name": "Blog Sorte Analisada",
         "description": "Blog Sorte Analisada: Explore o universo das loterias com análises de dados, estatísticas e curiosidades. Mega-Sena, Quina, Lotofácil e muito mais.",
-        "url": `${SITE_URL}/`,
+        "url": BLOG_URL,
         "inLanguage": "pt-BR",
         "author": {
             "@type": "Organization",

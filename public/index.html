@@ -22,14 +22,40 @@
             });
         </script>
 
-        <!-- ============== SCHEMA MARKUP PARA SEO ============== -->
-        <!-- O Schema (JSON-LD) é gerado dinamicamente pelo arquivo blog.js -->
+        <!-- Links antigos de artigos (sorteanalisada.com.br/#artigo) agora vivem em /blog#artigo -->
+        <script>
+            (function () {
+                var h = window.location.hash;
+                var locais = /^#(topo|gerador|gerador-titulo|destaque)$/;
+                // só hashes no formato de slug (letras minúsculas, números e hífens);
+                // outros, como #google_vignette dos anúncios, não são tocados
+                if (h && !locais.test(h) && /^#[a-z0-9]+(-[a-z0-9]+)*$/.test(h)) {
+                    window.location.replace("/blog" + h);
+                }
+            })();
+        </script>
+
+        <!-- ============== SCHEMA MARKUP (sem datas, para não gerar avisos) ============== -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Gerador de Dezenas - Sorte Analisada",
+            "url": "https://sorteanalisada.com.br/",
+            "applicationCategory": "EntertainmentApplication",
+            "operatingSystem": "Qualquer (navegador)",
+            "inLanguage": "pt-BR",
+            "description": "Gere 10 jogos para Mega-Sena, Quina, Dupla-Sena, Lotofácil, Dia de Sorte, +Milionária e Super Sete no modo aleatório ou Monte Carlo.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+            "publisher": { "@type": "Organization", "name": "Sorte Analisada", "url": "https://sorteanalisada.com.br/" }
+        }
+        </script>
 
         <!-- ============== METADADOS E SEO ============== -->
-        <meta name="description" content="Gere dezenas aleatórias para Mega-Sena, Quina, Dupla-Sena, Lotofácil, Dia de Sorte, +Milionária e Super Sete e leia curiosidades, análises e dicas sobre as loterias no Blog Sorte Analisada.">
-        <meta name="keywords" content="Blog de loterias, curiosidades sobre loterias, mega-sena, quina, lotofácil, Dia de Sorte, dupla sena, lotomania, resultados das loterias">
+        <meta name="description" content="Gerador de dezenas grátis para Mega-Sena, Quina, Dupla-Sena, Lotofácil, Dia de Sorte, +Milionária e Super Sete: escolha o modo aleatório ou Monte Carlo e gere 10 jogos de uma vez.">
+        <meta name="keywords" content="gerador de números loteria, gerador mega-sena, gerador quina, gerador lotofácil, dupla sena, dia de sorte, +milionária, super sete, monte carlo">
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-        <title>Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias</title>
+        <title>Gerador de Números para Loterias Grátis - Sorte Analisada</title>
         <link rel="icon" href="/static/images/logotipo.png" type="image/png">
 
         <!-- ============== LINK GOOGLE ADSENSE ============== -->
@@ -45,8 +71,8 @@
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://sorteanalisada.com.br/">
-        <meta property="og:title" content="Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias">
-        <meta property="og:description" content="Blog Sorte Analisada: Curiosidades, análises e guias sobre as loterias brasileiras. Explore o mundo dos números na Mega-Sena, Quina, Lotofácil e Dia de Sorte.">
+        <meta property="og:title" content="Gerador de Números para Loterias Grátis - Sorte Analisada">
+        <meta property="og:description" content="Gere 10 jogos para as principais loterias brasileiras no modo aleatório ou Monte Carlo. Grátis e sem cadastro.">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta property="og:locale" content="pt_BR">
@@ -56,8 +82,8 @@
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:url" content="https://sorteanalisada.com.br/">
-        <meta name="twitter:title" content="Sorte Analisada - Blog: Gerador de Dezenas e Curiosidades sobre Loterias">
-        <meta name="twitter:description" content="Blog Sorte Analisada: Explore o universo das loterias com curiosidades, análises de dados e estatísticas. Entenda os padrões da Mega-Sena, Quina, Lotofácil e mais.">
+        <meta name="twitter:title" content="Gerador de Números para Loterias Grátis - Sorte Analisada">
+        <meta name="twitter:description" content="Gere 10 jogos para Mega-Sena, Quina, Lotofácil e mais no modo aleatório ou Monte Carlo. Grátis e sem cadastro.">
         <meta name="twitter:image" content="https://sorteanalisada.com.br/static/images/twitter-card.jpg">
 
         <!-- Canonical -->
@@ -79,15 +105,15 @@
                             loading="eager" fetchpriority="high">
                     </picture>
                 </a>
-                <h1>Sorte Analisada - Blog</h1>
-                <p class="subtitulo">Gere dezenas e leia curiosidades e dicas sobre o mundo das loterias</p>
+                <h1>Sorte Analisada - Gerador</h1>
+                <p class="subtitulo">Gere 10 jogos aleatórios ou no modo Monte Carlo para as principais loterias</p>
             </header>
 
-            <nav class="nav-interna" aria-label="Navegação do blog">
-                <a href="#gerador">Gerador</a>
-                <a href="#artigos">Artigos</a>
+            <nav class="nav-interna" aria-label="Navegação do site">
+                <a href="/">Início</a>
                 <a href="/organizador">Organizador</a>
                 <a href="/ultimosresultados">Últimos Resultados</a>
+                <a href="/blog">Blog</a>
                 <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada">App Sorte Analisada</a>
                 <a href="/privacy">Política de Privacidade</a>
                 <a href="/terms">Termos de Uso</a>
@@ -97,7 +123,7 @@
                 <!-- ============== GERADOR DE DEZENAS ============== -->
                 <section id="gerador" class="gerador" aria-labelledby="gerador-titulo">
                     <h2 id="gerador-titulo" class="titulo-artigos">🎲 Gerador de Dezenas</h2>
-                    <p class="gerador-sub">Escolha a loteria e gere números aleatórios para o seu jogo.</p>
+                    <p class="gerador-sub">Escolha a loteria e o modo e gere 10 jogos de uma só vez.</p>
 
                     <div class="gerador-controles">
                         <label for="gerador-loteria">Loteria:</label>
@@ -125,10 +151,10 @@
 
                     <div class="gerador-botoes">
                         <button type="button" id="gerador-gerar" class="botao-gerar">
-                            <i class="fa-solid fa-dice" aria-hidden="true"></i> Gerar números
+                            <i class="fa-solid fa-dice" aria-hidden="true"></i> Gerar 10 jogos
                         </button>
                         <button type="button" id="gerador-copiar" class="botao-copiar" disabled>
-                            <i class="fa-solid fa-copy" aria-hidden="true"></i> Copiar
+                            <i class="fa-solid fa-copy" aria-hidden="true"></i> Copiar jogos
                         </button>
                     </div>
 
@@ -154,60 +180,18 @@
                             Baixe Grátis na Play Store
                         </a>
                     <p style="margin-top: 1rem;"><a href="/landing" class="link-interno">Conheça todos os recursos do app Sorte Analisada Lite</a></p>
-                    <p style="margin-top: 1rem;"><a href="/organizador" class="link-interno">Experimente também o Organizador de Jogos: escolha seus números e gere 10 jogos</a></p>
+                    <p style="margin-top: 1rem;"><a href="/organizador" class="link-interno">Experimente também o Organizador de Jogos: escolha seus números favoritos e organize seus jogos a partir deles</a></p>
+                    <p style="margin-top: 1rem;"><a href="/blog" class="link-interno">Leia curiosidades e dicas sobre loterias no Blog</a></p>
                     <br>
                     <p class="gerador-aviso">
-                       ** Números gerados aleatoriamente, apenas para entretenimento. Loterias são jogos de azar,
+                       ** Números gerados apenas para entretenimento. Loterias são jogos de azar,
                         não há garantia de prêmios. Jogue com responsabilidade (18+).
                     </p>
    
                 </section>
 
-                <!-- ============== ARTIGOS ============== -->
-                <section id="artigos">
-                <h2 class="titulo-artigos">Artigos</h2>
-                
-                <!-- AQUI O JAVASCRIPT VAI INJETAR OS ARTIGOS -->
-                <div id="lista-artigos"></div>
-                <noscript><p>Ative o JavaScript no seu navegador para ver os artigos do blog.</p></noscript>
-
-                <a href="#topo" class="voltar-topo">Voltar ao Topo ↑</a>
-                <!-- ============== CARD DE RECURSO ============== -->
-                <div id="destaque" class="destaque-gerador">
-                    <h2>🎯 Gere Suas Dezenas com algoritmos!</h2>
-                    <p>Não perca tempo! Use o gerador de dezenas do app <strong>Sorte Analisada Lite <span style="font-size: 1.5rem;">📱</span></strong>.<br>Gere dezenas para a Mega-Sena, Quina, Lotofácil e outras loterias!</p>
-                    <br>
-               
-                    <article class="card-feature">
-                        <p class="card-feature-titulo">
-                            <i class="fa-solid fa-dice" aria-hidden="true"></i> Disponível gratuitamente na Google Play Store!
-                        </p>
-                        <a href="https://play.google.com/store/apps/details?id=br.com.sorteanalisada.sorteanalisada"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           title="Baixar Sorte Analisada Lite na Play Store"
-                           class="botao-playstore">
-                            <i class="fa-brands fa-google-play" aria-hidden="true"></i>
-                            Baixe Grátis na Play Store
-                        </a>
-                        <p style="margin-top: 1rem;"><a href="/landing" class="link-interno">Conheça todos os recursos do app Sorte Analisada Lite</a></p>
-                    </article>
-                </div>
                 <br>
-
-                <!-- Compartilhamento geral -->
-                <div class="share-container" aria-label="Compartilhar o blog">
-                    Curtiu o Blog! Compartilhe:
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no WhatsApp" onclick="compartilharWhatsApp(urlBlog())" class="share-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Facebook" onclick="compartilharFacebook(urlBlog())" class="share-btn facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no X (Twitter)" onclick="compartilharTwitter(urlBlog())" class="share-btn twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Threads" onclick="compartilharThreads(urlBlog())" class="share-btn threads"><i class="fa-brands fa-threads"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no Instagram" onclick="compartilharInstagram()" class="share-btn instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Compartilhar no TikTok" onclick="compartilharTikTok()" class="share-btn tiktok"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="javascript:void(0)" role="button" aria-label="Copiar link" onclick="copiarLink(window.location.href, event)" class="share-btn copy-link"><i class="fa-solid fa-link"></i></a>
-                </div>
                 <a href="#topo" class="voltar-topo">Voltar ao Topo ↑</a>
-                </section>
             </main>
 
             <footer class="site-footer">
@@ -226,6 +210,8 @@
                     <br>
                     <a href="/ultimosresultados">Últimos Resultados</a>
                     <br>
+                    <a href="/blog">Blog</a>
+                    <br>
                     <a href="/landing">Conheça o App</a>
                     <br>
                     <a href="mailto:contato@sorteanalisada.com.br" title="Contato">
@@ -243,9 +229,7 @@
             </footer>
         </div>
 
-        <!-- Scripts com defer (carregam sem bloquear a renderização) -->
-        <script defer src="/static/js/dados-artigos.js"></script>
-        <script defer src="/static/js/blog.js"></script>
+        <!-- Script com defer (carrega sem bloquear a renderização) -->
         <script defer src="/static/js/gerador.js"></script>
     </body>
 </html>

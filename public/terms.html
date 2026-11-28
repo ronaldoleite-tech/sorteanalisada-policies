@@ -203,7 +203,7 @@
         <header>
             <h1>Termos de Uso</h1>
             <p class="subtitle">Sorte Analisada Lite - App e Site</p>
-            <div class="last-update">Última atualização: 25 de novembro de 2026</div>
+            <div class="last-update">Última atualização: 28 de novembro de 2026</div>
         </header>
 
         <main>
@@ -230,6 +230,7 @@
                     <li>Armazenam dados apenas localmente no dispositivo/navegador e não coletam dados pessoais identificáveis.</li>
                     <li>O aplicativo oferece anúncios em vídeo opcionais com recompensa (rewarded ads), que o usuário pode assistir voluntariamente para receber palpites Especiais adicionais nos minigames ou no Organizador de Jogos.</li>
                     <li>Incluem o Organizador de Jogos, um recurso gratuito para as loterias Mega-Sena, Quina, Dupla-Sena, Dia de Sorte e Lotofácil, que combina jogos distintos a partir de números escolhidos pelo usuário.</li>
+                    <li>O site também oferece o Gerador de Dezenas (nos modos Aleatório e Monte Carlo), a página Últimos Resultados, de caráter apenas informativo, o Blog e links para códigos de estudo compartilhados no GitHub (veja os itens 3.5 a 3.7).</li>
                 </ul>
             </div>
 
@@ -244,6 +245,7 @@
                     <li>Algoritmos estatísticos</li>
                     <li>Combinações aleatórias</li>
                     <li>Métodos de probabilidade</li>
+                    <li>Simulações computacionais, como o modo Monte Carlo do gerador de dezenas do site</li>
                 </ul>
 
                 <p><strong>3.2. Minigames e Recompensas (Aplicativo)</strong></p>
@@ -262,10 +264,35 @@
                 </p>
                 <ul>
                     <li><strong>No aplicativo:</strong> a partir do conjunto fixo formado, são gerados 10 jogos distintos entre si para todas as loterias disponíveis.</li>
-                    <li><strong>No site (sorteanalisada.com.br/organizador):</strong> na Mega-Sena, o conjunto reúne 9 dezenas e monta jogos de 6 números aplicando uma distribuição combinatória entre as linhas geradas (de modo que todas as combinações de 4 dezenas desse conjunto apareçam pelo menos uma vez entre os jogos produzidos); nas demais loterias, são gerados 10 jogos distintos entre si a partir do conjunto.</li>
+                    <li><strong>No site (sorteanalisada.com.br/organizador):</strong> por padrão, a partir do conjunto formado são gerados 10 jogos distintos entre si, sem repetição de combinações. Para Mega-Sena, Dupla-Sena e Quina, o site também oferece o modelo opcional <strong>"Conjunto fixo (fechamento)"</strong>, que reúne 9 dezenas e distribui 12 jogos de modo que todas as combinações de 4 dezenas (Mega-Sena e Dupla-Sena) ou de 3 dezenas (Quina) desse conjunto apareçam pelo menos uma vez entre os jogos produzidos. Assim, se pelo menos 4 (ou 3, na Quina) das dezenas sorteadas estiverem dentro do conjunto, ao menos um dos jogos conterá essas dezenas.</li>
                 </ul>
                 <p>
-                    <strong>Essa organização apenas estrutura combinações dentro do conjunto escolhido pelo usuário — ela não altera nem aumenta a probabilidade real de acerto contra o universo total de combinações da loteria, nem exige que o usuário utilize todas as linhas geradas.</strong>
+                    <strong>Essa organização apenas estrutura combinações dentro do conjunto escolhido pelo usuário — ela não altera nem aumenta a probabilidade real de acerto contra o universo total de combinações da loteria, não representa garantia de prêmio (a garantia do fechamento só se aplica se o número mínimo de dezenas sorteadas estiver dentro do conjunto) e não exige que o usuário utilize todas as linhas geradas.</strong>
+                </p>
+
+                <p><strong>3.5. Gerador de Dezenas (Site)</strong></p>
+                <p>
+                    O gerador de dezenas do site <strong>sorteanalisada.com.br</strong> gera 10 jogos de uma só vez (cada um com a quantidade de dezenas da loteria escolhida) e oferece dois modos:
+                </p>
+                <ul>
+                    <li><strong>Aleatório:</strong> as dezenas de cada jogo são sorteadas ao acaso, com a mesma chance para todas.</li>
+                    <li><strong>Monte Carlo:</strong> as dezenas são sorteadas com pesos proporcionais à frequência com que cada uma apareceu em simulações computacionais de sorteios, cujos dados ficam em arquivos públicos do próprio site.</li>
+                </ul>
+                <p>
+                    <strong>O modo Monte Carlo não indica dezenas mais prováveis e não aumenta a chance de acerto: as diferenças de frequência nas simulações tendem a ser pequenas e decorrem do acaso.</strong> O gerador é um recurso de entretenimento e funciona no navegador do usuário.
+                </p>
+
+                <p><strong>3.6. Últimos Resultados (Site)</strong></p>
+                <p>
+                    A página <strong>sorteanalisada.com.br/ultimosresultados</strong> apresenta, de forma <strong>apenas informativa</strong>, os resultados mais recentes das loterias da Caixa (+Milionária, Mega-Sena, Quina, Lotofácil, Dupla-Sena, Lotomania, Dia de Sorte, Timemania, Super Sete, Loteca e Federal), incluindo as estimativas de prêmio divulgadas pela Caixa. Os dados são públicos e obtidos automaticamente de fontes da Caixa por uma rotina que roda uma vez por dia, por isso <strong>podem apresentar atraso, indisponibilidade ou divergências</strong>.
+                </p>
+                <p>
+                    <strong>Os resultados oficiais da Caixa sempre prevalecem. Confira os números sorteados e os prêmios nos canais oficiais das Loterias Caixa antes de qualquer decisão.</strong> O site não é canal oficial, não recebe nem confere apostas e não paga prêmios.
+                </p>
+
+                <p><strong>3.7. Códigos compartilhados no GitHub</strong></p>
+                <p>
+                    O site pode indicar um repositório público no GitHub com códigos abertos usados em estudos do Sorte Analisada (por exemplo, scripts que geram combinações e exemplos de machine learning). Esses arquivos são <strong>apenas para estudo e curiosidade</strong>: <strong>não conferem vantagem alguma e também não aumentam nem reduzem a probabilidade de acerto</strong> — todas as combinações têm a mesma chance, e nenhum programa prevê resultados. São oferecidos no estado em que se encontram, sem garantia de qualquer tipo, e seu uso é de responsabilidade de quem os utiliza.
                 </p>
             </div>
 
@@ -321,6 +348,9 @@
                 <p>
                     A marca <strong>"Sorte Analisada"</strong> possui pedido de registro em análise junto ao Instituto Nacional da Propriedade Industrial (INPI), atualmente na fase de exame de mérito após o período de contestação. O uso não autorizado da marca, do nome ou de elementos visuais associados ao aplicativo e ao site <strong>sorteanalisada.com.br</strong> é vedado.
                 </p>
+                <p>
+                    Os nomes das modalidades lotéricas e os dados dos resultados oficiais exibidos na página Últimos Resultados pertencem à <strong>Caixa Econômica Federal</strong> e são utilizados apenas para fins informativos.
+                </p>
             </div>
 
             <div class="policy-section">
@@ -333,6 +363,7 @@
                     <li>Decisões de apostas tomadas pelo usuário</li>
                     <li>Problemas técnicos no dispositivo ou navegador do usuário</li>
                     <li>Erros ou imprecisões nos dados estatísticos apresentados</li>
+                    <li>Atrasos, indisponibilidade ou divergências nos resultados e nas estimativas de prêmio exibidos na página Últimos Resultados em relação aos canais oficiais</li>
                     <li>Resultados de sorteios oficiais</li>
                 </ul>
             </div>

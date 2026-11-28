@@ -5,7 +5,7 @@
 
 .res-aviso {
     max-width: 640px;
-    margin: 0.8rem auto 1.2rem;
+    margin: 1.4rem auto 1.2rem;
     padding: 0.8rem 1rem;
     font-size: 0.9rem;
     line-height: 1.5;
@@ -202,6 +202,27 @@
 .res-bilhete { font-weight: 700; letter-spacing: 2px; color: var(--cor-dourado); }
 .res-valor { font-size: 0.9rem; }
 
+/* Estimativa de prêmio do próximo concurso */
+.res-estimativa {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.res-estimativa-rotulo {
+    font-size: 0.8rem;
+    color: #bbdefb;
+}
+
+.res-estimativa-valor {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    color: var(--cor-dourado);
+    letter-spacing: 0.5px;
+}
+
 .res-prox {
     margin: 0;
     font-size: 0.9rem;
@@ -210,6 +231,7 @@
 
 @media (max-width: 600px) {
     .res-card { padding: 1rem 0.7rem; }
+    .res-estimativa-valor { font-size: 1.1rem; }
     .res-bolas .bola { width: 36px; height: 36px; font-size: 0.9rem; }
     .res-b-lotofacil,
     .res-b-lotomania { max-width: 230px; }   /* 5 bolas por linha no celular */

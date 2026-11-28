@@ -749,6 +749,62 @@ section[id] {
     font-weight: 700;
 }
 
+/* Lista de 10 jogos do gerador */
+.jogos-lista {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.jogo-linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 12px;
+    padding: 0.55rem 0.8rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+}
+
+.jogo-rotulo {
+    flex: none;
+    min-width: 4.8rem;
+    font-size: 0.8rem;
+    color: #bbdefb;
+    text-align: left;
+}
+
+.bolas-peq { gap: 6px; }
+
+.bolas-peq .bola {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+}
+
+.jogo-linha .bola-mes,
+.jogo-linha .bola-trevo {
+    padding: 0.2rem 0.7rem;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+    .jogo-rotulo { flex-basis: 100%; text-align: center; min-width: 0; }
+    .bolas.bolas-peq { gap: 5px; }
+    .bolas.bolas-peq .bola { width: 32px; height: 32px; font-size: 0.85rem; }   /* 7 bolas cabem numa linha */
+    .bolas-longa { max-width: 200px; }                                   /* Lotofácil: 5 por linha */
+    .gerador-resultado { padding: 0.6rem; }
+    .jogo-linha { padding: 0.5rem 0.4rem; }
+}
+
+@media (max-width: 380px) {
+    .bolas.bolas-peq { gap: 4px; }
+    .bolas.bolas-peq .bola { width: 28px; height: 28px; font-size: 0.78rem; }
+    .bolas-longa { max-width: 160px; }   /* Lotofácil continua com 5 por linha */
+}
+
 .gerador-app {
     font-size: 1.05rem;
     line-height: 1.6;
